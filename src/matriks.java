@@ -1,11 +1,11 @@
 /* kelas array matrix */
 
-class matriks {
+class Matriks {
      //Atribut
      int [][] Matriks = new int[10][10]; //matriks 10x10
 
      //Method
-     matriks() { //Konstruktor
+     Matriks() { //Konstruktor
           int i,j;
 
           for (i=0;i<10;i++) {
