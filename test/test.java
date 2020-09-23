@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-// * Output Hello World
+// Output Hello World
 
 public class test {
     public static void main(String[] args) {
