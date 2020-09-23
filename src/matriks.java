@@ -2,17 +2,35 @@
 
 class Matriks {
      //Atribut
-     int [][] Matriks = new int[10][10]; //matriks 10x10
+     private int maxNBrsKol = 1;
+     double [][] Matriks = new double[1][1]; //inisialisasi matriks 2x2
+     int NBrs;
+     int NKol;
 
-     //Method
-     Matriks() { //Konstruktor
+
+     // Method
+     Matriks(int NBrs, int NKol) { //Konstruktor
           int i,j;
 
-          for (i=0;i<10;i++) {
-               for (j=0;j<10;j++) {
-                    this.Matriks[i][j] = 0;
+          // Ganti ukuran matriks
+          while(NBrs>maxNBrsKol || NKol>maxNBrsKol) {
+               this.maxNBrsKol = this.maxNBrsKol*2;
+
+               double [][] NewMatriks = new double[this.maxNBrsKol][this.maxNBrsKol];
+               this.Matriks = NewMatriks;
+          }
+          
+          // Inisialisasi isi matriks
+          this.NBrs = NBrs;
+          this.NKol = NKol;
+
+          for (i=0;i<NBrs;i++) {
+               for (j=0;j<NKol;j++) {
+                    this.Matriks[i][j] = -99;
                }
           }
+          
+          
      }
 
      void isiMatriks (int N, int M) {
@@ -25,19 +43,19 @@ class Matriks {
           }
      }
 
-     void tulisMatriks (int M, int N) {
+     void tulisMatriks () {
           // mencetak elemen-elemen matriks hingga indeks M,N
           int i,j;
 
-          for (i=0;i<=M;i++) {
-               for (j=0;j<=N;i++) {
+          for (i=0;i < this.NBrs;i++) {
+               for (j=0;j < this.NKol;j++) {
                     System.out.print(this.Matriks[i][j]+" ");
                }
                System.out.println();
           }
      }
 
-     void transpose (int M, int N, int Matt[][]) {
+     void transpose (int M, int N, double Matt[][]) {
           //Membuat matriks transpose
           int i,j;
 
