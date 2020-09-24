@@ -133,6 +133,10 @@ public class Matriks {
           }
      }
 
+     int NBElmt() {
+          return this.NBrsEff * this.NKolEff;
+     }
+
      /* *** MEMORY MANAGEMENT *** */
 
      /**
@@ -232,4 +236,34 @@ public class Matriks {
           return this.Elmt(i,i);
      }
 
+
+     /* *** METODE DETERMINAN *** */
+
+     float DeterminanKofaktor()
+     /* Prekondisi: IsBujursangkar()
+     Menghitung nilai determinan sebuah matriks */
+     // Menggunakan metode Ekspansi Kofaktor
+     {
+          //KAMUS LOKAL
+          float[][] MHasil = new float[this.maxNBrsKol][this.maxNBrsKol];
+          int j; //kolom matriks awal (digunakan baris 0 untuk menentukan determinan)
+          int k,l; //indeks matriks minor
+          int m,n; //indeks matriks awal yang akan di-assign ke elemen matriks minor
+          float det;
+
+          //ALGORITMA
+          det = 0;
+          
+          if (this.NBElmt() == 1) { //basis
+               det = this.Elmt(0,0);
+          }
+          else { //rekurens
+               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                    MHasil.NBrsEff = this.NBrsEff-1;
+                    MHasil.NKolEff = this.NKolEff-1;
+               }
+               //REDUKSI MATRIKS AWAL
+          }
+
+     }
 }
