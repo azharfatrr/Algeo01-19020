@@ -239,9 +239,42 @@ public class Matriks {
           return this.GetFirstIdxKol()+this.NKolEff-1;
      }
 
-     /* Mengembalikan elemen diagonal */
+     /* Mengembalikan elemen diagonal! */
      float GetDiagonal(int i) {
           return this.Elmt(i,i);
      }
+
+     /*       KELOMPOK OPERASI OBE          */
+     void PlusRow(int origin, int target, float koef) {
+     /*Melakukan operasi Rasal+(koef)*Rakhir */
+          int j;
+
+          for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++) {
+               this.SetElmt(target, j, (this.Elmt(target, j)+(koef*this.Matriks[origin][j])));
+          }
+     }
+
+     void SwapRow(int origin, int target) {
+          /* Melakukan operasi pertukaran baris */
+          int j;
+          float temp;
+
+          for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++) {
+               // elemen 
+               temp = this.Elmt(origin, j);
+               this.SetElmt(origin, j, this.Elmt(target, j));
+               this.SetElmt(target, j, temp);
+          }
+     }
+
+     void MakeSatu(int i, float koef) {
+          /* Membagi baris i dengan konstanta koef untuk membuat 1 utama */
+          int j;
+          for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
+               this.SetElmt(i, j, (this.Elmt(i, j)/koef));
+          }
+     }
+
+
 
 }
