@@ -1,12 +1,15 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-class Matriks {
+public class Matriks {
      /* ***** ATRIBUTE ***** */
      private int maxNBrsKol = 1; //panjang maksimum baris dan kolom matriks
      float [][] Matriks = new float[maxNBrsKol][maxNBrsKol]; //inisialisasi matriks 1x1
      int NBrs; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKol; /* banyaknya/ukuran kolom yg terdefinisi */
 
+     /* Matriks Yang terdefinisi memiliki indeks dari [0..NBrsEff-1][0..NKolEff-1] */
 
      /* ***** METHODS ***** */
 
@@ -51,8 +54,7 @@ class Matriks {
 
      /** Tulis Matriks
       * I.S. Matriks terdefinisi dan memiliki nilai
-      * F.S. Menampilkan matriks pada layar
-      */
+      * F.S. Menampilkan matriks pada layar */
      void tulisMatriks () {
           // mencetak elemen-elemen matriks hingga indeks M,N
           int i,j;
@@ -64,6 +66,32 @@ class Matriks {
                System.out.println();
           }
      }
+
+     /** Baca Matriks dari File Txt
+      * I.S. File txt berisi Array Matriks
+      * F.S. Terbaca Matriks dan disimpan dalam variabel */
+     void bacaFileMatriks(String namaFile) throws FileNotFoundException
+     {
+          // Kamus
+          File file = new File(namaFile);
+          Scanner input = new Scanner(file);
+          int NBrs = 0;
+          int NKol = 0;
+
+          Scanner brs = new Scanner(input.nextLine()); // Digunakan untuk menghitung baris
+          Scanner kol = new Scanner(input.nextLine()); // Digunakan untuk menghitung kolom
+          Scanner matriks = new Scanner(input.); 
+
+          // Algoritma
+          
+
+
+
+
+     }
+
+
+     /* *** KELOMPOK OPERASI PRIMITIF ***/
 
      void transpose (int M, int N, float Matt[][]) {
           //Membuat matriks transpose
