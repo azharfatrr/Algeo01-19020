@@ -72,8 +72,9 @@ public class Matriks {
      /** Baca Matriks dari File Txt
       * I.S. File txt berisi Array Matriks
       * F.S. Terbaca Matriks dan disimpan dalam variabel */
-     void bacaFileMatriks(String namaFile) throws FileNotFoundException
+     void bacaFileMatriks(String namaFile)
      {
+          try {
           // Kamus
           File file = new File(namaFile);
           int NBrs = 0;
@@ -101,14 +102,17 @@ public class Matriks {
           line.close();
           matriks.close();
           
-          this.NBrsEff = NBrs;
-          this.NKolEff = NKol;
+          
 
           matriks  = new Scanner(file);
+          
           // Cek apakah ukuran muat
           while (NBrs > this.maxNBrsKol || NKol > this.maxNBrsKol) {
                this.doubleMatriks();
           }
+
+          this.NBrsEff = NBrs;
+          this.NKolEff = NKol;
 
           // Isi Matriks
           for (i = 0; i < NBrs; i++) {
@@ -117,6 +121,12 @@ public class Matriks {
                }
           }
           matriks.close();
+
+          } catch (FileNotFoundException e) {
+               System.out.println("File tidak ditemukan");
+               e.printStackTrace();
+          }
+          
      }
 
 
@@ -177,11 +187,13 @@ public class Matriks {
      /** Mengcopy array matriks ke tempat lain */
      float[][] copyArrayMatriks() {
           // Kamus
+
           float[][] MHsl = new float[this.maxNBrsKol][this.maxNBrsKol];
 
           // Algoritma
+          
           for (int i = 0; i < this.NBrsEff; i++) {
-               for (int j = 0; j < this.NBrsEff; j++) {
+               for (int j = 0; j < this.NKolEff; j++) {
                     MHsl[i][j] = this.Matriks[i][j];
                }
           }
@@ -266,4 +278,37 @@ public class Matriks {
           }
 
      }
+     /*       KELOMPOK OPERASI OBE          */
+     void PlusRow(int origin, int target, float koef) {
+     /*Melakukan operasi Rasal+(koef)*Rakhir */
+          int j;
+
+          for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++) {
+               this.SetElmt(target, j, (this.Elmt(target, j)+(koef*this.Matriks[origin][j])));
+          }
+     }
+
+     void SwapRow(int origin, int target) {
+          /* Melakukan operasi pertukaran baris */
+          int j;
+          float temp;
+
+          for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++) {
+               // elemen 
+               temp = this.Elmt(origin, j);
+               this.SetElmt(origin, j, this.Elmt(target, j));
+               this.SetElmt(target, j, temp);
+          }
+     }
+
+     void MakeSatu(int i, float koef) {
+          /* Membagi baris i dengan konstanta koef untuk membuat 1 utama */
+          int j;
+          for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
+               this.SetElmt(i, j, (this.Elmt(i, j)/koef));
+          }
+     }
+
+
+
 }
