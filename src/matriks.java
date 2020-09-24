@@ -78,31 +78,45 @@ public class Matriks {
           File file = new File(namaFile);
           int NBrs = 0;
           int NKol = 0;
+          int i,j; // Indeks
 
-          Scanner brs = new Scanner(file); // Digunakan untuk menghitung baris
-          Scanner kol = new Scanner(new Scanner(file).nextLine()); // Digunakan untuk menghitung kolom
           Scanner matriks = new Scanner(file); // Digunakan untuk memindahkan matriks
 
           // Algoritma
           
           // Menghitung banyaknya baris matriks
-          while (brs.hasNextLine()) {
+          while (matriks.hasNextLine()) {
                NBrs++;
-               brs.nextLine();
+               matriks.nextLine();
           }
-          brs.close();
+          matriks.close();
 
+          matriks  = new Scanner(file);
+          Scanner line = new Scanner(matriks.nextLine());
           // Menghitung banyaknya kolom baris matriks
-          while (kol.hasNextFloat()) {
+          while (line.hasNextFloat()) {
                NKol++;
-               kol.nextFloat();
+               line.nextFloat();
           }
-          kol.close();
+          line.close();
+          matriks.close();
           
+          this.NBrsEff = NBrs;
+          this.NKolEff = NKol;
 
+          matriks  = new Scanner(file);
+          // Cek apakah ukuran muat
+          while (NBrs > this.maxNBrsKol || NKol > this.maxNBrsKol) {
+               this.doubleMatriks();
+          }
 
-
-
+          // Isi Matriks
+          for (i = 0; i < NBrs; i++) {
+               for (j = 0; j < NKol; j++) {
+                    this.Matriks[i][j] = matriks.nextFloat();
+               }
+          }
+          matriks.close();
      }
 
 
@@ -213,7 +227,7 @@ public class Matriks {
           return this.GetFirstIdxKol()+this.NKolEff-1;
      }
 
-     /* Mengembalikan elemen diagonal */
+     /* Mengembalikan elemen diagonal! */
      float GetDiagonal(int i) {
           return this.Elmt(i,i);
      }
