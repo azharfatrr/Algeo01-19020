@@ -125,14 +125,10 @@ public class Matriks {
           }
      }
 
-<<<<<<< HEAD
      int NBElmt() {
           return this.NBrsEff * this.NKolEff;
      }
 
-=======
-     
->>>>>>> fae8b575b95aa4a38e58b6cc77caaa9a03e677f8
      /* *** MEMORY MANAGEMENT *** */
 
      /**
@@ -250,7 +246,6 @@ public class Matriks {
           return this.Elmt(i,i);
      }
 
-<<<<<<< HEAD
 
      /* *** METODE DETERMINAN *** */
 
@@ -260,7 +255,7 @@ public class Matriks {
      // Menggunakan metode Ekspansi Kofaktor
      {
           //KAMUS LOKAL
-          float[][] MHasil = new float[this.maxNBrsKol][this.maxNBrsKol];
+          Matriks MHasil;
           int j; //kolom matriks awal (digunakan baris 0 untuk menentukan determinan)
           int k,l; //indeks matriks minor
           int m,n; //indeks matriks awal yang akan di-assign ke elemen matriks minor
@@ -274,17 +269,33 @@ public class Matriks {
           }
           else { //rekurens
                for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
-                    MHasil.NBrsEff = this.NBrsEff-1;
-                    MHasil.NKolEff = this.NKolEff-1;
-               }
-               //REDUKSI MATRIKS AWAL
-          }
+                    MHasil = new Matriks(this.NBrsEff-1, this.NKolEff-1);
 
+                    //REDUKSI MATRIKS AWAL
+                    m=1; //inisiasi indeks baris matriks awal yg akan diassign ke matriks minor
+                    for (k = MHasil.GetFirstIdxBrs(); k <= MHasil.GetLastIdxBrs(); k++) {
+                         n=0; //inisialisasi indeks kolom matriks awal yang akan diassign ke matriks minor
+                         for (l = MHasil.GetFirstIdxKol(); l <= MHasil.GetLastIdxKol(); l++) {
+                              if (l == j) {
+                                   n = n+1;  //hal ini dilakukan agar kolom yang digunakan antara matriks utama dg
+                                             //matriks yang diassign ke matriks minor tidak sama
+                              }
+                              MHasil.Elmt(k,l) = this.Elmt(m,n);
+                              n = n+1;
+                         }
+                         m = m+1;
+                    }
+                    if (j%2 == 0) {
+                         det = det + this.Elmt(0,j) * MHasil.DeterminanKofaktor();
+                    }
+                    else {
+                         det = det + (-1 * this.Elmt(0,j) * MHasil.DeterminanKofaktor());
+                    }
+               }
+          }
+          return det;
      }
      /*       KELOMPOK OPERASI OBE          */
-=======
-     /* *** KELOMPOK OPERASI OBE *** */
->>>>>>> fae8b575b95aa4a38e58b6cc77caaa9a03e677f8
      void PlusRow(int origin, int target, float koef) {
      /*Melakukan operasi Rasal+(koef)*Rakhir */
           int j;
