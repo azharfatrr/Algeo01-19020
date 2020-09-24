@@ -125,14 +125,11 @@ public class Matriks {
           }
      }
 
-<<<<<<< HEAD
      int NBElmt() {
           return this.NBrsEff * this.NKolEff;
      }
 
-=======
      
->>>>>>> fae8b575b95aa4a38e58b6cc77caaa9a03e677f8
      /* *** MEMORY MANAGEMENT *** */
 
      /**
@@ -186,6 +183,18 @@ public class Matriks {
           return MHsl;
      }
 
+     /** Mencopy matriks ke matriks lain */
+     Matriks copyMatriks() {
+          // Kamus
+          Matriks MCopy = new Matriks(this.NBrsEff, this.NKolEff);
+          // Algoritma
+          MCopy.Matriks = this.copyArrayMatriks();
+          MCopy.maxNBrsKol = this.maxNBrsKol;
+          MCopy.NBrsEff = this.NBrsEff;
+          MCopy.NKolEff = this.NKolEff;
+
+          return MCopy;
+     }
 
      /* *** KELOMPOK OPERASI PRIMITIF *** */
 
@@ -202,18 +211,7 @@ public class Matriks {
 
      
 
-     /** Mencopy matriks ke matriks lain */
-     Matriks copyMatriks() {
-          // Kamus
-          Matriks MCopy = new Matriks(this.NBrsEff, this.NKolEff);
-          // Algoritma
-          MCopy.Matriks = this.copyArrayMatriks();
-          MCopy.maxNBrsKol = this.maxNBrsKol;
-          MCopy.NBrsEff = this.NBrsEff;
-          MCopy.NKolEff = this.NKolEff;
-
-          return MCopy;
-     }
+     
 
      /* Mengakses Elemen Matriks */
      float Elmt(int i, int j) {
@@ -250,7 +248,6 @@ public class Matriks {
           return this.Elmt(i,i);
      }
 
-<<<<<<< HEAD
 
      /* *** METODE DETERMINAN *** */
 
@@ -281,10 +278,8 @@ public class Matriks {
           }
 
      }
-     /*       KELOMPOK OPERASI OBE          */
-=======
+
      /* *** KELOMPOK OPERASI OBE *** */
->>>>>>> fae8b575b95aa4a38e58b6cc77caaa9a03e677f8
      void PlusRow(int origin, int target, float koef) {
      /*Melakukan operasi Rasal+(koef)*Rakhir */
           int j;
