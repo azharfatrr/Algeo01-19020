@@ -105,6 +105,12 @@ public class Matriks {
           this.NKolEff = NKol;
 
           matriks  = new Scanner(file);
+          // Cek apakah ukuran muat
+          while (NBrs > this.maxNBrsKol || NKol > this.maxNBrsKol) {
+               this.doubleMatriks();
+          }
+
+          // Isi Matriks
           for (i = 0; i < NBrs; i++) {
                for (j = 0; j < NKol; j++) {
                     this.Matriks[i][j] = matriks.nextFloat();
