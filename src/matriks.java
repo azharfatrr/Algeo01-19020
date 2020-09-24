@@ -182,4 +182,40 @@ public class Matriks {
 
           return MCopy;
      }
+
+     /* Mengakses Elemen Matriks */
+     float Elmt(int i, int j) {
+          return this.Matriks[i][j];
+     }
+
+     /* Set element matriks[i][j] dengan val */
+     void SetElmt(int i, int j, float value) {
+          this.Matriks[i][j] = value;
+     }
+
+     /* Mengembalikan indeks baris pertama */
+     int GetFirstIdxBrs() {
+          return 0;
+     }
+
+     /* Mengembalikan indeks kolom pertama */
+     int GetFirstIdxKol() {
+          return 0;
+     }
+
+     /* Mengembalikan indeks baris terakhir */
+     int GetLastIdxBrs(){
+          return this.GetFirstIdxBrs()+this.NBrsEff-1;
+     }
+
+     /* Mengembalikan indeks kolom terakhir */
+     int GetLastIdxKol(){
+          return this.GetFirstIdxKol()+this.NKolEff-1;
+     }
+
+     /* Mengembalikan elemen diagonal */
+     float GetDiagonal(int i) {
+          return this.Elmt(i,i);
+     }
+
 }
