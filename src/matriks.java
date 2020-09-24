@@ -53,22 +53,6 @@ public class Matriks {
           input.close();
      }
 
-     /**
-      * Tulis Matriks I.S. Matriks terdefinisi dan memiliki nilai F.S. Menampilkan
-      * matriks pada layar
-      */
-     void tulisMatriks() {
-          // mencetak elemen-elemen matriks hingga indeks M,N
-          int i, j;
-
-          for (i = 0; i < this.NBrsEff; i++) {
-               for (j = 0; j < this.NKolEff; j++) {
-                    System.out.print(this.Matriks[i][j] + " ");
-               }
-               System.out.println();
-          }
-     }
-
      /** Baca Matriks dari File Txt
       * I.S. File txt berisi Array Matriks
       * F.S. Terbaca Matriks dan disimpan dalam variabel */
@@ -102,8 +86,6 @@ public class Matriks {
           line.close();
           matriks.close();
           
-          
-
           matriks  = new Scanner(file);
           
           // Cek apakah ukuran muat
@@ -123,26 +105,27 @@ public class Matriks {
           matriks.close();
 
           } catch (FileNotFoundException e) {
-               System.out.println("File tidak ditemukan");
-               e.printStackTrace();
+               System.out.println("Error: File tidak ditemukan");
           }
-          
      }
 
+     /**
+      * Tulis Matriks I.S. Matriks terdefinisi dan memiliki nilai F.S. Menampilkan
+      * matriks pada layar
+      */
+     void tulisMatriks() {
+          // mencetak elemen-elemen matriks hingga indeks M,N
+          int i, j;
 
-     /* *** KELOMPOK OPERASI PRIMITIF ***/
-
-     void transpose (int M, int N, float Matt[][]) {
-          //Membuat matriks transpose
-          int i,j;
-
-          for (i = 0; i <= M; i++) {
-               for (j = 0; j <= N; j++) {
-                    Matt[j][i] = this.Matriks[i][j];
+          for (i = 0; i < this.NBrsEff; i++) {
+               for (j = 0; j < this.NKolEff; j++) {
+                    System.out.print(this.Matriks[i][j] + " ");
                }
+               System.out.println();
           }
      }
 
+     
      /* *** MEMORY MANAGEMENT *** */
 
      /**
@@ -196,6 +179,22 @@ public class Matriks {
           return MHsl;
      }
 
+
+     /* *** KELOMPOK OPERASI PRIMITIF *** */
+
+     void transpose (int M, int N, float Matt[][]) {
+          //Membuat matriks transpose
+          int i,j;
+
+          for (i = 0; i <= M; i++) {
+               for (j = 0; j <= N; j++) {
+                    Matt[j][i] = this.Matriks[i][j];
+               }
+          }
+     }
+
+     
+
      /** Mencopy matriks ke matriks lain */
      Matriks copyMatriks() {
           // Kamus
@@ -244,7 +243,7 @@ public class Matriks {
           return this.Elmt(i,i);
      }
 
-     /*       KELOMPOK OPERASI OBE          */
+     /* *** KELOMPOK OPERASI OBE *** */
      void PlusRow(int origin, int target, float koef) {
      /*Melakukan operasi Rasal+(koef)*Rakhir */
           int j;
