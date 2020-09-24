@@ -168,4 +168,14 @@ public class Matriks {
 
           return MCopy;
      }
+
+     /* Mengakses Elemen Matriks */
+     float Elmt(int i, int j) {
+          return this.Matriks[i][j];
+     }
+
+     /* Set element matriks[i][j] dengan val */
+     void SetElmt(int i, int j, float value) {
+          this.Matriks[i][j] = value;
+     }
 }
