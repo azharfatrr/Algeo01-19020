@@ -1,10 +1,10 @@
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("UJI COBA\n");
-        
-        Matriks M = new Matriks(4, 4);
+        Matriks M = new Matriks(0,0);
 
-        M.bacaMatriks();
+        M.bacaFileMatriks("cek.txt");
+        M.tulisMatriks();
 
     }
 }
