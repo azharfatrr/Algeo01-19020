@@ -1,0 +1,10 @@
+Buka terminal di directory src
+
+- Compile + Run
+$ javac -d ../bin Matriks.java Main.java ; java -cp ../bin Main
+
+- Compile
+$ javac -d ../bin Matriks.java Main.java
+
+- Run
+$ java -d ../bin Main
