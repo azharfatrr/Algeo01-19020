@@ -50,6 +50,7 @@ public class Matriks {
                     this.Matriks[i][j] = input.nextFloat();
                }
           }
+          input.close();
      }
 
      /**
@@ -75,15 +76,28 @@ public class Matriks {
      {
           // Kamus
           File file = new File(namaFile);
-          Scanner input = new Scanner(file);
           int NBrs = 0;
           int NKol = 0;
 
-          Scanner brs = new Scanner(input.nextLine()); // Digunakan untuk menghitung baris
-          Scanner kol = new Scanner(input.nextLine()); // Digunakan untuk menghitung kolom
-          // Scanner matriks = new Scanner(input.); 
+          Scanner brs = new Scanner(file); // Digunakan untuk menghitung baris
+          Scanner kol = new Scanner(new Scanner(file).nextLine()); // Digunakan untuk menghitung kolom
+          Scanner matriks = new Scanner(file); // Digunakan untuk memindahkan matriks
 
           // Algoritma
+          
+          // Menghitung banyaknya baris matriks
+          while (brs.hasNextLine()) {
+               NBrs++;
+               brs.nextLine();
+          }
+          brs.close();
+
+          // Menghitung banyaknya kolom baris matriks
+          while (kol.hasNextFloat()) {
+               NKol++;
+               kol.nextFloat();
+          }
+          kol.close();
           
 
 
