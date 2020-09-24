@@ -1,0 +1,7 @@
+public class Matrix
+{
+    public int NBrsEff;
+    public int NKolEff;
+    public double [][] TD;
+    
+}
