@@ -3,7 +3,7 @@
 class Matriks {
      //Atribut
      private int maxNBrsKol = 1;
-     double [][] Matriks = new double[1][1]; //inisialisasi matriks 2x2
+     double [][] Matriks = new double[1][1]; //inisialisasi matriks 1x1
      int NBrs;
      int NKol;
 
