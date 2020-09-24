@@ -213,7 +213,7 @@ public class Matriks {
           return this.GetFirstIdxKol()+this.NKolEff-1;
      }
 
-     /* Mengembalikan elemen diagonal */
+     /* Mengembalikan elemen diagonal! */
      float GetDiagonal(int i) {
           return this.Elmt(i,i);
      }
