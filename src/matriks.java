@@ -15,10 +15,10 @@ public class Matriks {
 
      /* *** Konstruktor membentuk MATRIKS *** */
      Matriks(int NBrsEff, int NKolEff) {
-          // KAMUS
+          /* KAMUS */
           int i, j;
 
-          // ALGORITMA
+          /* ALGORITMA */
           // Ubah ukuran matriks
           while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
                this.doubleMatriks();
@@ -59,7 +59,7 @@ public class Matriks {
      void bacaFileMatriks(String namaFile)
      {
           try {
-          // Kamus
+          /* KAMUS */
           File file = new File(namaFile);
           int NBrs = 0;
           int NKol = 0;
@@ -67,7 +67,7 @@ public class Matriks {
 
           Scanner matriks = new Scanner(file); // Digunakan untuk memindahkan matriks
 
-          // Algoritma
+          /* ALGORITMA */
           
           // Menghitung banyaknya baris matriks
           while (matriks.hasNextLine()) {
@@ -105,13 +105,14 @@ public class Matriks {
           matriks.close();
 
           } catch (FileNotFoundException e) {
-               System.out.println("Error: File tidak ditemukan");
+               System.out.printf("Error: File \"%s\" tidak ditemukan\n",namaFile);
           }
      }
 
      /**
-      * Tulis Matriks I.S. Matriks terdefinisi dan memiliki nilai F.S. Menampilkan
-      * matriks pada layar
+      * Tulis Matriks 
+      * I.S. Matriks terdefinisi dan memiliki nilai 
+      * F.S. Menampilkan matriks pada layar
       */
      void tulisMatriks() {
           // mencetak elemen-elemen matriks hingga indeks M,N
@@ -137,11 +138,11 @@ public class Matriks {
       * semula Ukuran memory matriks menjadi 4x semula
       **/
      void doubleMatriks() {
-          // Kamus
+          /* KAMUS */
           this.maxNBrsKol = this.maxNBrsKol * 2;
           float[][] NewMatriks = new float[this.maxNBrsKol][this.maxNBrsKol];
 
-          // Algoritma
+          /* ALGORITMA */
           NewMatriks = this.copyArrayMatriks();
           this.Matriks = NewMatriks;
      }
@@ -154,11 +155,11 @@ public class Matriks {
       **/
      void halfMatriks() {
           if ((this.NBrsEff <= this.maxNBrsKol / 2) && (this.NKolEff <= this.maxNBrsKol / 2)) {
-               // Kamus
+               /* KAMUS */
                this.maxNBrsKol = this.maxNBrsKol * 1 / 2;
                float[][] NewMatriks = new float[this.maxNBrsKol][this.maxNBrsKol];
 
-               // Algoritma
+               /* ALGORITMA */
                NewMatriks = this.copyArrayMatriks();
                this.Matriks = NewMatriks;
           } else {
@@ -168,11 +169,11 @@ public class Matriks {
 
      /** Mengcopy array matriks ke tempat lain */
      float[][] copyArrayMatriks() {
-          // Kamus
+          /* KAMUS */
 
           float[][] MHsl = new float[this.maxNBrsKol][this.maxNBrsKol];
 
-          // Algoritma
+          /* ALGORITMA */
           
           for (int i = 0; i < this.NBrsEff; i++) {
                for (int j = 0; j < this.NKolEff; j++) {
@@ -184,9 +185,9 @@ public class Matriks {
 
      /** Mencopy matriks ke matriks lain */
      Matriks copyMatriks() {
-          // Kamus
+          /* KAMUS */
           Matriks MCopy = new Matriks(this.NBrsEff, this.NKolEff);
-          // Algoritma
+          /* ALGORITMA */
           MCopy.Matriks = this.copyArrayMatriks();
           MCopy.maxNBrsKol = this.maxNBrsKol;
           MCopy.NBrsEff = this.NBrsEff;
@@ -213,7 +214,7 @@ public class Matriks {
      
 
      /* Mengakses Elemen Matriks */
-     float Elmt(int i, int j) {
+     float GetElmt(int i, int j) {
           return this.Matriks[i][j];
      }
 
@@ -244,7 +245,7 @@ public class Matriks {
 
      /* Mengembalikan elemen diagonal! */
      float GetDiagonal(int i) {
-          return this.Elmt(i,i);
+          return this.GetElmt(i,i);
      }
 
 
@@ -266,7 +267,7 @@ public class Matriks {
           det = 0;
           
           if (this.NBElmt() == 1) { //basis
-               det = this.Elmt(0,0);
+               det = this.GetElmt(0,0);
           }
           else { //rekurens
                for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
@@ -281,16 +282,17 @@ public class Matriks {
                                    n = n+1;  //hal ini dilakukan agar kolom yang digunakan antara matriks utama dg
                                              //matriks yang diassign ke matriks minor tidak sama
                               }
-                              MHasil.Elmt(k,l) = this.Elmt(m,n);
+                              //MHasil.GetElmt(k,l) = this.GetElmt(m,n);
+                              MHasil.SetElmt(k, l, this.GetElmt(m, n));
                               n = n+1;
                          }
                          m = m+1;
                     }
                     if (j%2 == 0) {
-                         det = det + this.Elmt(0,j) * MHasil.DeterminanKofaktor();
+                         det = det + this.GetElmt(0,j) * MHasil.DeterminanKofaktor();
                     }
                     else {
-                         det = det + (-1 * this.Elmt(0,j) * MHasil.DeterminanKofaktor());
+                         det = det + (-1 * this.GetElmt(0,j) * MHasil.DeterminanKofaktor());
                     }
                }
           }
@@ -303,7 +305,7 @@ public class Matriks {
           int j;
 
           for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++) {
-               this.SetElmt(target, j, (this.Elmt(target, j)+(koef*this.Matriks[origin][j])));
+               this.SetElmt(target, j, (this.GetElmt(target, j)+(koef*this.Matriks[origin][j])));
           }
      }
 
@@ -314,8 +316,8 @@ public class Matriks {
 
           for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++) {
                // elemen 
-               temp = this.Elmt(origin, j);
-               this.SetElmt(origin, j, this.Elmt(target, j));
+               temp = this.GetElmt(origin, j);
+               this.SetElmt(origin, j, this.GetElmt(target, j));
                this.SetElmt(target, j, temp);
           }
      }
@@ -324,7 +326,7 @@ public class Matriks {
           /* Membagi baris i dengan konstanta koef untuk membuat 1 utama */
           int j;
           for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
-               this.SetElmt(i, j, (this.Elmt(i, j)/koef));
+               this.SetElmt(i, j, (this.GetElmt(i, j)/koef));
           }
      }
 
