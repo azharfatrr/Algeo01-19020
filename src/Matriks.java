@@ -15,7 +15,7 @@ public class Matriks {
      /* ***** METHODS ***** */
 
      /* *** Konstruktor membentuk MATRIKS *** */
-     Matriks(final int NBrsEff, final int NKolEff) {
+     Matriks(int NBrsEff, int NKolEff) {
           /* KAMUS */
           int i, j;
 
