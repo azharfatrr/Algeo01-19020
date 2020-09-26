@@ -121,7 +121,7 @@ public class Matriks {
           matriks.close();
 
           } catch (final FileNotFoundException e) {
-               System.out.printf("Error: File \"%s\" tidak ditemukan\n",namaFile);
+               System.err.printf("Error: File \"%s\" tidak ditemukan\n",namaFile);
           }
      }
 
