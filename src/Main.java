@@ -7,5 +7,6 @@ public class Main {
         M.GaussElimination();
         M.tulisMatriks();
 
+
     }
 }
