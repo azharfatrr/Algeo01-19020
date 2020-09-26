@@ -338,6 +338,8 @@ public class Matriks {
           /* I.S Terdefinisi Matriks M */
           /* F.S Matriks M adalah Matriks eselon baris tereduksi */
           
+
+     }
      /* *** METODE DETERMINAN *** */
 
      float DeterminanKofaktor()
@@ -456,7 +458,6 @@ public class Matriks {
                System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
           }
 
-     }
      
           else {
                MInvers = new Matriks(this.NBrsEff, this.NKolEff);
@@ -472,3 +473,4 @@ public class Matriks {
      }
 
 }
+
