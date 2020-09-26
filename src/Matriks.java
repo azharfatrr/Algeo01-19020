@@ -249,56 +249,7 @@ public class Matriks {
           return this.GetElmt(i,i);
      }
 
-
-     /* *** METODE DETERMINAN *** */
-
-     float DeterminanKofaktor()
-     /* Prekondisi: IsBujursangkar()
-     Menghitung nilai determinan sebuah matriks */
-     // Menggunakan metode Ekspansi Kofaktor
-     {
-          //KAMUS LOKAL
-          Matriks MHasil;
-          int j; //kolom matriks awal (digunakan baris 0 untuk menentukan determinan)
-          int k,l; //indeks matriks minor
-          int m,n; //indeks matriks awal yang akan di-assign ke elemen matriks minor
-          float det;
-
-          //ALGORITMA
-          det = 0;
-          
-          if (this.NBElmt() == 1) { //basis
-               det = this.GetElmt(0,0);
-          }
-          else { //rekurens
-               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
-                    MHasil = new Matriks(this.NBrsEff-1, this.NKolEff-1);
-
-                    //REDUKSI MATRIKS AWAL
-                    m=1; //inisiasi indeks baris matriks awal yg akan diassign ke matriks minor
-                    for (k = MHasil.GetFirstIdxBrs(); k <= MHasil.GetLastIdxBrs(); k++) {
-                         n=0; //inisialisasi indeks kolom matriks awal yang akan diassign ke matriks minor
-                         for (l = MHasil.GetFirstIdxKol(); l <= MHasil.GetLastIdxKol(); l++) {
-                              if (l == j) {
-                                   n = n+1;  //hal ini dilakukan agar kolom yang digunakan antara matriks utama dg
-                                             //matriks yang diassign ke matriks minor tidak sama
-                              }
-                              //MHasil.GetElmt(k,l) = this.GetElmt(m,n);
-                              MHasil.SetElmt(k, l, this.GetElmt(m, n));
-                              n = n+1;
-                         }
-                         m = m+1;
-                    }
-                    if (j%2 == 0) {
-                         det = det + this.GetElmt(0,j) * MHasil.DeterminanKofaktor();
-                    }
-                    else {
-                         det = det + (-1 * this.GetElmt(0,j) * MHasil.DeterminanKofaktor());
-                    }
-               }
-          }
-          return det;
-     }
+     
      
      /*       KELOMPOK OPERASI OBE          */
      void PlusRow(int origin, int target, float koef) {
@@ -384,6 +335,62 @@ public class Matriks {
 
      }
 
+     void GaussJordanElimination(){
+          /* I.S Terdefinisi Matriks M */
+          /* F.S Matriks M adalah Matriks eselon baris tereduksi */
+          
+
+     }
+     /* *** METODE DETERMINAN *** */
+
+     float DeterminanKofaktor()
+     /* Prekondisi: IsBujursangkar()
+     Menghitung nilai determinan sebuah matriks */
+     // Menggunakan metode Ekspansi Kofaktor
+     {
+          //KAMUS LOKAL
+          Matriks MHasil;
+          int j; //kolom matriks awal (digunakan baris 0 untuk menentukan determinan)
+          int k,l; //indeks matriks minor
+          int m,n; //indeks matriks awal yang akan di-assign ke elemen matriks minor
+          float det;
+
+          //ALGORITMA
+          det = 0;
+          
+          if (this.NBElmt() == 1) { //basis
+               det = this.GetElmt(0,0);
+          }
+          else { //rekurens
+               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                    MHasil = new Matriks(this.NBrsEff-1, this.NKolEff-1);
+
+                    //REDUKSI MATRIKS AWAL
+                    m=1; //inisiasi indeks baris matriks awal yg akan diassign ke matriks minor
+                    for (k = MHasil.GetFirstIdxBrs(); k <= MHasil.GetLastIdxBrs(); k++) {
+                         n=0; //inisialisasi indeks kolom matriks awal yang akan diassign ke matriks minor
+                         for (l = MHasil.GetFirstIdxKol(); l <= MHasil.GetLastIdxKol(); l++) {
+                              if (l == j) {
+                                   n = n+1;  //hal ini dilakukan agar kolom yang digunakan antara matriks utama dg
+                                             //matriks yang diassign ke matriks minor tidak sama
+                              }
+                              //MHasil.GetElmt(k,l) = this.GetElmt(m,n);
+                              MHasil.SetElmt(k, l, this.GetElmt(m, n));
+                              n = n+1;
+                         }
+                         m = m+1;
+                    }
+                    if (j%2 == 0) {
+                         det = det + this.GetElmt(0,j) * MHasil.DeterminanKofaktor();
+                    }
+                    else {
+                         det = det + (-1 * this.GetElmt(0,j) * MHasil.DeterminanKofaktor());
+                    }
+               }
+          }
+          return det;
+     }
+
      // ***** KELOMPOK MATRIKS INVERS *****//
      Matriks Kofaktor()
      //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
@@ -452,6 +459,7 @@ public class Matriks {
                System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
           }
 
+     
           else {
                MInvers = new Matriks(this.NBrsEff, this.NKolEff);
                MInvers = this.Kofaktor();
@@ -467,4 +475,7 @@ public class Matriks {
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad2d9bf137434eef6a787bf52ae9fcc462305b0e
