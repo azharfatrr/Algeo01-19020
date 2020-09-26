@@ -225,7 +225,26 @@ public class Matriks {
           }
      }
 
-     
+     Matriks KaliMatriks(Matriks M1, Matriks M2){
+          /* Prekondisi : Ukuran kolom efektif M1 = ukuran baris efektif M2 */
+          /* Mengirim hasil perkalian matriks: salinan M1 * M2 */
+          Matriks MRes = new Matriks(M1.NBrsEff, M2.NKolEff);
+          float result;
+
+          for (int i = MRes.GetFirstIdxBrs(); i <= MRes.GetLastIdxBrs(); i++){
+               for (int j = MRes.GetFirstIdxKol(); j<=MRes.GetLastIdxKol(); j++){
+                    
+                    result = 0;
+                    
+                    for (int k = M1.GetFirstIdxKol(); k<=M1.GetLastIdxKol(); k++){
+                         result += M1.GetElmt(i, k) * M2.GetElmt(k, j);
+                    }
+                    MRes.SetElmt(i, j, result);
+               }
+          }
+
+          return MRes;
+     }
 
      
 
@@ -532,6 +551,88 @@ public class Matriks {
           }
           return MInvers;
      }
+
+     Matriks InverseGaussJordan(){
+          /* I.S Terdefinisi Matriks M bujur sangkar */
+          /* F.S Terbentuk sebuah matriks invers dengan metode Gauss Jordan */
+          Matriks Invers = new Matriks(this.NBrsEff, (this.NKolEff)-1);
+          for (int i = Invers.GetFirstIdxBrs(); i <=Invers.GetLastIdxBrs(); i++){
+               Invers.SetElmt(i, i, 1);
+          }
+
+          int i = this.GetFirstIdxBrs();
+          int j;
+          int k;    // variable yang digunakan untuk mengecek baris setelahnya
+          float koef;
+          boolean flag;
+          int cek;
+
+          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
+          for (j = this.GetFirstIdxKol(); (i<=this.GetLastIdxBrs() && j < this.GetLastIdxKol()); j++){
+               boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
+               
+               if (this.GetElmt(i, j) == 0){
+
+                    k = i+1;
+                    flag = false;
+                    while (!flag && k <= this.GetLastIdxBrs()){
+                         //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
+                         if (this.GetElmt(k, j)!=0){
+                              flag = true;
+                         } 
+                         else {
+                              k+=1;
+                         }
+                    }
+
+                    //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
+                    if (flag){
+                         this.SwapRow(i, k);
+                         Invers.SwapRow(i,k);
+                    } 
+                    else {
+                         NextProcess = false;
+                    }
+               }
+
+               if (NextProcess){
+                    // proses pembuatan segitiga atas
+                    this.MakeOne(i, GetElmt(i, j));
+                    for (k=i+1; k <= this.GetLastIdxBrs(); k++){
+                         koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
+                         this.PlusRow(i,k, koef);
+                         Invers.PlusRow(i, k, koef);
+                    }
+               }
+               i+=1;
+          }
+
+
+          //iterasi dari indeks kolom terkahir sampai indeks kolom pertama
+          for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
+
+               i = this.GetLastIdxBrs();
+
+               //Jika elemen index ke (i,j)==0 maka di skip
+               while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
+                    i-=1;
+               }
+
+               //proses pembuatan matriks eselon baris tereduksi
+               k= i-1;
+               cek = (int) Math.floor(this.GetElmt(i, j));
+               if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
+                    for (k = i-1; k>=this.GetFirstIdxBrs(); k--){
+                         koef = -(this.GetElmt(k, j));
+                         this.PlusRow(i, k, koef);
+                         Invers.PlusRow(i, k, koef);
+                    }
+               }
+          }
+
+          return Invers;
+     }
+
 
      // ***** KAIDAH CRAMER ***** //
      Matriks KaidahCramer()
