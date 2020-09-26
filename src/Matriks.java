@@ -45,6 +45,19 @@ public class Matriks {
      void bacaMatriks() {
           int i, j;
           Scanner input = new Scanner(System.in);
+          Scanner N = new Scanner(System.in);
+
+          System.out.print("Masukkan NBrs : ");
+          int NBrsEff = N.nextInt();
+          System.out.print("Masukkan NKol : ");
+          int NKolEff = N.nextInt();
+
+          while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
+               this.doubleMatriks();
+          }
+
+          this.NBrsEff = NBrsEff;
+          this.NKolEff = NKolEff;
 
           for (i = 0; i < this.NBrsEff; i++) {
                for (j = 0; j < this.NKolEff; j++) {
@@ -475,7 +488,3 @@ public class Matriks {
 
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ad2d9bf137434eef6a787bf52ae9fcc462305b0e
