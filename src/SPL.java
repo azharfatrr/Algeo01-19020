@@ -58,8 +58,13 @@ public class SPL extends Matriks {
             solusi = 1;
         } else {
             i = this.GetLastIdxBrs();
-            while (isRowZero(i) && (i >= this.GetFirstIdxBrs())) {
+            while (isRowZeroEx(i) && isLastElemtRowZero(i) && (i >= this.GetFirstIdxBrs())) {
                 i--;
+            }
+            if (isRowZeroEx(i) && !isLastElemtRowZero(i)) {
+                solusi = -1;
+            } else {
+                solusi = 1;
             }
         }
 
@@ -90,14 +95,14 @@ public class SPL extends Matriks {
         return segitigaAtas;
     }
 
-    /** Cek Apakah Baris Terakhir semua 0
+    /** Cek Apakah Baris Terakhir (kecuali kolom terakhir) semua 0
      * I.S. Matriks Augmented Terdefinisi dan Telah dilakukan OBE
      * F.S. Mengembalikan True jika merupakan Baris Terakhir Augmented Matriks semua 0, False jika bukan
      */
-    boolean isRowZero(int i) {
+    boolean isRowZeroEx(int i) {
         boolean lastRowZero = true;
         int j = this.GetFirstIdxKol();
-        while (lastRowZero && (j<= this.GetLastIdxKol())) {
+        while (lastRowZero && (j<= (this.GetLastIdxKol()-1))) {
             if (this.GetElmt(i, j)!=0) {
                 lastRowZero = false;
             } else {

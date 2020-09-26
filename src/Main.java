@@ -1,20 +1,18 @@
 
 public class Main {
     public static void main(String[] args) {
-        Matriks M = new Matriks(0,0);
 
-        //M.bacaMatriks();
+        SPL M1 = new SPL(0,0);
+        M1.bacaFileSPL("cek.txt");
+        M1.tulisSPL();
+        System.out.println(M1.jenisSolusi());
 
-        //M.tulisMatriks();
+        // Matriks M = new Matriks(0,0);
+        // float Det;
+        // M.bacaFileMatriks("cek.txt");
+        // Det = M.DeterminanGauss();
+        // M.tulisMatriks();
 
-        //SPL M = new SPL(0,0);
-        float Det;
-        Matriks Invers;
-        M.bacaFileMatriks("cek.txt");
-        Invers = M.InverseGaussJordan();
-        Invers.tulisMatriks();
-        //M.bacaFileSPL("cek.txt");
-        //M.tulisSPL();
 
 
     }
