@@ -298,7 +298,7 @@ public class Matriks {
      }
 
      /*       KELOMPOK ELIMINASI GAUSS DAN GAUSS-JORDAN         */
-     void GaussElimination(){
+     void GaussElimination(float indikatorDet){
           /* I.S Terdefinisi Augmented Matriks M */
           /* F.S Matriks M adalah sebuah matriks eselon baris */
           /*   1 2 3
@@ -309,6 +309,7 @@ public class Matriks {
           int k;    // variable yang digunakan untuk mengecek baris setelahnya
           float koef;
           boolean flag;
+          indikatorDet = 1;
 
           // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
           for (j = this.GetFirstIdxKol(); (i<=this.GetLastIdxBrs() && j < this.GetLastIdxKol()); j++){
@@ -331,6 +332,7 @@ public class Matriks {
                     //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
                     if (flag){
                          this.SwapRow(i, k);
+                         indikatorDet *= -1;
                     } 
                     else {
                          NextProcess = false;
@@ -353,8 +355,8 @@ public class Matriks {
      void GaussJordanElimination(){
           /* I.S Terdefinisi Augmented Matriks M */
           /* F.S Matriks M adalah Matriks eselon baris tereduksi */
-          
-          this.GaussElimination();           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
+          float Det = 0;
+          this.GaussElimination(Det);           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
           int i;
           int j;
           int k;
@@ -433,6 +435,20 @@ public class Matriks {
           return det;
      }
 
+     float DeterminanGauss(){
+          /* I.S : IsBujurSangkar */
+          /* F.S : Fungsi melakukan return nilai dari Determinan matriks M */
+          float Det=0;
+
+          this.GaussElimination(Det);
+
+          for (int i = this.GetFirstIdxBrs(); i<= this.GetLastIdxBrs(); i++){
+               Det *= this.GetElmt(i, i);
+          }
+
+          return Det;
+     }
+
      // ***** KELOMPOK MATRIKS INVERS *****//
      Matriks Kofaktor()
      //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
@@ -487,6 +503,8 @@ public class Matriks {
           return MAdjoin;
      }
 
+
+     /*        KUMPULAN OPERASI INVERSE       */
      Matriks InversKofaktor()
      // F.S Terbentuk sebuah matriks invers dengan metode ekspansi kofaktor serta adjoin
      {
@@ -569,5 +587,7 @@ public class Matriks {
           }
           return MatriksVar;
      }
+
 }
+
 
