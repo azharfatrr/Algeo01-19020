@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -5,9 +6,9 @@ import java.util.Scanner;
 public class Matriks {
      /* ***** ATRIBUTE ***** */
      private int maxNBrsKol = 1; //panjang maksimum baris dan kolom matriks
-     float [][] Matriks = new float[maxNBrsKol][maxNBrsKol]; //inisialisasi matriks 1x1
-     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
-	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
+     public float [][] Matriks = new float[maxNBrsKol][maxNBrsKol]; //inisialisasi matriks 1x1
+     public int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
+	public int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
 
      /* Matriks Yang terdefinisi memiliki indeks dari [0..NBrsEff-1][0..NKolEff-1] */
 
@@ -465,3 +466,5 @@ public class Matriks {
      }
 
 }
+
+
