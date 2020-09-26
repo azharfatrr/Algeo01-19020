@@ -6,11 +6,6 @@ public class Main {
         M.bacaFileMatriks("cek.txt");
         M.tulisMatriks();
 
-        Matriks N = new Matriks(3,3);
-        N.tulisMatriks();
-        N.bacaMatriks();
-        N = N.InversKofaktor();
-        N.tulisMatriks();
 
     }
 }

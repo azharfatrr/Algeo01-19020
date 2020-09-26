@@ -446,12 +446,19 @@ public class Matriks {
 
           det = this.DeterminanKofaktor();
 
-          MInvers = new Matriks(this.NBrsEff, this.NKolEff);
-          MInvers = this.Kofaktor();
-          MInvers = MInvers.Adjoin();
-          for (i = this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++) {
-               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
-                    MInvers.SetElmt(i,j, MInvers.GetElmt(i,j)/det);
+          if (det == 0) {
+               MInvers = new Matriks(this.NBrsEff, this.NKolEff);
+               System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
+          }
+
+          else {
+               MInvers = new Matriks(this.NBrsEff, this.NKolEff);
+               MInvers = this.Kofaktor();
+               MInvers = MInvers.Adjoin();
+               for (i = this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++) {
+                    for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                         MInvers.SetElmt(i,j, MInvers.GetElmt(i,j)/det);
+                    }
                }
           }
           return MInvers;
