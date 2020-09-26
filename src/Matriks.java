@@ -383,6 +383,22 @@ public class Matriks {
 
      }
 
-     
+     // ***** KELOMPOK MATRIKS INVERS *****//
+     Matriks Kofaktor()
+     //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
+     //F.S. Terbentuk matriks kofaktor
+     {
+          Matriks MKofaktor;
+          int i,j; //indeks matriks awal
+          int k,l; //indeks matriks minor
+          int m,n; //indeks matriks awal yang akan di-assign ke elemen matriks minor
+          
+          if (this.NBElmt() == 1) { //basis
+               return this.GetElmt(0,0);
+          }
+          // HMMM KALEM MIKIR DULU:((((
+
+
+     }     
 
 }
