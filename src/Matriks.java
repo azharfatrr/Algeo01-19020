@@ -383,6 +383,12 @@ public class Matriks {
 
      }
 
+     void GaussJordanElimination(){
+          /* I.S Terdefinisi Matriks M */
+          /* F.S Matriks M adalah Matriks eselon baris tereduksi */
+          
+     }
+
      // ***** KELOMPOK MATRIKS INVERS *****//
      Matriks Kofaktor()
      //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
@@ -399,6 +405,7 @@ public class Matriks {
           // HMMM KALEM MIKIR DULU:((((
 
 
-     }     
+     }
+     
 
 }

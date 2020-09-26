@@ -4,6 +4,7 @@ public class Main {
         Matriks M = new Matriks(0,0);
 
         M.bacaFileMatriks("cek.txt");
+        M.GaussElimination();
         M.tulisMatriks();
 
     }
