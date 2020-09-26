@@ -322,7 +322,7 @@ public class Matriks {
           }
      }
 
-     void MakeSatu(int i, float koef) {
+     void MakeOne(int i, float koef) {
           /* Membagi baris i dengan konstanta koef untuk membuat 1 utama */
           int j;
           for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
@@ -330,6 +330,138 @@ public class Matriks {
           }
      }
 
+     /*       KELOMPOK ELIMINASI GAUSS DAN GAUSS-JORDAN         */
+     void GaussElimination(){
+          /* I.S Terdefinisi Matriks M */
+          /* F.S Matriks M adalah sebuah matriks eselon baris */
+          /*   1 2 3
+               4 5 6     
+               7 8 9     */
+          int i = this.GetFirstIdxBrs();
+          int j;
+          int k;    // variable yang digunakan untuk mengecek baris setelahnya
+          float koef;
+          boolean flag;
 
+          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
+          for (j = this.GetFirstIdxKol(); (i<=this.GetLastIdxBrs() && j < this.GetLastIdxKol()); j++){
+               boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
+               
+               if (this.GetElmt(i, j) == 0){
+
+                    k = i+1;
+                    flag = false;
+                    while (!flag && k <= this.GetLastIdxBrs()){
+                         //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
+                         if (this.GetElmt(k, j)!=0){
+                              flag = true;
+                         } 
+                         else {
+                              k+=1;
+                         }
+                    }
+
+                    //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
+                    if (flag){
+                         this.SwapRow(i, k);
+                    } 
+                    else {
+                         NextProcess = false;
+                    }
+               }
+
+               if (NextProcess){
+                    // proses pembuatan segitiga atas
+                    this.MakeOne(i, GetElmt(i, j));
+                    for (k=i+1; k <= this.GetLastIdxBrs(); k++){
+                         koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
+                         this.PlusRow(i,k, koef);
+                    }
+               }
+               i+=1;
+          }
+
+     }
+
+     // ***** KELOMPOK MATRIKS INVERS *****//
+     Matriks Kofaktor()
+     //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
+     //F.S. Terbentuk matriks kofaktor
+     {
+          int i,j; //indeks matriks awal
+          int k,l; //indeks matriks minor
+          int m,n; //indeks matriks awal yang akan memasuki matriks minor
+          Matriks MKofaktor;
+          Matriks MMinor;
+          MKofaktor = new Matriks(this.NBrsEff, this.NKolEff);
+          MMinor = new Matriks(this.NBrsEff-1, this.NKolEff-1);
+
+          for (i = this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++) {
+               for (j = this.GetFirstIdxKol(); j<= this.GetLastIdxKol(); j++) {
+                    m = 0;
+                    for (k = MMinor.GetFirstIdxBrs(); k<= MMinor.GetLastIdxBrs(); k++) {
+                         n = 0;
+                         if (m == i) {
+                              m+=1;
+                         }
+                         for (l = MMinor.GetFirstIdxKol(); l <= MMinor.GetLastIdxKol(); l++) {
+                              if (n == j) {
+                                   n+=1;
+                              } 
+                              MMinor.SetElmt(k, l, this.GetElmt(m, n));
+                              n+=1;
+                         }
+                         m+=1;
+                    }
+                    MKofaktor.SetElmt(i,j, MMinor.DeterminanKofaktor());
+                    if ((i+j)%2 == 1 ) {
+                         MKofaktor.SetElmt(i,j, -1*MKofaktor.GetElmt(i,j));
+                    }
+               }
+          }
+          return MKofaktor;
+     }
+
+     Matriks Adjoin()
+     // I.S. Matriks Kofaktor tersedia
+     // F.S. Matriks kofaktor telah di-transpose
+     {
+          Matriks MAdjoin;
+          int i,j;
+          MAdjoin = new Matriks(this.NBrsEff,this.NKolEff);
+          for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                    MAdjoin.SetElmt(i,j, this.GetElmt(j,i));
+               }
+          }
+          return MAdjoin;
+     }
+
+     Matriks InversKofaktor()
+     // F.S Terbentuk sebuah matriks invers dengan metode ekspansi kofaktor serta adjoin
+     {
+          Matriks MInvers;
+          int i,j;
+          float det;
+
+          det = this.DeterminanKofaktor();
+
+          if (det == 0) {
+               MInvers = new Matriks(this.NBrsEff, this.NKolEff);
+               System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
+          }
+
+          else {
+               MInvers = new Matriks(this.NBrsEff, this.NKolEff);
+               MInvers = this.Kofaktor();
+               MInvers = MInvers.Adjoin();
+               for (i = this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++) {
+                    for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                         MInvers.SetElmt(i,j, MInvers.GetElmt(i,j)/det);
+                    }
+               }
+          }
+          return MInvers;
+     }
 
 }

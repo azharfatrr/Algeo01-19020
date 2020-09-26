@@ -6,5 +6,6 @@ public class Main {
         M.bacaFileMatriks("cek.txt");
         M.tulisMatriks();
 
+
     }
 }
