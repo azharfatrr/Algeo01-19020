@@ -225,7 +225,26 @@ public class Matriks {
           }
      }
 
-     
+     Matriks KaliMatriks(Matriks M1, Matriks M2){
+          /* Prekondisi : Ukuran kolom efektif M1 = ukuran baris efektif M2 */
+          /* Mengirim hasil perkalian matriks: salinan M1 * M2 */
+          Matriks MRes = new Matriks(M1.NBrsEff, M2.NKolEff);
+          float result;
+
+          for (int i = MRes.GetFirstIdxBrs(); i <= MRes.GetLastIdxBrs(); i++){
+               for (int j = MRes.GetFirstIdxKol(); j<=MRes.GetLastIdxKol(); j++){
+                    
+                    result = 0;
+                    
+                    for (int k = M1.GetFirstIdxKol(); k<=M1.GetLastIdxKol(); k++){
+                         result += M1.GetElmt(i, k) * M2.GetElmt(k, j);
+                    }
+                    MRes.SetElmt(i, j, result);
+               }
+          }
+
+          return MRes;
+     }
 
      
 
