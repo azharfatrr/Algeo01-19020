@@ -556,7 +556,4 @@ public class Matriks {
      }
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> ad2d9bf137434eef6a787bf52ae9fcc462305b0e
