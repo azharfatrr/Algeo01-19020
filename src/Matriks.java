@@ -411,9 +411,9 @@ public class Matriks {
                               MMinor.SetElmt(k, l, this.GetElmt(m, n));
                               n+=1;
                          }
-                         m+=1
+                         m+=1;
                     }
-                    MKofaktor.SetElmt(i,j, MMinor.DeterminanKofaktor())
+                    MKofaktor.SetElmt(i,j, MMinor.DeterminanKofaktor());
                     if ((i+j)%2 == 1 ) {
                          MKofaktor.SetElmt(i,j, -1*MKofaktor.GetElmt(i,j));
                     }
@@ -444,7 +444,7 @@ public class Matriks {
           int i,j;
           float det;
 
-          det = this.DeterminanKofaktor()
+          det = this.DeterminanKofaktor();
 
           MInvers = new Matriks(this.NBrsEff, this.NKolEff);
           MInvers = this.Kofaktor();
