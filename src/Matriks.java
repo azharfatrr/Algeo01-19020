@@ -388,17 +388,73 @@ public class Matriks {
      //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
      //F.S. Terbentuk matriks kofaktor
      {
-          Matriks MKofaktor;
           int i,j; //indeks matriks awal
           int k,l; //indeks matriks minor
-          int m,n; //indeks matriks awal yang akan di-assign ke elemen matriks minor
-          
-          if (this.NBElmt() == 1) { //basis
-               return this.GetElmt(0,0);
+          int m,n; //indeks matriks awal yang akan memasuki matriks minor
+          Matriks MKofaktor;
+          Matriks MMinor;
+          MKofaktor = new Matriks(this.NBrsEff, this.NKolEff);
+          MMinor = new Matriks(this.NBrsEff-1, this.NKolEff-1);
+
+          for (i = this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++) {
+               for (j = this.GetFirstIdxKol(); j<= this.GetLastIdxKol(); j++) {
+                    m = 0;
+                    for (k = MMinor.GetFirstIdxBrs(); k<= MMinor.GetLastIdxBrs(); k++) {
+                         n = 0;
+                         if (m == i) {
+                              m+=1;
+                         }
+                         for (l = MMinor.GetFirstIdxKol(); l <= MMinor.GetLastIdxKol(); l++) {
+                              if (n == j) {
+                                   n+=1;
+                              } 
+                              MMinor.SetElmt(k, l, this.GetElmt(m, n));
+                              n+=1;
+                         }
+                         m+=1
+                    }
+                    MKofaktor.SetElmt(i,j, MMinor.DeterminanKofaktor())
+                    if ((i+j)%2 == 1 ) {
+                         MKofaktor.SetElmt(i,j, -1*MKofaktor.GetElmt(i,j));
+                    }
+               }
           }
-          // HMMM KALEM MIKIR DULU:((((
+          return MKofaktor;
+     }
 
+     Matriks Adjoin()
+     // I.S. Matriks Kofaktor tersedia
+     // F.S. Matriks kofaktor telah di-transpose
+     {
+          Matriks MAdjoin;
+          int i,j;
+          MAdjoin = new Matriks(this.NBrsEff,this.NKolEff);
+          for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                    MAdjoin.SetElmt(i,j, this.GetElmt(j,i));
+               }
+          }
+          return MAdjoin;
+     }
 
-     }     
+     Matriks InversKofaktor()
+     // F.S Terbentuk sebuah matriks invers dengan metode ekspansi kofaktor serta adjoin
+     {
+          Matriks MInvers;
+          int i,j;
+          float det;
+
+          det = this.DeterminanKofaktor()
+
+          MInvers = new Matriks(this.NBrsEff, this.NKolEff);
+          MInvers = this.Kofaktor();
+          MInvers = MInvers.Adjoin();
+          for (i = this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++) {
+               for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                    MInvers.SetElmt(i,j, MInvers.GetElmt(i,j)/det);
+               }
+          }
+          return MInvers;
+     }
 
 }

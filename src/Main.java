@@ -6,5 +6,9 @@ public class Main {
         M.bacaFileMatriks("cek.txt");
         M.tulisMatriks();
 
+        M.bacaMatriks();
+        M = M.InversKofaktor();
+        M.tulisMatriks();
+
     }
 }
