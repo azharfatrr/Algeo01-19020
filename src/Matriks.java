@@ -15,7 +15,7 @@ public class Matriks {
      /* ***** METHODS ***** */
 
      /* *** Konstruktor membentuk MATRIKS *** */
-     Matriks(int NBrsEff, int NKolEff) {
+     Matriks(final int NBrsEff, final int NKolEff) {
           /* KAMUS */
           int i, j;
 
@@ -52,6 +52,8 @@ public class Matriks {
           System.out.print("Masukkan NKol : ");
           int NKolEff = N.nextInt();
 
+          N.close();
+
           while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
                this.doubleMatriks();
           }
@@ -70,11 +72,11 @@ public class Matriks {
      /** Baca Matriks dari File Txt
       * I.S. File txt berisi Array Matriks
       * F.S. Terbaca Matriks dan disimpan dalam variabel */
-     void bacaFileMatriks(String namaFile)
+     void bacaFileMatriks(final String namaFile)
      {
           try {
           /* KAMUS */
-          File file = new File(namaFile);
+          final File file = new File(namaFile);
           int NBrs = 0;
           int NKol = 0;
           int i,j; // Indeks
@@ -91,7 +93,7 @@ public class Matriks {
           matriks.close();
 
           matriks  = new Scanner(file);
-          Scanner line = new Scanner(matriks.nextLine());
+          final Scanner line = new Scanner(matriks.nextLine());
           // Menghitung banyaknya kolom baris matriks
           while (line.hasNextFloat()) {
                NKol++;
@@ -118,7 +120,7 @@ public class Matriks {
           }
           matriks.close();
 
-          } catch (FileNotFoundException e) {
+          } catch (final FileNotFoundException e) {
                System.out.printf("Error: File \"%s\" tidak ditemukan\n",namaFile);
           }
      }
@@ -185,7 +187,7 @@ public class Matriks {
      float[][] copyArrayMatriks() {
           /* KAMUS */
 
-          float[][] MHsl = new float[this.maxNBrsKol][this.maxNBrsKol];
+          final float[][] MHsl = new float[this.maxNBrsKol][this.maxNBrsKol];
 
           /* ALGORITMA */
           
@@ -200,7 +202,7 @@ public class Matriks {
      /** Mencopy matriks ke matriks lain */
      Matriks copyMatriks() {
           /* KAMUS */
-          Matriks MCopy = new Matriks(this.NBrsEff, this.NKolEff);
+          final Matriks MCopy = new Matriks(this.NBrsEff, this.NKolEff);
           /* ALGORITMA */
           MCopy.Matriks = this.copyArrayMatriks();
           MCopy.maxNBrsKol = this.maxNBrsKol;
@@ -212,7 +214,7 @@ public class Matriks {
 
      /* *** KELOMPOK OPERASI PRIMITIF *** */
 
-     void transpose (int M, int N, float Matt[][]) {
+     void transpose (final int M, final int N, final float Matt[][]) {
           //Membuat matriks transpose
           int i,j;
 
@@ -228,12 +230,12 @@ public class Matriks {
      
 
      /* Mengakses Elemen Matriks */
-     float GetElmt(int i, int j) {
+     float GetElmt(final int i, final int j) {
           return this.Matriks[i][j];
      }
 
      /* Set element matriks[i][j] dengan val */
-     void SetElmt(int i, int j, float value) {
+     void SetElmt(final int i, final int j, final float value) {
           this.Matriks[i][j] = value;
      }
 
@@ -258,14 +260,14 @@ public class Matriks {
      }
 
      /* Mengembalikan elemen diagonal! */
-     float GetDiagonal(int i) {
+     float GetDiagonal(final int i) {
           return this.GetElmt(i,i);
      }
 
      
      
      /*       KELOMPOK OPERASI OBE          */
-     void PlusRow(int origin, int target, float koef) {
+     void PlusRow(final int origin, final int target, final float koef) {
      /*Melakukan operasi Rasal+(koef)*Rakhir */
           int j;
 
@@ -274,7 +276,7 @@ public class Matriks {
           }
      }
 
-     void SwapRow(int origin, int target) {
+     void SwapRow(final int origin, final int target) {
           /* Melakukan operasi pertukaran baris */
           int j;
           float temp;
@@ -287,7 +289,7 @@ public class Matriks {
           }
      }
 
-     void MakeOne(int i, float koef) {
+     void MakeOne(final int i, final float koef) {
           /* Membagi baris i dengan konstanta koef untuk membuat 1 utama */
           int j;
           for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
@@ -297,7 +299,7 @@ public class Matriks {
 
      /*       KELOMPOK ELIMINASI GAUSS DAN GAUSS-JORDAN         */
      void GaussElimination(){
-          /* I.S Terdefinisi Matriks M */
+          /* I.S Terdefinisi Augmented Matriks M */
           /* F.S Matriks M adalah sebuah matriks eselon baris */
           /*   1 2 3
                4 5 6     
@@ -349,13 +351,40 @@ public class Matriks {
      }
 
      void GaussJordanElimination(){
-          /* I.S Terdefinisi Matriks M */
+          /* I.S Terdefinisi Augmented Matriks M */
           /* F.S Matriks M adalah Matriks eselon baris tereduksi */
           
+          this.GaussElimination();           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
+          int i;
+          int j;
+          int k;
+          int cek;
+          float koef;
 
+          //iterasi dari indeks kolom terkahir sampai indeks kolom pertama
+          for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
+
+               i = this.GetLastIdxBrs();
+
+               //Jika elemen index ke (i,j)==0 maka di skip
+               while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
+                    i-=1;
+               }
+
+               //proses pembuatan matriks eselon baris tereduksi
+               k= i-1;
+               cek = (int) Math.floor(this.GetElmt(i, j));
+               if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
+                    for (k = i-1; k>=this.GetFirstIdxBrs(); k--){
+                         koef = -(this.GetElmt(k, j));
+                         this.PlusRow(i, k, koef);
+                    }
+               }
+          }
      }
-     /* *** METODE DETERMINAN *** */
 
+
+     /* *** METODE DETERMINAN *** */
      float DeterminanKofaktor()
      /* Prekondisi: IsBujursangkar()
      Menghitung nilai determinan sebuah matriks */
@@ -486,5 +515,59 @@ public class Matriks {
           return MInvers;
      }
 
+     // ***** KAIDAH CRAMER ***** //
+     Matriks KaidahCramer()
+     // I.S. SPL terdefinisi
+     // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
+     {
+          Matriks MatriksA, MatriksB, MatriksVar;
+          int i,j,count;
+          float det, dettemp;
+          float temp; //temporary variable
+          //SPL berbentuk MatriksA*var = MatriksB
+          //MatriksVar sebagai penampung nilai variabel
+
+          // mengisi ketiga matriks
+          MatriksA = new Matriks(this.NBrsEff, this.NKolEff-1);
+          MatriksB = new Matriks(this.NBrsEff, 1);
+          MatriksVar = new Matriks(this.NBrsEff, 1);
+
+          for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+               for (j = this.GetFirstIdxKol(); j < this.GetLastIdxKol(); j++) {
+                    MatriksA.SetElmt(i,j, this.GetElmt(i,j));
+               }
+          }
+          for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+               MatriksB.SetElmt(i,0, this.GetElmt(i,this.GetLastIdxKol()));
+          }
+          for (i = MatriksVar.GetFirstIdxBrs(); i <= MatriksVar.GetLastIdxBrs(); i++) {
+               MatriksVar.SetElmt(i,0,0);
+          }
+
+          det = MatriksA.DeterminanKofaktor();
+          count = 0;
+
+          if (det == 0) {
+               System.out.println("Nilai variabel tidak dapat ditentukan karena nilai determinan awal adalah 0.");
+          }
+          else {
+               for (j = MatriksA.GetFirstIdxKol(); j <= MatriksA.GetLastIdxKol(); j++) {
+                    for (i = MatriksA.GetFirstIdxBrs(); i <= MatriksA.GetLastIdxBrs(); i++) {
+                         temp = MatriksA.GetElmt(i,j);
+                         MatriksA.SetElmt(i,j, MatriksB.GetElmt(i,0));
+                         MatriksB.SetElmt(i,0, temp);
+                    }
+                    dettemp = MatriksA.DeterminanKofaktor();
+                    MatriksVar.SetElmt(count,0, dettemp/det);
+                    for (i = MatriksA.GetFirstIdxBrs(); i <= MatriksA.GetLastIdxBrs(); i++) {
+                         temp = MatriksA.GetElmt(i,j);
+                         MatriksA.SetElmt(i,j, MatriksB.GetElmt(i,0));
+                         MatriksB.SetElmt(i,0, temp);
+                    }
+                    count += 1;
+               }
+          }
+          return MatriksVar;
+     }
 }
 
