@@ -5,13 +5,14 @@ public class Main {
         SPL M1 = new SPL(0,0);
         M1.bacaFileSPL("cek.txt");
         M1.tulisSPL();
+        int indikatorDet = 0;
+        M1.GaussElimination(indikatorDet);
         System.out.println(M1.jenisSolusi());
+        M1.solveGauss();
 
-        // Matriks M = new Matriks(0,0);
-        // float Det;
-        // M.bacaFileMatriks("cek.txt");
-        // Det = M.DeterminanGauss();
-        // M.tulisMatriks();
+        for (int i = 0; i < M1.Solusi.length; i++) {
+            System.out.println(M1.Solusi[i]);
+        }
 
 
 

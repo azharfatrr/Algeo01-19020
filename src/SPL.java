@@ -3,13 +3,17 @@
 public class SPL extends Matriks {
     /* ***** ATRIBUTE ***** */
     public float [] Solusi;
-
+    /** indeks solusi [0..NKol-1]
+     * x1 x2 .. xn c
+     * x1 berada pada indeks solusi[0]
+     * x2 berada pada indeks solusi[1]
+     * xn berada pada indeks solusi[NKol-1]
+    */
     /* ***** METHODS ***** */
 
     /* *** Konstruktor membentuk MATRIKS AUGMENTED SPL *** */
     SPL(int NBrsEff, int NKolEff) {
         super(NBrsEff, NKolEff);
-        this.Solusi = new float [this.NKolEff];
     }
 
     /* *** KELOMPOK BACA/TULIS *** */
@@ -19,7 +23,7 @@ public class SPL extends Matriks {
      */
     void bacaSPL() {
         bacaMatriks();
-        this.Solusi = new float [this.NKolEff];
+        this.Solusi = new float [this.NKolEff-1];
     }
 
     /** Baca SPL Dari File
@@ -28,7 +32,7 @@ public class SPL extends Matriks {
      */
     void bacaFileSPL(String namaFile) {
         bacaFileMatriks(namaFile);
-        this.Solusi = new float [this.NKolEff];
+        this.Solusi = new float [this.NKolEff-1];
     }
 
     /** Tulis SPL Ke Terminal
@@ -67,7 +71,6 @@ public class SPL extends Matriks {
                 solusi = 1;
             }
         }
-
         return solusi;
     }
 
@@ -119,7 +122,53 @@ public class SPL extends Matriks {
         return (GetElmt(i, GetLastIdxKol()))==0;
     }
 
-    
+    /* *** KELOMPOK PENCARI SOLUSI METODE GAUSS *** */
+
+    /** SOLUSI
+     * I.S. Matriks Augmented Terdefinisi
+     * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
+     */
+    void solveGauss() {
+        if (this.jenisSolusi()==0) {
+            this.solusiUnikGauss();
+        } else if(this.jenisSolusi()==1) {
+            this.solusiBanyakGauss();
+        } else {
+            System.out.println("Matriks tidak memiliki solusi");
+            // this.Solusi = new float[0];
+        }
+
+    }
+
+    /** SOLUSI UNIK 
+     * I.S. Matriks Augmented Terdefinisi dan Berjenis Solusi Unik, Inisialisasi solusi dengan nilai 1
+     * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
+    */
+    void solusiUnikGauss() {
+        int i,j; // Indeks Baris dan Kolom
+        float c;
+        int k = GetLastIdxKol()-1; // Indeks Solusi [0..GetLastIdxKol()-1]
+        
+        for (int n = 0; n <= (this.GetLastIdxKol()-1); n++) {
+            this.Solusi[k] = 1;
+        }
+        // Back Subtitution
+        for (i = this.GetLastIdxBrs(); i >= this.GetFirstIdxBrs(); i--) {
+            c = 0;
+            for (j = this.GetFirstIdxKol(); j <= (this.GetLastIdxKol()-1);j++) {
+                if (j != k) {
+                    c += this.GetElmt(i, j) * this.Solusi[j];
+                } 
+            }
+            this.Solusi[k] = this.GetElmt(i, this.GetLastIdxKol()) - c;
+            k--;
+        }
+
+    }
+
+    void solusiBanyakGauss() {
+
+    }
 
 
 }   
