@@ -1,22 +1,20 @@
 
 public class Main {
     public static void main(String[] args) {
-<<<<<<< Updated upstream
         Matriks M = new Matriks(0,0);
 
-        M.bacaMatriks();
+        //M.bacaMatriks();
 
-        M.tulisMatriks();
+        //M.tulisMatriks();
 
-=======
-        SPL M = new SPL(0,0);
+        //SPL M = new SPL(0,0);
         float Det;
+        Matriks Invers;
         M.bacaFileMatriks("cek.txt");
-        Det = M.DeterminanGauss();
-        M.tulisMatriks();
+        Invers = M.InverseGaussJordan();
+        Invers.tulisMatriks();
         //M.bacaFileSPL("cek.txt");
         //M.tulisSPL();
->>>>>>> Stashed changes
 
 
     }
