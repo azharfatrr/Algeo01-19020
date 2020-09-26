@@ -7,6 +7,7 @@ public class Main {
         M1.tulisSPL();
         int indikatorDet = 0;
         M1.GaussElimination(indikatorDet);
+        M1.tulisSPL();
         System.out.println(M1.jenisSolusi());
         M1.solveGauss();
 

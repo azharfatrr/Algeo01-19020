@@ -9,6 +9,10 @@ public class SPL extends Matriks {
      * x2 berada pada indeks solusi[1]
      * xn berada pada indeks solusi[NKol-1]
     */
+
+    /* TO DO*/
+    public String [] Persamaan; // Digunakan untuk menyimpan persamaan (x1 = 2, x2 = 3 dll)
+    public int [] Status; // Digunakan untuk bagian status dapat disubtitusi pada solusi banyak
     /* ***** METHODS ***** */
 
     /* *** Konstruktor membentuk MATRIKS AUGMENTED SPL *** */
@@ -147,21 +151,36 @@ public class SPL extends Matriks {
     void solusiUnikGauss() {
         int i,j; // Indeks Baris dan Kolom
         float c;
-        int k = GetLastIdxKol()-1; // Indeks Solusi [0..GetLastIdxKol()-1]
+        int k; // Indeks Solusi [0..GetLastIdxKol()-1]
         
-        for (int n = 0; n <= (this.GetLastIdxKol()-1); n++) {
-            this.Solusi[k] = 1;
-        }
+        // for (int n = 0; n <= (this.GetLastIdxKol()-1); n++) {
+        //     this.Solusi[k] = 1;
+        // }
+
         // Back Subtitution
         for (i = this.GetLastIdxBrs(); i >= this.GetFirstIdxBrs(); i--) {
+            j = GetFirstIdxKol();
             c = 0;
-            for (j = this.GetFirstIdxKol(); j <= (this.GetLastIdxKol()-1);j++) {
-                if (j != k) {
-                    c += this.GetElmt(i, j) * this.Solusi[j];
-                } 
+
+            // for (j = this.GetFirstIdxKol(); j <= (this.GetLastIdxKol()-1);j++) {
+            //     if (j != k) {
+            //         c += this.GetElmt(i, j) * this.Solusi[j];
+            //     } 
+            // }
+
+            // Cari leading 1
+            while (this.GetElmt(i, j)!=1 && j < GetLastIdxKol()) {
+                j++;
             }
+            k=j; // Set Indeks Solusi 
+            j++; // Elemen setelah leading 1
+            
+            while (j< GetLastIdxKol()) {
+                c += this.GetElmt(i, j) * this.Solusi[j];
+                j ++;
+            }
+            
             this.Solusi[k] = this.GetElmt(i, this.GetLastIdxKol()) - c;
-            k--;
         }
 
     }
