@@ -41,7 +41,7 @@ public class SPL extends Matriks {
      */
     void bacaSPL() {
         bacaMatriks();
-        this.Solusi = new float [this.NKolEff-1];
+        
     }
 
     /** Baca SPL Dari File
@@ -50,7 +50,6 @@ public class SPL extends Matriks {
      */
     void bacaFileSPL(String namaFile) {
         bacaFileMatriks(namaFile);
-        this.Solusi = new float [this.NKolEff-1];
     }
 
     /** Tulis SPL Ke Terminal
@@ -74,9 +73,9 @@ public class SPL extends Matriks {
         int solusi = 0;
         int i; // Indeks Baris
         /* Cek Solusi Unik */
-        if (isSegitigaSPL() && (this.GetLastIdxBrs()==(this.GetLastIdxKol()-1))) {
+        if (isAllDiagonalOne() && (this.GetLastIdxBrs()==(this.GetLastIdxKol()-1))) {
             solusi = 0;
-        } else if (isSegitigaSPL() && (this.GetLastIdxBrs()!=(this.GetLastIdxKol()-1))) {
+        } else if (isAllDiagonalOne() && (this.GetLastIdxBrs()!=(this.GetLastIdxKol()-1))) {
             solusi = 1;
         } else {
             i = this.GetLastIdxBrs();
@@ -99,21 +98,19 @@ public class SPL extends Matriks {
      * 0 3 5 9 -> True
      * 0 0 7 2
      */
-    boolean isSegitigaSPL() {
-        boolean segitigaAtas = true;
+    boolean isAllDiagonalOne() {
+        boolean allDiagonalOne = true;
         int i = this.GetFirstIdxBrs();
-        int j = this.GetLastIdxBrs();
 
-        while (segitigaAtas && (i <= this.GetLastIdxBrs()) && (j <= this.GetLastIdxKol())) {
+        while (allDiagonalOne && (i <= this.GetLastIdxBrs())) {
             // Cukup Cek Diagonal Utama
-            if (this.GetElmt(i, j)==0) {
-                segitigaAtas = false;
+            if (this.GetElmt(i, i)==0) {
+                allDiagonalOne = false;
             } else {
                 i++;
-                j++;
             }
         }
-        return segitigaAtas;
+        return allDiagonalOne;
     }
 
     /** Cek Apakah Baris Terakhir (kecuali kolom terakhir) semua 0
@@ -147,9 +144,15 @@ public class SPL extends Matriks {
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
     void solveGauss() {
+        this.Solusi = new float [this.NKolEff-1];
+        this.Persamaan = new String [this.NKolEff-1];
+        this.Status = new int [this.NKolEff-1];
+
         if (this.jenisSolusi()==0) {
+            System.out.println("Jenis Solusi Unik");
             this.solusiUnikGauss();
         } else if(this.jenisSolusi()==1) {
+            System.out.println("Jenis Solusi Banyak");
             this.solusiBanyakGauss();
         } else {
             System.out.println("Matriks tidak memiliki solusi");
@@ -167,20 +170,11 @@ public class SPL extends Matriks {
         float c;
         int k; // Indeks Solusi [0..GetLastIdxKol()-1]
         
-        // for (int n = 0; n <= (this.GetLastIdxKol()-1); n++) {
-        //     this.Solusi[k] = 1;
-        // }
 
         // Back Subtitution
         for (i = this.GetLastIdxBrs(); i >= this.GetFirstIdxBrs(); i--) {
             j = GetFirstIdxKol();
-            c = 0;
-
-            // for (j = this.GetFirstIdxKol(); j <= (this.GetLastIdxKol()-1);j++) {
-            //     if (j != k) {
-            //         c += this.GetElmt(i, j) * this.Solusi[j];
-            //     } 
-            // }
+            c = GetElmt(i, GetLastIdxKol()); // Nilai konstanta
 
             // Cari leading 1
             while (this.GetElmt(i, j)!=1 && j < GetLastIdxKol()) {
@@ -190,19 +184,111 @@ public class SPL extends Matriks {
             j++; // Elemen setelah leading 1
             
             while (j< GetLastIdxKol()) {
-                c += this.GetElmt(i, j) * this.Solusi[j];
+                c -= this.GetElmt(i, j) * this.Solusi[j]; //Kurangi nilai konstanta dengan ini
                 j ++;
             }
             
-            this.Solusi[k] = this.GetElmt(i, this.GetLastIdxKol()) - c;
+            // Masukkan nilai ke dalam solusi
+            this.Solusi[k] = c;
+            this.Persamaan[k] = Float.toString(this.Solusi[k]);
+            this.Status[k] = 1;
         }
 
     }
 
     void solusiBanyakGauss() {
+        int i,j; // Indeks Baris dan Kolom
+        float c;
+        String cParam;
+        int k; // Indeks Solusi [0..GetLastIdxKol()-1], Persamaan, dan Status
+        char parameter = 'A';
+
+        // Back Subtitution
+        for (i = this.GetLastIdxBrs(); i >= this.GetFirstIdxBrs(); i--) {
+            j = GetFirstIdxKol();
+            
+            // Cari baris bukan nol
+            while (this.isRowZeroEx(i)) {
+                i--;
+            }
+
+            // Cari leading 1
+            while (this.GetElmt(i, j)!=1 && j < GetLastIdxKol()) {
+                j++;
+            }
+            k=j; // Set Indeks Solusi
+
+            this.Status[k] = 1; //Asumsi solusi eksak
+            j++; // Elemen setelah leading 1
+            c = GetElmt(i, GetLastIdxKol()); // Nilai konstanta
+            
+            while (j< GetLastIdxKol()) { // Hitung nilai eksas untuk C
+
+                if (this.GetElmt(i, j)!=0) { //Skip yang nol
+                    this.Status[k] = 3; // Asumsi diganti jadi solusi dapat disubtitusikan
+
+                    if (this.Status[j]==0) { //Status undeff
+                        this.Status[j] = 2; // Yang ini bakalan jadi parameter
+                        this.Persamaan[j] = String.valueOf(parameter);
+                        parameter++;
+                    }
+                    if (this.Status[j]==1) { //Ini ada solusi eksak
+                        c -= this.GetElmt(i, j) * this.Solusi[j];
+                    // } else if (this.Status[j]==2) { //Ini solusi parameter
+
+                    }
+                }  
+                j ++;
+            }
+            // Akan dapet nilai c
+            cParam = Float.toString(c);
+            j = k+1;
+
+
+            if (this.Status[k]==3) { // Hitung nilai parameter
+                while (j< GetLastIdxKol()) {
+                    if (this.GetElmt(i, j)!=0) { //Skip yang nol
+                        if (this.Status[j]==2) { //Dapet yang parameter
+                            // Cuma buat kosmetik
+                            if (this.GetElmt(i, j) > 0) { 
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " - " + this.Persamaan[j];
+                                } else {
+                                    cParam += " - " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j];
+                                }
+                            } else {
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " + " + this.Persamaan[j];
+                                } else {
+                                    cParam += " + " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j];
+                                }
+                            }   
+                        } else if (this.Status[j]==3) { //Dapet yang dapat disubtitusikan
+                            // Cuma buat kosmetik
+                            if (this.GetElmt(i, j) > 0) {
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " - " + "(" + this.Persamaan[j] + ")";
+                                } else {
+                                    cParam += " - " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ")";
+                                }
+                            } else {
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " + " + "(" + this.Persamaan[j] + ")";
+                                } else {
+                                    cParam += " + " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ")";
+                                }
+                            }
+                        }
+                    }
+                    j++;
+                }
+            }
+            this.Persamaan[k] = cParam;
+
+        }
 
     }
-}
+
 
     /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
     void SPLInvers(){
@@ -234,3 +320,4 @@ public class SPL extends Matriks {
 
 
     }
+}
