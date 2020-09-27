@@ -2,17 +2,31 @@
 
 public class SPL extends Matriks {
     /* ***** ATRIBUTE ***** */
-    public float [] Solusi;
+
     /** indeks solusi [0..NKol-1]
      * x1 x2 .. xn c
      * x1 berada pada indeks solusi[0]
      * x2 berada pada indeks solusi[1]
-     * xn berada pada indeks solusi[NKol-1]
-    */
+     * xn berada pada indeks solusi[NKol-1] */
+    public float [] Solusi;
+    
+    /** Menyimpan string Persamaan (x1 = 2, x2 = a + 3 dll)
+     * indeks [0..NKol-1]
+     * x1 berada pada indeks Persamaan[0]
+     * x2 berada pada indeks Persamaan[1]
+     * xn berada pada indeks Persamaan[NKol-1] */
+    public String [] Persamaan;
 
-    /* TO DO*/
-    public String [] Persamaan; // Digunakan untuk menyimpan persamaan (x1 = 2, x2 = 3 dll)
-    public int [] Status; // Digunakan untuk bagian status dapat disubtitusi pada solusi banyak
+    /** Menyimpan status jenis variabel, apakah solusi eksak, solusi paramatik, atau dapat disubtitusikan
+     * indeks [0..Nkol-1]
+     * Jenis status :
+     * 0 : undef,
+     * 1 : solusi eksak,
+     * 2 : solusi parametik,
+     * 3 : solusi dapat disubtitusi */
+    public int [] Status;
+
+
     /* ***** METHODS ***** */
 
     /* *** Konstruktor membentuk MATRIKS AUGMENTED SPL *** */
@@ -188,6 +202,7 @@ public class SPL extends Matriks {
     void solusiBanyakGauss() {
 
     }
+}
 
     /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
     void SPLInvers(){
@@ -217,12 +232,62 @@ public class SPL extends Matriks {
 
         MRes.transpose();
 
-        for (int j = MRes.GetFirstIdxKol(); j<= MRes.GetLastIdxKol(); j++){
-            this.Solusi[j] = MRes.GetElmt(MRes.GetFirstIdxBrs(), j);
-        }
-        
+        //Ntar dulu brok gue pikir dulu ye
+    }
+    
+    // ***** KAIDAH CRAMER ***** //
+    Matriks KaidahCramer()
+    // I.S. SPL terdefinisi
+    // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
+    {
+        Matriks MatriksA, MatriksB, MatriksVar;
+        int i,j,count;
+        float det, dettemp;
+        float temp; //temporary variable
+        //SPL berbentuk MatriksA*var = MatriksB
+        //MatriksVar sebagai penampung nilai variabel
 
+        // mengisi ketiga matriks
+        MatriksA = new Matriks(this.NBrsEff, this.NKolEff-1);
+        MatriksB = new Matriks(this.NBrsEff, 1);
+        MatriksVar = new Matriks(this.NBrsEff, 1);
+
+        for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+            for (j = this.GetFirstIdxKol(); j < this.GetLastIdxKol(); j++) {
+                MatriksA.SetElmt(i,j, this.GetElmt(i,j));
+            }
+        }
+        for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+            MatriksB.SetElmt(i,0, this.GetElmt(i,this.GetLastIdxKol()));
+        }
+        for (i = MatriksVar.GetFirstIdxBrs(); i <= MatriksVar.GetLastIdxBrs(); i++) {
+            MatriksVar.SetElmt(i,0,0);
+        }
+
+        det = MatriksA.DeterminanKofaktor();
+        count = 0;
+
+        if (det == 0) {
+            System.out.println("Nilai variabel tidak dapat ditentukan karena nilai determinan awal adalah 0.");
+        }
+        else {
+            for (j = MatriksA.GetFirstIdxKol(); j <= MatriksA.GetLastIdxKol(); j++) {
+                for (i = MatriksA.GetFirstIdxBrs(); i <= MatriksA.GetLastIdxBrs(); i++) {
+                    temp = MatriksA.GetElmt(i,j);
+                    MatriksA.SetElmt(i,j, MatriksB.GetElmt(i,0));
+                    MatriksB.SetElmt(i,0, temp);
+                }
+                dettemp = MatriksA.DeterminanKofaktor();
+                MatriksVar.SetElmt(count,0, dettemp/det);
+                for (i = MatriksA.GetFirstIdxBrs(); i <= MatriksA.GetLastIdxBrs(); i++) {
+                    temp = MatriksA.GetElmt(i,j);
+                    MatriksA.SetElmt(i,j, MatriksB.GetElmt(i,0));
+                    MatriksB.SetElmt(i,0, temp);
+                }
+                count += 1;
+            }
+        }
+        return MatriksVar;
     }
 
-
-}   
+}
