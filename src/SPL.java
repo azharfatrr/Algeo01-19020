@@ -310,14 +310,69 @@ public class SPL extends Matriks {
             MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
         }
 
+        //Proses Inverse matriks koefisien
         MInv = MInv.InverseGaussJordan();
 
         //Hasil Akhir solusi
         MRes = KaliMatriks(MInv, MSol);
 
+        MRes.transpose();
 
         //Ntar dulu brok gue pikir dulu ye
+    }
+    
+    // ***** KAIDAH CRAMER ***** //
+    Matriks KaidahCramer()
+    // I.S. SPL terdefinisi
+    // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
+    {
+        Matriks MatriksA, MatriksB, MatriksVar;
+        int i,j,count;
+        float det, dettemp;
+        float temp; //temporary variable
+        //SPL berbentuk MatriksA*var = MatriksB
+        //MatriksVar sebagai penampung nilai variabel
 
+        // mengisi ketiga matriks
+        MatriksA = new Matriks(this.NBrsEff, this.NKolEff-1);
+        MatriksB = new Matriks(this.NBrsEff, 1);
+        MatriksVar = new Matriks(this.NBrsEff, 1);
 
+        for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+            for (j = this.GetFirstIdxKol(); j < this.GetLastIdxKol(); j++) {
+                MatriksA.SetElmt(i,j, this.GetElmt(i,j));
+            }
+        }
+        for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+            MatriksB.SetElmt(i,0, this.GetElmt(i,this.GetLastIdxKol()));
+        }
+        for (i = MatriksVar.GetFirstIdxBrs(); i <= MatriksVar.GetLastIdxBrs(); i++) {
+            MatriksVar.SetElmt(i,0,0);
+        }
+
+        det = MatriksA.DeterminanKofaktor();
+        count = 0;
+
+        if (det == 0) {
+            System.out.println("Nilai variabel tidak dapat ditentukan karena nilai determinan awal adalah 0.");
+        }
+        else {
+            for (j = MatriksA.GetFirstIdxKol(); j <= MatriksA.GetLastIdxKol(); j++) {
+                for (i = MatriksA.GetFirstIdxBrs(); i <= MatriksA.GetLastIdxBrs(); i++) {
+                    temp = MatriksA.GetElmt(i,j);
+                    MatriksA.SetElmt(i,j, MatriksB.GetElmt(i,0));
+                    MatriksB.SetElmt(i,0, temp);
+                }
+                dettemp = MatriksA.DeterminanKofaktor();
+                MatriksVar.SetElmt(count,0, dettemp/det);
+                for (i = MatriksA.GetFirstIdxBrs(); i <= MatriksA.GetLastIdxBrs(); i++) {
+                    temp = MatriksA.GetElmt(i,j);
+                    MatriksA.SetElmt(i,j, MatriksB.GetElmt(i,0));
+                    MatriksB.SetElmt(i,0, temp);
+                }
+                count += 1;
+            }
+        }
+        return MatriksVar;
     }
 }
