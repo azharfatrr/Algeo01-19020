@@ -3,11 +3,13 @@
 public class SPL extends Matriks {
     /* ***** ATRIBUTE ***** */
 
-    /** indeks solusi [0..NKol-1]
+    /** Menyimpan solusi Eksak dengan indeks [0..NKol-1]
      * x1 x2 .. xn c
      * x1 berada pada indeks solusi[0]
      * x2 berada pada indeks solusi[1]
-     * xn berada pada indeks solusi[NKol-1] */
+     * xn berada pada indeks solusi[NKol-1]
+     * Untuk Status[k] = 1, akan disimpan nilai eksak pada Solusi[k]
+     * Untuk Status[k] != 1, akan disimpan nilai koefisien pada Solusi[k] */
     public float [] Solusi;
     
     /** Menyimpan string Persamaan (x1 = 2, x2 = a + 3 dll)
@@ -23,7 +25,7 @@ public class SPL extends Matriks {
      * 0 : undef,
      * 1 : solusi eksak,
      * 2 : solusi parametik,
-     * 3 : solusi dapat disubtitusi */
+     * 3 : solusi terdapat parametik dan eksak, dapat disubtitusikan */
     public int [] Status;
 
 
@@ -144,59 +146,29 @@ public class SPL extends Matriks {
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
     void solveGauss() {
+        this.GaussElimination(0);
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];
 
         if (this.jenisSolusi()==0) {
             System.out.println("Jenis Solusi Unik");
-            this.solusiUnikGauss();
+            this.solusiGauss();
+            /** this.Status akan bernilai 1 semua **/
         } else if(this.jenisSolusi()==1) {
             System.out.println("Jenis Solusi Banyak");
-            this.solusiBanyakGauss();
+            this.solusiGauss();
         } else {
             System.out.println("Matriks tidak memiliki solusi");
-            // this.Solusi = new float[0];
+            /** this.Status akan bernilai 0 semua **/
         }
-
     }
 
-    /** SOLUSI UNIK 
-     * I.S. Matriks Augmented Terdefinisi dan Berjenis Solusi Unik, Inisialisasi solusi dengan nilai 1
-     * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
+    /** MENCARI SOLUSI DARI METODE GAUSS DAN METODE GAUSS-JORDAN
+     * I.S. Matriks Augmented Terdefinisi Dan Telah dilakukan OBE
+     * F.S. Dihasilkan Solusi yang dimasukkan ke dalam this.Solusi dan this.Persamaan
     */
-    void solusiUnikGauss() {
-        int i,j; // Indeks Baris dan Kolom
-        float c;
-        int k; // Indeks Solusi [0..GetLastIdxKol()-1]
-        
-
-        // Back Subtitution
-        for (i = this.GetLastIdxBrs(); i >= this.GetFirstIdxBrs(); i--) {
-            j = GetFirstIdxKol();
-            c = GetElmt(i, GetLastIdxKol()); // Nilai konstanta
-
-            // Cari leading 1
-            while (this.GetElmt(i, j)!=1 && j < GetLastIdxKol()) {
-                j++;
-            }
-            k=j; // Set Indeks Solusi 
-            j++; // Elemen setelah leading 1
-            
-            while (j< GetLastIdxKol()) {
-                c -= this.GetElmt(i, j) * this.Solusi[j]; //Kurangi nilai konstanta dengan ini
-                j ++;
-            }
-            
-            // Masukkan nilai ke dalam solusi
-            this.Solusi[k] = c;
-            this.Persamaan[k] = Float.toString(this.Solusi[k]);
-            this.Status[k] = 1;
-        }
-
-    }
-
-    void solusiBanyakGauss() {
+    void solusiGauss() {
         int i,j; // Indeks Baris dan Kolom
         float c;
         String cParam;
@@ -215,6 +187,9 @@ public class SPL extends Matriks {
             // Cari leading 1
             while (this.GetElmt(i, j)!=1 && j < GetLastIdxKol()) {
                 j++;
+                if (j==GetLastIdxKol()) {
+                    System.err.println("Error: Tidak ditemukan leading 1");
+                }
             }
             k=j; // Set Indeks Solusi
 
@@ -223,29 +198,28 @@ public class SPL extends Matriks {
             c = GetElmt(i, GetLastIdxKol()); // Nilai konstanta
             
             while (j< GetLastIdxKol()) { // Hitung nilai eksas untuk C
-
                 if (this.GetElmt(i, j)!=0) { //Skip yang nol
-                    this.Status[k] = 3; // Asumsi diganti jadi solusi dapat disubtitusikan
-
-                    if (this.Status[j]==0) { //Status undeff
+                    if (this.Status[j]!=1){ // Asumsi diganti jadi solusi dapat disubtitusikan, jika terdapat nilai bukan solusi eksak
+                        this.Status[k] = 3; 
+                    }
+                    
+                    if (this.Status[j]==1) { //Ini ada solusi eksak
+                        c -= this.GetElmt(i, j) * this.Solusi[j];
+                    } else if (this.Status[j]==0) { //Status undeff
                         this.Status[j] = 2; // Yang ini bakalan jadi parameter
                         this.Persamaan[j] = String.valueOf(parameter);
                         parameter++;
                     }
-                    if (this.Status[j]==1) { //Ini ada solusi eksak
-                        c -= this.GetElmt(i, j) * this.Solusi[j];
-                    // } else if (this.Status[j]==2) { //Ini solusi parameter
-
-                    }
-                }  
-                j ++;
+                } 
+                j++;
             }
             // Akan dapet nilai c
+            this.Solusi[k] = c;
+
             cParam = Float.toString(c);
             j = k+1;
 
-
-            if (this.Status[k]==3) { // Hitung nilai parameter
+            if (this.Status[k]==3) { // Hitung nilai parameter, jika k bukan solusi eksak
                 while (j< GetLastIdxKol()) {
                     if (this.GetElmt(i, j)!=0) { //Skip yang nol
                         if (this.Status[j]==2) { //Dapet yang parameter
@@ -283,10 +257,10 @@ public class SPL extends Matriks {
                     j++;
                 }
             }
+
+            // Akan didapat cParam
             this.Persamaan[k] = cParam;
-
         }
-
     }
 
 
