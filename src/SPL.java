@@ -189,5 +189,36 @@ public class SPL extends Matriks {
 
     }
 
+    /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
+    void SPLInvers(){
+        /* I.S Terdefinisi matriks dalam bentuk A*X = B, dengan A adalah matriks solusi, X adalah matriks variabel, dan B adalah matriks solusi */
+        /* F.S Terbentuk solusi dalam bentuk X = (A^-1)B */
+        Matriks MInv = new Matriks(this.NBrsEff, this.NKolEff-1);
+        Matriks MSol = new Matriks(this.NBrsEff, 1);
+        Matriks MRes;
+
+        //Proses assignment matriks koefisien
+        for (int i = MInv.GetFirstIdxBrs(); i <= MInv.GetLastIdxBrs(); i++){
+            for (int j = MInv.GetFirstIdxKol(); j<= MInv.GetLastIdxKol(); j++){
+                MInv.SetElmt(i, j, this.GetElmt(i, j));
+            }
+        }
+
+        //Proses assignment matriks solusi
+        for (int i = MSol.GetFirstIdxBrs(); i <= MSol.GetLastIdxBrs(); i++){
+            MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
+        }
+
+        MInv = MInv.InverseGaussJordan();
+
+        //Hasil Akhir solusi
+        MRes = KaliMatriks(MInv, MSol);
+
+
+        //Ntar dulu brok gue pikir dulu ye
+        
+
+    }
+
 
 }   
