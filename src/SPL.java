@@ -2,17 +2,31 @@
 
 public class SPL extends Matriks {
     /* ***** ATRIBUTE ***** */
-    public float [] Solusi;
+
     /** indeks solusi [0..NKol-1]
      * x1 x2 .. xn c
      * x1 berada pada indeks solusi[0]
      * x2 berada pada indeks solusi[1]
-     * xn berada pada indeks solusi[NKol-1]
-    */
+     * xn berada pada indeks solusi[NKol-1] */
+    public float [] Solusi;
+    
+    /** Menyimpan string Persamaan (x1 = 2, x2 = a + 3 dll)
+     * indeks [0..NKol-1]
+     * x1 berada pada indeks Persamaan[0]
+     * x2 berada pada indeks Persamaan[1]
+     * xn berada pada indeks Persamaan[NKol-1] */
+    public String [] Persamaan;
 
-    /* TO DO*/
-    public String [] Persamaan; // Digunakan untuk menyimpan persamaan (x1 = 2, x2 = 3 dll)
-    public int [] Status; // Digunakan untuk bagian status dapat disubtitusi pada solusi banyak
+    /** Menyimpan status jenis variabel, apakah solusi eksak, solusi paramatik, atau dapat disubtitusikan
+     * indeks [0..Nkol-1]
+     * Jenis status :
+     * 0 : undef,
+     * 1 : solusi eksak,
+     * 2 : solusi parametik,
+     * 3 : solusi dapat disubtitusi */
+    public int [] Status;
+
+
     /* ***** METHODS ***** */
 
     /* *** Konstruktor membentuk MATRIKS AUGMENTED SPL *** */
@@ -188,37 +202,4 @@ public class SPL extends Matriks {
     void solusiBanyakGauss() {
 
     }
-
-    /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
-    void SPLInvers(){
-        /* I.S Terdefinisi matriks dalam bentuk A*X = B, dengan A adalah matriks solusi, X adalah matriks variabel, dan B adalah matriks solusi */
-        /* F.S Terbentuk solusi dalam bentuk X = (A^-1)B */
-        Matriks MInv = new Matriks(this.NBrsEff, this.NKolEff-1);
-        Matriks MSol = new Matriks(this.NBrsEff, 1);
-        Matriks MRes;
-
-        //Proses assignment matriks koefisien
-        for (int i = MInv.GetFirstIdxBrs(); i <= MInv.GetLastIdxBrs(); i++){
-            for (int j = MInv.GetFirstIdxKol(); j<= MInv.GetLastIdxKol(); j++){
-                MInv.SetElmt(i, j, this.GetElmt(i, j));
-            }
-        }
-
-        //Proses assignment matriks solusi
-        for (int i = MSol.GetFirstIdxBrs(); i <= MSol.GetLastIdxBrs(); i++){
-            MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
-        }
-
-        MInv = MInv.InverseGaussJordan();
-
-        //Hasil Akhir solusi
-        MRes = KaliMatriks(MInv, MSol);
-
-
-        //Ntar dulu brok gue pikir dulu ye
-        
-
-    }
-
-
-}   
+}
