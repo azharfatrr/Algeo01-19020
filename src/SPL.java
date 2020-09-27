@@ -209,13 +209,17 @@ public class SPL extends Matriks {
             MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
         }
 
+        //Proses Inverse matriks koefisien
         MInv = MInv.InverseGaussJordan();
 
         //Hasil Akhir solusi
         MRes = KaliMatriks(MInv, MSol);
 
+        MRes.transpose();
 
-        //Ntar dulu brok gue pikir dulu ye
+        for (int j = MRes.GetFirstIdxKol(); j<= MRes.GetLastIdxKol(); j++){
+            this.Solusi[j] = MRes.GetElmt(MRes.GetFirstIdxBrs(), j);
+        }
         
 
     }

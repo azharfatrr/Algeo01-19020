@@ -214,15 +214,27 @@ public class Matriks {
 
      /* *** KELOMPOK OPERASI PRIMITIF *** */
 
-     void transpose (final int M, final int N, final float Matt[][]) {
+     void transpose () {
           //Membuat matriks transpose
           int i,j;
+          Matriks MTemp;
+          MTemp = this.copyMatriks();
 
-          for (i = 0; i <= M; i++) {
-               for (j = 0; j <= N; j++) {
-                    Matt[j][i] = this.Matriks[i][j];
+          //Proses transpose
+          for (i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
+               for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
+                    MTemp.SetElmt(i, j, this.GetElmt(j, i));
                }
           }
+
+          //mengembalikan isi Matriks asal
+          for (i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
+               for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
+                    this.SetElmt(i, j, MTemp.GetElmt(i, j));
+               }
+          }
+
+          
      }
 
      Matriks KaliMatriks(Matriks M1, Matriks M2){
