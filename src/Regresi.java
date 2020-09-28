@@ -71,16 +71,31 @@ public class Regresi extends SPL {
     }
 
     Matriks normalEstimation() {
-        Matriks MNE = new Matriks(this.nPeubah()+1,this.nPeubah());
+        Matriks MNE = new Matriks(this.nPeubah()+1,this.nPeubah()+2);
 
-        int k = 0; // Menentukan posisi
+        int k = -1; // Menentukan posisi (status)
+        int n;
         for (int i = MNE.GetFirstIdxBrs(); i <= MNE.GetLastIdxBrs() ; i++) {
-            for (int j = MNE.GetFirstIdxKol(); j <= MNE.GetLastIdxKol(); j++) {
+
+            for (int j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
                 float sum = 0;
+                n = j + 1;
                 for (int l = this.GetFirstIdxBrs(); l <= this.GetLastIdxBrs(); l++) {
-                    sum += this.GetElmt(j,l);
+                    if (i==0) {
+                        sum += this.GetElmt(l,j);
+                    } else {
+                        sum += this.GetElmt(l,j)*this.GetElmt(l,k);
+                    }
+                   
                 }
+                if (j==0 && i==0) {
+                    MNE.Matriks[i][j] = this.nData();
+                } else if (j==0) {
+                    MNE.Matriks[i][j] = MNE.Matriks[j][i];
+                } 
+                MNE.Matriks[i][n] = sum;
             }
+            k++;
         }
 
 
