@@ -9,8 +9,9 @@ public class Main {
         M1.tulisSPL();
 
 
-        
+
         System.out.println("Matriks Augmented Telah dilakukan OBE");
+
         M1.solveGauss();
         M1.tulisSPL();
         

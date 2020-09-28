@@ -377,8 +377,8 @@ public class Matriks {
                          koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
                          this.PlusRow(i,k, koef);
                     }
-               }
-               i+=1;
+                    i+=1;
+               }  
           }
 
      }
