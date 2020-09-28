@@ -1,6 +1,8 @@
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Matriks {
@@ -141,6 +143,39 @@ public class Matriks {
                System.out.println();
           }
      }
+
+     /**
+      * Tulis Matriks 
+      * I.S. Matriks terdefinisi dan memiliki nilai 
+      * F.S. Menyimpan matriks pada suatu file
+      */
+     void tulisFileMatriks(String namaFile) {
+          int i,j;
+          String line;
+          try {
+               FileWriter writeMatriks = new FileWriter(namaFile);
+               for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+                    line = "";
+                    for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                         line += Float.toString(this.GetElmt(i, j));
+
+                         if (j!=this.GetLastIdxKol()) {
+                              line += " ";
+                         }
+                    }
+                    if (i!=this.GetLastIdxBrs()) {
+                         line += "\n";
+                    }
+                    writeMatriks.write(line); 
+               }
+               writeMatriks.close();
+               System.out.println("Berhasil menyimpan matriks pada file \"" + namaFile + "\".");
+             } catch (IOException e) {
+               System.err.println("Terjadi error.");
+               e.printStackTrace();
+             }
+     }
+
 
      int NBElmt() {
           return this.NBrsEff * this.NKolEff;
