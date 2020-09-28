@@ -11,8 +11,38 @@ public class Interpolasi extends SPL {
         super(NBrsEff,NKolEff);
     }
 
+	float bacaInterpolasi()
+	{
+		int i, j;
+        Scanner input = new Scanner(System.in);
 
-    void InterpolasiPolinom()
+        System.out.print("Masukkan Banyaknya n : ");
+        int NBrsEff = input.nextInt();
+        int NKolEff = 2;
+
+        while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
+        	this.doubleMatriks();
+        }
+
+        this.NBrsEff = NBrsEff;
+        this.NKolEff = NKolEff;
+
+        for (i = 0; i < this.NBrsEff; i++) {
+            for (j = 0; j < this.NKolEff; j++) {
+            	this.Matriks[i][j] = input.nextFloat();
+            }
+        }
+		
+		System.out.print("Masukkan nilai x yang akan ditaksir : ");
+        float x = input.nextFloat();
+        
+      	input.close();    
+		
+		return x;
+	}
+
+
+    float InterpolasiPolinom(float x)
     //Melakukan proses interpolasi polinom dengan menggunakan metode eliminasi gauss dalam matriks augmented.
     {
         //Scanner input = new Scanner(System.in);
@@ -56,45 +86,49 @@ public class Interpolasi extends SPL {
           //}
           //input.close();
         //}
-        int y = 0;
+        float y = 0;
         int j, pangkat;
-        Scanner input = new Scanner(System.in);
+        //Scanner inputs = new Scanner(System.in);
 
-        System.out.print("Masukkan nilai x yang akan ditaksir : ");
-        float x = input.nextFloat();
-        input.close();
+
 
         SPL augmented;
         augmented = this.ConvertToMatrixAug();
+
+		augmented.Solusi = new float [augmented.NKolEff-1];
+        augmented.Persamaan = new String [augmented.NKolEff-1];
+        augmented.Status = new int [augmented.NKolEff-1];
 
         augmented.GaussElimination();
         augmented.solusiGauss();
 
         pangkat = 0;
         for (j = 0; j < augmented.GetLastIdxKol(); j++) {
-            y += augmented.Solusi[j]*(x**pangkat);
+            y += augmented.Solusi[j]*Math.pow(x,pangkat);
             pangkat++;
         }
-
-
-
+        return y;
     }
 
-    Matriks ConvertToMatrixAug()
+    SPL ConvertToMatrixAug()
     // I.S. terdapat ragam (xn,yn) dan nilai x yang akan ditaksir
     // F.S. terbentuk matriks yang akan siap untuk di eliminasi gauss jordan dan ditemukan solusinya
     {
-        Matriks Mat;
+        SPL Mat;
 
-        Mat = new Matriks(this.NBrsEff, this.NKolEff+1);
+        Mat = new SPL(this.NBrsEff, this.NKolEff+1);
         int pangkat = 0;
         int i,j;
         int k,l;
+        double temp1;
+        float temp2;
 
         for (i = 0; i < this.NBrsEff; i++) {
             k = 0;
             for (l = 0; l < Mat.GetLastIdxKol(); l++) {
-                Mat.SetElmt(k,l,this.GetElmt(i,0)**l);
+                temp1 = Math.pow(this.GetElmt(i,0),l);
+                temp2 = (float) temp1;
+                Mat.SetElmt(k,l,temp2);
             }
             Mat.SetElmt(k,Mat.GetLastIdxKol() , this.GetElmt(i,1));
             k++;
@@ -104,3 +138,11 @@ public class Interpolasi extends SPL {
     }
     
 }
+
+//Cara akses Interpolasi
+//Interpolasi M1 = new Interpolasi(3,2);
+//float x;
+//x = M1.bacaInterpolasi();
+//float y;
+//y = M1.InterpolasiPolinom(x);
+//System.out.println(y);
