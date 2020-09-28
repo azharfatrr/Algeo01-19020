@@ -654,6 +654,7 @@ public class Matriks {
                System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
           }
           else{ 
+               //proses pembuatan matriks identitas
                for (int i = Invers.GetFirstIdxBrs(); i <=Invers.GetLastIdxBrs(); i++){
                     Invers.SetElmt(i, i, 1);
                }
@@ -706,7 +707,6 @@ public class Matriks {
                          i+=1;
                     }  
                }
-     
                //iterasi dari indeks kolom terakhir sampai indeks kolom pertama
                for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
      
