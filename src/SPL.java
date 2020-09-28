@@ -232,9 +232,11 @@ public class SPL extends Matriks {
 
         MRes.transpose();
 
-        //Ntar dulu brok gue pikir dulu ye
-    }
-    
+        for (int i = MSol.GetFirstIdxBrs(); i <= MSol.GetLastIdxBrs(); i++){
+            MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
+        }
+}
+
     // ***** KAIDAH CRAMER ***** //
     Matriks KaidahCramer()
     // I.S. SPL terdefinisi
