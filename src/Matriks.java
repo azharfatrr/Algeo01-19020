@@ -74,11 +74,11 @@ public class Matriks {
      /** Baca Matriks dari File Txt
       * I.S. File txt berisi Array Matriks
       * F.S. Terbaca Matriks dan disimpan dalam variabel */
-     void bacaFileMatriks(final String namaFile)
+     void bacaFileMatriks(String namaFile)
      {
           try {
           /* KAMUS */
-          final File file = new File(namaFile);
+          File file = new File(namaFile);
           int NBrs = 0;
           int NKol = 0;
           int i,j; // Indeks
@@ -95,7 +95,7 @@ public class Matriks {
           matriks.close();
 
           matriks  = new Scanner(file);
-          final Scanner line = new Scanner(matriks.nextLine());
+          Scanner line = new Scanner(matriks.nextLine());
           // Menghitung banyaknya kolom baris matriks
           while (line.hasNextFloat()) {
                NKol++;
@@ -122,7 +122,7 @@ public class Matriks {
           }
           matriks.close();
 
-          } catch (final FileNotFoundException e) {
+          } catch (FileNotFoundException e) {
                System.err.printf("Error: File \"%s\" tidak ditemukan\n",namaFile);
           }
      }
