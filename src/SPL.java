@@ -296,7 +296,7 @@ public class SPL extends Matriks {
             // Akan dapet nilai c
             this.Solusi[k] = c;
             if (c!=0) {
-                cParam = String.format("%.2f",c) + " ";
+                cParam = String.format("%f",c) + " ";
             } else {
                 cParam = "";
             }

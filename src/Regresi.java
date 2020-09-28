@@ -58,6 +58,11 @@ public class Regresi extends SPL {
         bacaFileMatriks(namaFile);
     }
 
+    /** TO DO
+     * - Tulis Persamaan Regresi di Terminal dan File
+     * - Tulis Hasil Regresi di Terminal dan File
+     */
+
     /* ** SELEKTOR ** */
 
     /* Mengembalikan Banyaknya Peubah */
@@ -70,8 +75,12 @@ public class Regresi extends SPL {
         return this.NBrsEff;
     }
 
-    Matriks normalEstimation() {
-        Matriks MNE = new Matriks(this.nPeubah()+1,this.nPeubah()+2);
+    /** Melakukan Normal Estimation Equation untuk Multiple Linier Regression  
+    * I.S. Matriks Data Regresi Terdefinisi
+    * F.S. Dikembalikan SPL hasil normalEstimation dan siap untuk disolve untuk setiap nilai b
+    */
+    SPL normalEstimation() {
+        SPL MNE = new SPL(this.nPeubah()+1,this.nPeubah()+2);
 
         int k = -1; // Menentukan posisi (status)
         int n;
@@ -97,10 +106,31 @@ public class Regresi extends SPL {
             }
             k++;
         }
-
-
         return MNE;
-
     }
 
+    /** Memberikan hasil Regresi dari Parameter yang akan diminta
+    * I.S. Matriks Data Regresi Terdefinisi
+    * F.S. Dikembalikan hasil regresi untuk setiap paramater yang akan diminta
+    */
+    float hasilRegresi() {
+        SPL MHasil = this.normalEstimation();
+        Scanner input = new Scanner(System.in);
+        float P;
+        
+        // Apakah perlu ganti Metode?
+        MHasil.solveGauss();
+
+        float hasil = MHasil.Solusi[0] ; // Inisialisasi
+
+        
+        for (int i = 1; i <= this.nPeubah(); i++) {
+            System.out.print("Masukkan Nilai Parameter " + i + ": ");
+            P = input.nextFloat();
+            hasil += P*MHasil.Solusi[i];
+        }
+
+        input.close();
+        return hasil;
+    }
 }

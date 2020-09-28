@@ -9,9 +9,17 @@ public class Main {
         // System.out.println("Matriks Augmented Telah dilakukan OBE");
 
         M.bacaFileRegresi("cek3.txt");
-        Matriks M1 = M.normalEstimation();
 
-        M1.tulisMatriks();
+        SPL M1 = M.normalEstimation();
+
+        float a = M.hasilRegresi();
+
+
+        M1.tulisFileSPL("nilaiRegresi.txt");
+
+        // float a = M.hasilRegresi();
+
+        // System.out.println(a);
         
 
         // for (int i = 0; i < M1.Persamaan.length; i++) {
