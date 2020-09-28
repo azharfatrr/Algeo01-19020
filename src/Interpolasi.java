@@ -56,9 +56,51 @@ public class Interpolasi extends SPL {
           //}
           //input.close();
         //}
-        
+        int y = 0;
+        int j, pangkat;
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Masukkan nilai x yang akan ditaksir : ");
+        float x = input.nextFloat();
+        input.close();
+
+        SPL augmented;
+        augmented = this.ConvertToMatrixAug();
+
+        augmented.GaussElimination();
+        augmented.solusiGauss();
+
+        pangkat = 0;
+        for (j = 0; j < augmented.GetLastIdxKol(); j++) {
+            y += augmented.Solusi[j]*(x**pangkat);
+            pangkat++;
+        }
 
 
+
+    }
+
+    Matriks ConvertToMatrixAug()
+    // I.S. terdapat ragam (xn,yn) dan nilai x yang akan ditaksir
+    // F.S. terbentuk matriks yang akan siap untuk di eliminasi gauss jordan dan ditemukan solusinya
+    {
+        Matriks Mat;
+
+        Mat = new Matriks(this.NBrsEff, this.NKolEff+1);
+        int pangkat = 0;
+        int i,j;
+        int k,l;
+
+        for (i = 0; i < this.NBrsEff; i++) {
+            k = 0;
+            for (l = 0; l < Mat.GetLastIdxKol(); l++) {
+                Mat.SetElmt(k,l,this.GetElmt(i,0)**l);
+            }
+            Mat.SetElmt(k,Mat.GetLastIdxKol() , this.GetElmt(i,1));
+            k++;
+        }
+
+        return Mat;
     }
     
 }
