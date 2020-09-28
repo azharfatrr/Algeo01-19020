@@ -106,7 +106,7 @@ public class SPL extends Matriks {
 
         while (allDiagonalOne && (i <= this.GetLastIdxBrs())) {
             // Cukup Cek Diagonal Utama
-            if (this.GetElmt(i, i)==0) {
+            if (this.GetElmt(i, i)!=0) {
                 allDiagonalOne = false;
             } else {
                 i++;
