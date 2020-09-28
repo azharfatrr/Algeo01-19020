@@ -21,7 +21,7 @@ public class Interpolasi extends SPL {
         System.out.println("Pilihan:");
         System.out.println("1. Baca dari keyboard");
         System.out.println("2. Baca dari file");
-        System.out.println("Format dalam memilih: 1 atau 2")
+        System.out.println("Format dalam memilih: 1 atau 2");
         System.out.print("Masukkan pilihan: ");
         int pilihan = input.nextInt();
         input.close();

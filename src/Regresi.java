@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -16,10 +17,10 @@ public class Regresi extends SPL {
     }
 
     /* *** KELOMPOK BACA/TULIS *** */
-     /** Baca Data Regresi
-      * I.S. Matriks Data Regresi Terdefinisi
-      * F.S. Matriks Data Regresi Berisi Nilai
-      */
+    /** Baca Data Regresi
+     * I.S. Matriks Data Regresi Terdefinisi
+    * F.S. Matriks Data Regresi Berisi Nilai
+    */
     void bacaRegresi() {
         int i, j;
         int N; // Banyaknya Peubah
@@ -49,9 +50,15 @@ public class Regresi extends SPL {
         input.close();
     }
 
+    /** Baca Data Regresi
+    * I.S. Matriks Data Regresi Terdefinisi
+    * F.S. Matriks Data Regresi Berisi Nilai dari file
+    */
     void bacaFileRegresi(String namaFile) {
         bacaFileMatriks(namaFile);
     }
+
+    /* ** SELEKTOR ** */
 
     /* Mengembalikan Banyaknya Peubah */
     int nPeubah() {
@@ -62,4 +69,23 @@ public class Regresi extends SPL {
     int nData() {
         return this.NBrsEff;
     }
+
+    Matriks normalEstimation() {
+        Matriks MNE = new Matriks(this.nPeubah()+1,this.nPeubah());
+
+        int k = 0; // Menentukan posisi
+        for (int i = MNE.GetFirstIdxBrs(); i <= MNE.GetLastIdxBrs() ; i++) {
+            for (int j = MNE.GetFirstIdxKol(); j <= MNE.GetLastIdxKol(); j++) {
+                float sum = 0;
+                for (int l = this.GetFirstIdxBrs(); l <= this.GetLastIdxBrs(); l++) {
+                    sum += this.GetElmt(j,l);
+                }
+            }
+        }
+
+
+        return MNE;
+
+    }
+
 }
