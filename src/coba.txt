@@ -4,3 +4,4 @@ X_3 = - 2.0A
 X_4 = A
 X_5 = C
 X_6 = 0.33 
+Dengan A,B,C merupakan bilangan real

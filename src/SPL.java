@@ -62,6 +62,7 @@ public class SPL extends Matriks {
       */
     void tulisSPL() {
         int i;
+        int count;
         int N; // Banyaknya solusi
         String line;
         
@@ -69,9 +70,27 @@ public class SPL extends Matriks {
         if (this.Status[0]==0) {
             System.out.println("Solusi SPL tidak ada");;
         } else {
+            count = 0;
             for (i = 0; i < N; i++) {
+                if (this.Status[i] == 2) {
+                    count += 1;
+                }
                 line = "X_" + (i+1) + " = " + this.Persamaan[i]; 
                 System.out.println(line); 
+            }
+            if (count!=0) {
+                char param = 'A';
+                line = "Dengan ";
+                while (count>0) {
+                    count--;
+                    line += String.valueOf(param);
+                    param++;
+                    if (count>0) {
+                        line += ",";
+                    }
+                }
+                line += " merupakan bilangan real";
+                System.out.println(line);
             }
         }
         
@@ -84,8 +103,8 @@ public class SPL extends Matriks {
       */
       void tulisFileSPL(String namaFile) {
         int i;
-        int count;
         int N; // Banyaknya solusi
+        int count = 0;
         String line;
         try {
             FileWriter writeSPL = new FileWriter(namaFile);
@@ -94,12 +113,27 @@ public class SPL extends Matriks {
                 writeSPL.write("Solusi SPL tidak ada");
             } else {
                 for (i = 0; i < N; i++) {
-                    line = "X_" + (i+1) + " = " + this.Persamaan[i]; 
-                    if (i!=N-1) {
-                        line += "\n";
+                    if (this.Status[i] == 2) {
+                        count += 1;
                     }
+                    line = "X_" + (i+1) + " = " + this.Persamaan[i] + "\n"; 
                     writeSPL.write(line); 
                 }
+            }
+            
+            if (count!=0) {
+                char param = 'A';
+                line = "Dengan ";
+                while (count>0) {
+                    count--;
+                    line += String.valueOf(param);
+                    param++;
+                    if (count>0) {
+                        line += ",";
+                    }
+                }
+                line += " merupakan bilangan real";
+                writeSPL.write(line);
             }
             
             writeSPL.close();
@@ -405,7 +439,7 @@ public class SPL extends Matriks {
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];
 
-        for (int j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
+        for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
             this.Solusi[j] = MatriksVar.GetElmt(0,j);
             this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
             this.Status[j] = 1;
