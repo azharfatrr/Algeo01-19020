@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Matriks {
      /* ***** ATRIBUTE ***** */
-     private int maxNBrsKol = 1; //panjang maksimum baris dan kolom matriks
+     public int maxNBrsKol = 1; //panjang maksimum baris dan kolom matriks
      public float [][] Matriks = new float[maxNBrsKol][maxNBrsKol]; //inisialisasi matriks 1x1
      public int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	public int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
