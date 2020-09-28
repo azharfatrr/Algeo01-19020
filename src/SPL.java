@@ -1,4 +1,6 @@
 
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class SPL extends Matriks {
     /* ***** ATRIBUTE ***** */
@@ -55,11 +57,92 @@ public class SPL extends Matriks {
     }
 
     /** Tulis SPL Ke Terminal
-    * I.S. Matriks Augmented Terdefinisi dan berisi nilai
-    * F.S. Matriks Augmented SPL ditulis pada terminal
-    */
+      * I.S. SPL Telah diselesaikan 
+      * F.S. Menampilkan Hasil SPL pada terminal
+      */
     void tulisSPL() {
-        tulisMatriks();
+        int i;
+        int count;
+        int N; // Banyaknya solusi
+        String line;
+        
+        N = this.NKolEff-1;
+        if (this.Status[0]==0) {
+            System.out.println("Solusi SPL tidak ada");;
+        } else {
+            count = 0;
+            for (i = 0; i < N; i++) {
+                if (this.Status[i] == 2) {
+                    count += 1;
+                }
+                line = "X_" + (i+1) + " = " + this.Persamaan[i]; 
+                System.out.println(line); 
+            }
+            if (count!=0) {
+                char param = 'A';
+                line = "Dengan ";
+                while (count>0) {
+                    count--;
+                    line += String.valueOf(param);
+                    param++;
+                    if (count>0) {
+                        line += ",";
+                    }
+                }
+                line += " merupakan bilangan real";
+                System.out.println(line);
+            }
+        }
+        
+    }
+
+    /**
+      * Tulis SPL
+      * I.S. SPL Telah diselesaikan 
+      * F.S. Menyimpan Hasil SPL pada suatu file
+      */
+      void tulisFileSPL(String namaFile) {
+        int i;
+        int N; // Banyaknya solusi
+        int count = 0;
+        String line;
+        try {
+            FileWriter writeSPL = new FileWriter(namaFile);
+            N = this.NKolEff-1;
+            if (this.Status[0]==0) {
+                writeSPL.write("Solusi SPL tidak ada");
+            } else {
+                for (i = 0; i < N; i++) {
+                    if (this.Status[i] == 2) {
+                        count += 1;
+                    }
+                    line = "X_" + (i+1) + " = " + this.Persamaan[i] + "\n"; 
+                    writeSPL.write(line); 
+                }
+            }
+            
+            if (count!=0) {
+                char param = 'A';
+                line = "Dengan ";
+                while (count>0) {
+                    count--;
+                    line += String.valueOf(param);
+                    param++;
+                    if (count>0) {
+                        line += ",";
+                    }
+                }
+                line += " merupakan bilangan real";
+                writeSPL.write(line);
+            }
+            
+            writeSPL.close();
+            System.out.println("Berhasil menyimpan matriks pada file \"" + namaFile + "\".");
+
+            } catch (IOException e) {
+            System.err.println("Terjadi error.");
+            e.printStackTrace();
+            }
     }
 
     /* *** KELOMPOK CEK JENIS SOLUSI ****/
@@ -106,7 +189,7 @@ public class SPL extends Matriks {
 
         while (allDiagonalOne && (i <= this.GetLastIdxBrs())) {
             // Cukup Cek Diagonal Utama
-            if (this.GetElmt(i, i)==0) {
+            if (this.GetElmt(i, i)!=0) {
                 allDiagonalOne = false;
             } else {
                 i++;
@@ -152,14 +235,11 @@ public class SPL extends Matriks {
         this.Status = new int [this.NKolEff-1];
 
         if (this.jenisSolusi()==0) {
-            System.out.println("Jenis Solusi Unik");
             this.solusiGauss();
             /** this.Status akan bernilai 1 semua **/
         } else if(this.jenisSolusi()==1) {
-            System.out.println("Jenis Solusi Banyak");
             this.solusiGauss();
         } else {
-            System.out.println("Matriks tidak memiliki solusi");
             /** this.Status akan bernilai 0 semua **/
         }
     }
@@ -215,8 +295,12 @@ public class SPL extends Matriks {
             }
             // Akan dapet nilai c
             this.Solusi[k] = c;
-
-            cParam = Float.toString(c);
+            if (c!=0) {
+                cParam = String.format("%.2f",c) + " ";
+            } else {
+                cParam = "";
+            }
+            
             j = k+1;
 
             if (this.Status[k]==3) { // Hitung nilai parameter, jika k bukan solusi eksak
@@ -226,30 +310,30 @@ public class SPL extends Matriks {
                             // Cuma buat kosmetik
                             if (this.GetElmt(i, j) > 0) { 
                                 if(Math.abs(this.GetElmt(i, j)) == 1) {
-                                    cParam += " - " + this.Persamaan[j];
+                                    cParam += "- " + this.Persamaan[j] + " ";
                                 } else {
-                                    cParam += " - " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j];
+                                    cParam += "- " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j] + " ";
                                 }
                             } else {
                                 if(Math.abs(this.GetElmt(i, j)) == 1) {
-                                    cParam += " + " + this.Persamaan[j];
+                                    cParam += "+ " + this.Persamaan[j] + " ";
                                 } else {
-                                    cParam += " + " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j];
+                                    cParam += "+ " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j] + " ";
                                 }
                             }   
                         } else if (this.Status[j]==3) { //Dapet yang dapat disubtitusikan
                             // Cuma buat kosmetik
                             if (this.GetElmt(i, j) > 0) {
                                 if(Math.abs(this.GetElmt(i, j)) == 1) {
-                                    cParam += " - " + "(" + this.Persamaan[j] + ")";
+                                    cParam += "- " + "(" + this.Persamaan[j] + ") ";
                                 } else {
-                                    cParam += " - " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ")";
+                                    cParam += "- " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ") ";
                                 }
                             } else {
                                 if(Math.abs(this.GetElmt(i, j)) == 1) {
-                                    cParam += " + " + "(" + this.Persamaan[j] + ")";
+                                    cParam += "+ " + "(" + this.Persamaan[j] + ") ";
                                 } else {
-                                    cParam += " + " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ")";
+                                    cParam += "+ " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ") ";
                                 }
                             }
                         }
@@ -312,7 +396,7 @@ public class SPL extends Matriks {
 }
 
     // ***** KAIDAH CRAMER ***** //
-    Matriks KaidahCramer()
+    void KaidahCramer()
     // I.S. SPL terdefinisi
     // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
     {
@@ -363,6 +447,16 @@ public class SPL extends Matriks {
                 count += 1;
             }
         }
-        return MatriksVar;
+        MatriksVar.transpose();
+
+        this.Solusi = new float [this.NKolEff-1];
+        this.Persamaan = new String [this.NKolEff-1];
+        this.Status = new int [this.NKolEff-1];
+
+        for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
+            this.Solusi[j] = MatriksVar.GetElmt(0,j);
+            this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
+            this.Status[j] = 1;
+        }
     }
 }

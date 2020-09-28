@@ -1,11 +1,13 @@
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Matriks {
      /* ***** ATRIBUTE ***** */
-     private int maxNBrsKol = 1; //panjang maksimum baris dan kolom matriks
+     public int maxNBrsKol = 1; //panjang maksimum baris dan kolom matriks
      public float [][] Matriks = new float[maxNBrsKol][maxNBrsKol]; //inisialisasi matriks 1x1
      public int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	public int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
@@ -72,11 +74,11 @@ public class Matriks {
      /** Baca Matriks dari File Txt
       * I.S. File txt berisi Array Matriks
       * F.S. Terbaca Matriks dan disimpan dalam variabel */
-     void bacaFileMatriks(final String namaFile)
+     void bacaFileMatriks(String namaFile)
      {
           try {
           /* KAMUS */
-          final File file = new File(namaFile);
+          File file = new File(namaFile);
           int NBrs = 0;
           int NKol = 0;
           int i,j; // Indeks
@@ -93,7 +95,7 @@ public class Matriks {
           matriks.close();
 
           matriks  = new Scanner(file);
-          final Scanner line = new Scanner(matriks.nextLine());
+          Scanner line = new Scanner(matriks.nextLine());
           // Menghitung banyaknya kolom baris matriks
           while (line.hasNextFloat()) {
                NKol++;
@@ -120,7 +122,7 @@ public class Matriks {
           }
           matriks.close();
 
-          } catch (final FileNotFoundException e) {
+          } catch (FileNotFoundException e) {
                System.err.printf("Error: File \"%s\" tidak ditemukan\n",namaFile);
           }
      }
@@ -141,6 +143,39 @@ public class Matriks {
                System.out.println();
           }
      }
+
+     /**
+      * Tulis Matriks 
+      * I.S. Matriks terdefinisi dan memiliki nilai 
+      * F.S. Menyimpan matriks pada suatu file
+      */
+     void tulisFileMatriks(String namaFile) {
+          int i,j;
+          String line;
+          try {
+               FileWriter writeMatriks = new FileWriter(namaFile);
+               for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
+                    line = "";
+                    for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
+                         line += Float.toString(this.GetElmt(i, j));
+
+                         if (j!=this.GetLastIdxKol()) {
+                              line += " ";
+                         }
+                    }
+                    if (i!=this.GetLastIdxBrs()) {
+                         line += "\n";
+                    }
+                    writeMatriks.write(line); 
+               }
+               writeMatriks.close();
+               System.out.println("Berhasil menyimpan matriks pada file \"" + namaFile + "\".");
+             } catch (IOException e) {
+               System.err.println("Terjadi error.");
+               e.printStackTrace();
+             }
+     }
+
 
      int NBElmt() {
           return this.NBrsEff * this.NKolEff;
