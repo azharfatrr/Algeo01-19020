@@ -348,7 +348,7 @@ public class SPL extends Matriks {
 }
 
     // ***** KAIDAH CRAMER ***** //
-    Matriks KaidahCramer()
+    void KaidahCramer()
     // I.S. SPL terdefinisi
     // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
     {
@@ -399,6 +399,16 @@ public class SPL extends Matriks {
                 count += 1;
             }
         }
-        return MatriksVar;
+        MatriksVar.transpose();
+
+        this.Solusi = new float [this.NKolEff-1];
+        this.Persamaan = new String [this.NKolEff-1];
+        this.Status = new int [this.NKolEff-1];
+
+        for (int j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
+            this.Solusi[j] = MatriksVar.GetElmt(0,j);
+            this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
+            this.Status[j] = 1;
+        }
     }
 }
