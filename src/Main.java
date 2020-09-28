@@ -2,17 +2,16 @@
 public class Main {
     public static void main(String[] args) {
 
-        SPL M1 = new SPL(0,0);
-        
-        M1.bacaFileSPL("cek2.txt");
+        Regresi M = new Regresi(0, 0);
         // System.out.println("Matriks Augmented Awal");
         // M1.tulisSPL();
 
         // System.out.println("Matriks Augmented Telah dilakukan OBE");
 
-        M1.solveGauss();
-        M1.tulisFileSPL("coba.txt");
-        M1.tulisSPL();
+        M.bacaFileRegresi("cek3.txt");
+        Matriks M1 = M.normalEstimation();
+
+        M1.tulisMatriks();
         
 
         // for (int i = 0; i < M1.Persamaan.length; i++) {
