@@ -329,7 +329,7 @@ public class Matriks {
      }
 
      /*       KELOMPOK ELIMINASI GAUSS DAN GAUSS-JORDAN         */
-     void GaussElimination(float indikatorDet){
+     void GaussElimination(){
           /* I.S Terdefinisi Augmented Matriks M */
           /* F.S Matriks M adalah sebuah matriks eselon baris */
           /*   1 2 3
@@ -340,10 +340,11 @@ public class Matriks {
           int k;    // variable yang digunakan untuk mengecek baris setelahnya
           float koef;
           boolean flag;
-          indikatorDet = 1;
+          int indikatorDet = 1;
 
           // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
-          for (j = this.GetFirstIdxKol(); (i<=this.GetLastIdxBrs() && j < this.GetLastIdxKol()); j++){
+          for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
+               
                boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
                
                if (this.GetElmt(i, j) == 0){
@@ -372,7 +373,7 @@ public class Matriks {
 
                if (NextProcess){
                     // proses pembuatan segitiga atas
-                    this.MakeOne(i, GetElmt(i, j));
+                    this.MakeOne(i, this.GetElmt(i, j));
                     for (k=i+1; k <= this.GetLastIdxBrs(); k++){
                          koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
                          this.PlusRow(i,k, koef);
@@ -386,15 +387,14 @@ public class Matriks {
      void GaussJordanElimination(){
           /* I.S Terdefinisi Augmented Matriks M */
           /* F.S Matriks M adalah Matriks eselon baris tereduksi */
-          float Det = 0;
-          this.GaussElimination(Det);           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
+          this.GaussElimination();           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
           int i;
           int j;
           int k;
           int cek;
           float koef;
 
-          //iterasi dari indeks kolom terkahir sampai indeks kolom pertama
+          //iterasi dari indeks kolom terakhir sampai indeks kolom pertama
           for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
 
                i = this.GetLastIdxBrs();
@@ -469,15 +469,60 @@ public class Matriks {
      float DeterminanGauss(){
           /* I.S : IsBujurSangkar */
           /* F.S : Fungsi melakukan return nilai dari Determinan matriks M */
-          float Det=0;
+          int i = this.GetFirstIdxBrs();
+          int j;
+          int k;    // variable yang digunakan untuk mengecek baris setelahnya
+          float koef;
+          boolean flag;
+          int indikatorDet = 1;
 
-          this.GaussElimination(Det);
+          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
+          for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
+               
+               boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
+               
+               if (this.GetElmt(i, j) == 0){
 
-          for (int i = this.GetFirstIdxBrs(); i<= this.GetLastIdxBrs(); i++){
-               Det *= this.GetElmt(i, i);
+                    k = i+1;
+                    flag = false;
+                    while (!flag && k <= this.GetLastIdxBrs()){
+                         //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
+                         if (this.GetElmt(k, j)!=0){
+                              flag = true;
+                         } 
+                         else {
+                              k+=1;
+                         }
+                    }
+
+                    //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
+                    if (flag){
+                         this.SwapRow(i, k);
+                         indikatorDet *= -1;
+                    } 
+                    else {
+                         NextProcess = false;
+                    }
+               }
+
+               if (NextProcess){
+                    // proses pembuatan segitiga atas
+                    this.MakeOne(i, this.GetElmt(i, j));
+                    for (k=i+1; k <= this.GetLastIdxBrs(); k++){
+                         koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
+                         this.PlusRow(i,k, koef);
+                    }
+                    i+=1;
+               }  
           }
 
-          return Det;
+          float Det = this.GetElmt(this.GetFirstIdxBrs(), this.GetFirstIdxKol());
+
+          for (int o = this.GetFirstIdxBrs()+1; o<= this.GetLastIdxBrs(); o++){
+               Det *= this.GetElmt(o, o);
+          }
+
+          return (Det*indikatorDet);
      }
 
      // ***** KELOMPOK MATRIKS INVERS *****//
@@ -567,82 +612,89 @@ public class Matriks {
      Matriks InverseGaussJordan(){
           /* I.S Terdefinisi Matriks M bujur sangkar */
           /* F.S Terbentuk sebuah matriks invers dengan metode Gauss Jordan */
-          Matriks Invers = new Matriks(this.NBrsEff, (this.NKolEff)-1);
-          for (int i = Invers.GetFirstIdxBrs(); i <=Invers.GetLastIdxBrs(); i++){
-               Invers.SetElmt(i, i, 1);
+          float det = this.DeterminanGauss();
+          Matriks Invers = new Matriks(this.NBrsEff, (this.NKolEff));
+
+          if (det == 0){
+               System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
           }
-
-          int i = this.GetFirstIdxBrs();
-          int j;
-          int k;    // variable yang digunakan untuk mengecek baris setelahnya
-          float koef;
-          boolean flag;
-          int cek;
-
-          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
-          for (j = this.GetFirstIdxKol(); (i<=this.GetLastIdxBrs() && j < this.GetLastIdxKol()); j++){
-               boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
-               
-               if (this.GetElmt(i, j) == 0){
-
-                    k = i+1;
-                    flag = false;
-                    while (!flag && k <= this.GetLastIdxBrs()){
-                         //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
-                         if (this.GetElmt(k, j)!=0){
-                              flag = true;
+          else{ 
+               for (int i = Invers.GetFirstIdxBrs(); i <=Invers.GetLastIdxBrs(); i++){
+                    Invers.SetElmt(i, i, 1);
+               }
+     
+               int i = this.GetFirstIdxBrs();
+               int j;
+               int k;    // variable yang digunakan untuk mengecek baris setelahnya
+               float koef;
+               boolean flag;
+               int cek;
+     
+               // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
+               for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
+                    
+                    boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya (next baris)
+                    
+                    if (this.GetElmt(i, j) == 0){
+     
+                         k = i+1;
+                         flag = false;
+                         while (!flag && k <= this.GetLastIdxBrs()){
+                              //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
+                              if (this.GetElmt(k, j)!=0){
+                                   flag = true;
+                              } 
+                              else {
+                                   k+=1;
+                              }
+                         }
+     
+                         //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
+                         if (flag){
+                              Invers.SwapRow(i, k);
+                              this.SwapRow(i, k);
                          } 
                          else {
-                              k+=1;
+                              NextProcess = false;
                          }
                     }
-
-                    //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
-                    if (flag){
-                         this.SwapRow(i, k);
-                         Invers.SwapRow(i,k);
-                    } 
-                    else {
-                         NextProcess = false;
-                    }
+     
+                    if (NextProcess){
+                         // proses pembuatan segitiga atas
+                         Invers.MakeOne(i, this.GetElmt(i, j));
+                         this.MakeOne(i, this.GetElmt(i, j));
+                         for (k=i+1; k <= this.GetLastIdxBrs(); k++){
+                              koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
+                              this.PlusRow(i,k, koef);
+                              Invers.PlusRow(i, k, koef);
+                         }
+                         i+=1;
+                    }  
                }
-
-               if (NextProcess){
-                    // proses pembuatan segitiga atas
-                    this.MakeOne(i, GetElmt(i, j));
-                    for (k=i+1; k <= this.GetLastIdxBrs(); k++){
-                         koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
-                         this.PlusRow(i,k, koef);
-                         Invers.PlusRow(i, k, koef);
+     
+               //iterasi dari indeks kolom terakhir sampai indeks kolom pertama
+               for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
+     
+                    i = this.GetLastIdxBrs();
+     
+                    //Jika elemen index ke (i,j)==0 maka di skip
+                    while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
+                         i-=1;
                     }
-               }
-               i+=1;
+     
+                    //proses pembuatan matriks eselon baris tereduksi
+                    k= i-1;
+                    cek = (int) Math.floor(this.GetElmt(i, j));
+                    if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
+                         for (k = i-1; k >= this.GetFirstIdxBrs(); k--){
+                              koef = -(this.GetElmt(k, j));
+                              Invers.PlusRow(i, k, koef);
+                              this.PlusRow(i, k, koef);
+                         }
+                    }
+               }    
           }
-
-
-          //iterasi dari indeks kolom terkahir sampai indeks kolom pertama
-          for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
-
-               i = this.GetLastIdxBrs();
-
-               //Jika elemen index ke (i,j)==0 maka di skip
-               while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
-                    i-=1;
-               }
-
-               //proses pembuatan matriks eselon baris tereduksi
-               k= i-1;
-               cek = (int) Math.floor(this.GetElmt(i, j));
-               if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
-                    for (k = i-1; k>=this.GetFirstIdxBrs(); k--){
-                         koef = -(this.GetElmt(k, j));
-                         this.PlusRow(i, k, koef);
-                         Invers.PlusRow(i, k, koef);
-                    }
-               }
-          }
-
-          return Invers;
+          return Invers; 
      }
 
 

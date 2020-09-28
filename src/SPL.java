@@ -146,7 +146,7 @@ public class SPL extends Matriks {
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
     void solveGauss() {
-        this.GaussElimination(0);
+        this.GaussElimination();
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];
@@ -266,15 +266,18 @@ public class SPL extends Matriks {
 
     /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
     void SPLInvers(){
+        /* Prekondisi : Determinan Matriks Augmented =/= 0 */
         /* I.S Terdefinisi matriks dalam bentuk A*X = B, dengan A adalah matriks solusi, X adalah matriks variabel, dan B adalah matriks solusi */
         /* F.S Terbentuk solusi dalam bentuk X = (A^-1)B */
         Matriks MInv = new Matriks(this.NBrsEff, this.NKolEff-1);
         Matriks MSol = new Matriks(this.NBrsEff, 1);
         Matriks MRes;
+        
+        
 
         //Proses assignment matriks koefisien
         for (int i = MInv.GetFirstIdxBrs(); i <= MInv.GetLastIdxBrs(); i++){
-            for (int j = MInv.GetFirstIdxKol(); j<= MInv.GetLastIdxKol(); j++){
+            for (int j = MInv.GetFirstIdxKol(); j <= MInv.GetLastIdxKol(); j++){
                 MInv.SetElmt(i, j, this.GetElmt(i, j));
             }
         }
@@ -285,16 +288,27 @@ public class SPL extends Matriks {
         }
 
         //Proses Inverse matriks koefisien
-        MInv = MInv.InverseGaussJordan();
+        MInv = MInv.InversKofaktor();
 
+        //  MInv * Mvar = MSol
+        //  Mvar = MInv^-1 * MSol
         //Hasil Akhir solusi
         MRes = KaliMatriks(MInv, MSol);
+        MRes.tulisMatriks();
 
         MRes.transpose();
 
-        for (int i = MSol.GetFirstIdxBrs(); i <= MSol.GetLastIdxBrs(); i++){
-            MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
+        this.Solusi = new float [MRes.NKolEff];
+        this.Persamaan = new String [MRes.NKolEff];
+        this.Status = new int [MRes.NKolEff];
+
+        
+        for (int j = MRes.GetFirstIdxKol(); j <= MRes.GetLastIdxKol(); j++){
+            this.Solusi[j] = MRes.GetElmt(0, j);
+            this.Persamaan[j] = Float.toString(MRes.GetElmt(0, j));
+            this.Status[j] = 1;
         }
+
 }
 
     // ***** KAIDAH CRAMER ***** //
