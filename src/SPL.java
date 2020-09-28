@@ -3,11 +3,13 @@
 public class SPL extends Matriks {
     /* ***** ATRIBUTE ***** */
 
-    /** indeks solusi [0..NKol-1]
+    /** Menyimpan solusi Eksak dengan indeks [0..NKol-1]
      * x1 x2 .. xn c
      * x1 berada pada indeks solusi[0]
      * x2 berada pada indeks solusi[1]
-     * xn berada pada indeks solusi[NKol-1] */
+     * xn berada pada indeks solusi[NKol-1]
+     * Untuk Status[k] = 1, akan disimpan nilai eksak pada Solusi[k]
+     * Untuk Status[k] != 1, akan disimpan nilai koefisien pada Solusi[k] */
     public float [] Solusi;
     
     /** Menyimpan string Persamaan (x1 = 2, x2 = a + 3 dll)
@@ -23,7 +25,7 @@ public class SPL extends Matriks {
      * 0 : undef,
      * 1 : solusi eksak,
      * 2 : solusi parametik,
-     * 3 : solusi dapat disubtitusi */
+     * 3 : solusi terdapat parametik dan eksak, dapat disubtitusikan */
     public int [] Status;
 
 
@@ -41,7 +43,7 @@ public class SPL extends Matriks {
      */
     void bacaSPL() {
         bacaMatriks();
-        this.Solusi = new float [this.NKolEff-1];
+        
     }
 
     /** Baca SPL Dari File
@@ -50,7 +52,6 @@ public class SPL extends Matriks {
      */
     void bacaFileSPL(String namaFile) {
         bacaFileMatriks(namaFile);
-        this.Solusi = new float [this.NKolEff-1];
     }
 
     /** Tulis SPL Ke Terminal
@@ -74,9 +75,9 @@ public class SPL extends Matriks {
         int solusi = 0;
         int i; // Indeks Baris
         /* Cek Solusi Unik */
-        if (isSegitigaSPL() && (this.GetLastIdxBrs()==(this.GetLastIdxKol()-1))) {
+        if (isAllDiagonalOne() && (this.GetLastIdxBrs()==(this.GetLastIdxKol()-1))) {
             solusi = 0;
-        } else if (isSegitigaSPL() && (this.GetLastIdxBrs()!=(this.GetLastIdxKol()-1))) {
+        } else if (isAllDiagonalOne() && (this.GetLastIdxBrs()!=(this.GetLastIdxKol()-1))) {
             solusi = 1;
         } else {
             i = this.GetLastIdxBrs();
@@ -99,21 +100,19 @@ public class SPL extends Matriks {
      * 0 3 5 9 -> True
      * 0 0 7 2
      */
-    boolean isSegitigaSPL() {
-        boolean segitigaAtas = true;
+    boolean isAllDiagonalOne() {
+        boolean allDiagonalOne = true;
         int i = this.GetFirstIdxBrs();
-        int j = this.GetLastIdxBrs();
 
-        while (segitigaAtas && (i <= this.GetLastIdxBrs()) && (j <= this.GetLastIdxKol())) {
+        while (allDiagonalOne && (i <= this.GetLastIdxBrs())) {
             // Cukup Cek Diagonal Utama
-            if (this.GetElmt(i, j)==0) {
-                segitigaAtas = false;
+            if (this.GetElmt(i, i)==0) {
+                allDiagonalOne = false;
             } else {
                 i++;
-                j++;
             }
         }
-        return segitigaAtas;
+        return allDiagonalOne;
     }
 
     /** Cek Apakah Baris Terakhir (kecuali kolom terakhir) semua 0
@@ -147,62 +146,123 @@ public class SPL extends Matriks {
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
     void solveGauss() {
+        this.GaussElimination(0);
+        this.Solusi = new float [this.NKolEff-1];
+        this.Persamaan = new String [this.NKolEff-1];
+        this.Status = new int [this.NKolEff-1];
+
         if (this.jenisSolusi()==0) {
-            this.solusiUnikGauss();
+            System.out.println("Jenis Solusi Unik");
+            this.solusiGauss();
+            /** this.Status akan bernilai 1 semua **/
         } else if(this.jenisSolusi()==1) {
-            this.solusiBanyakGauss();
+            System.out.println("Jenis Solusi Banyak");
+            this.solusiGauss();
         } else {
             System.out.println("Matriks tidak memiliki solusi");
-            // this.Solusi = new float[0];
+            /** this.Status akan bernilai 0 semua **/
         }
-
     }
 
-    /** SOLUSI UNIK 
-     * I.S. Matriks Augmented Terdefinisi dan Berjenis Solusi Unik, Inisialisasi solusi dengan nilai 1
-     * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
+    /** MENCARI SOLUSI DARI METODE GAUSS DAN METODE GAUSS-JORDAN
+     * I.S. Matriks Augmented Terdefinisi Dan Telah dilakukan OBE
+     * F.S. Dihasilkan Solusi yang dimasukkan ke dalam this.Solusi dan this.Persamaan
     */
-    void solusiUnikGauss() {
+    void solusiGauss() {
         int i,j; // Indeks Baris dan Kolom
         float c;
-        int k; // Indeks Solusi [0..GetLastIdxKol()-1]
-        
-        // for (int n = 0; n <= (this.GetLastIdxKol()-1); n++) {
-        //     this.Solusi[k] = 1;
-        // }
+        String cParam;
+        int k; // Indeks Solusi [0..GetLastIdxKol()-1], Persamaan, dan Status
+        char parameter = 'A';
 
         // Back Subtitution
         for (i = this.GetLastIdxBrs(); i >= this.GetFirstIdxBrs(); i--) {
             j = GetFirstIdxKol();
-            c = 0;
-
-            // for (j = this.GetFirstIdxKol(); j <= (this.GetLastIdxKol()-1);j++) {
-            //     if (j != k) {
-            //         c += this.GetElmt(i, j) * this.Solusi[j];
-            //     } 
-            // }
+            
+            // Cari baris bukan nol
+            while (this.isRowZeroEx(i)) {
+                i--;
+            }
 
             // Cari leading 1
             while (this.GetElmt(i, j)!=1 && j < GetLastIdxKol()) {
                 j++;
+                if (j==GetLastIdxKol()) {
+                    System.err.println("Error: Tidak ditemukan leading 1");
+                }
             }
-            k=j; // Set Indeks Solusi 
+            k=j; // Set Indeks Solusi
+
+            this.Status[k] = 1; //Asumsi solusi eksak
             j++; // Elemen setelah leading 1
+            c = GetElmt(i, GetLastIdxKol()); // Nilai konstanta
             
-            while (j< GetLastIdxKol()) {
-                c += this.GetElmt(i, j) * this.Solusi[j];
-                j ++;
+            while (j< GetLastIdxKol()) { // Hitung nilai eksas untuk C
+                if (this.GetElmt(i, j)!=0) { //Skip yang nol
+                    if (this.Status[j]!=1){ // Asumsi diganti jadi solusi dapat disubtitusikan, jika terdapat nilai bukan solusi eksak
+                        this.Status[k] = 3; 
+                    }
+                    
+                    if (this.Status[j]==1) { //Ini ada solusi eksak
+                        c -= this.GetElmt(i, j) * this.Solusi[j];
+                    } else if (this.Status[j]==0) { //Status undeff
+                        this.Status[j] = 2; // Yang ini bakalan jadi parameter
+                        this.Persamaan[j] = String.valueOf(parameter);
+                        parameter++;
+                    }
+                } 
+                j++;
             }
-            
-            this.Solusi[k] = this.GetElmt(i, this.GetLastIdxKol()) - c;
+            // Akan dapet nilai c
+            this.Solusi[k] = c;
+
+            cParam = Float.toString(c);
+            j = k+1;
+
+            if (this.Status[k]==3) { // Hitung nilai parameter, jika k bukan solusi eksak
+                while (j< GetLastIdxKol()) {
+                    if (this.GetElmt(i, j)!=0) { //Skip yang nol
+                        if (this.Status[j]==2) { //Dapet yang parameter
+                            // Cuma buat kosmetik
+                            if (this.GetElmt(i, j) > 0) { 
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " - " + this.Persamaan[j];
+                                } else {
+                                    cParam += " - " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j];
+                                }
+                            } else {
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " + " + this.Persamaan[j];
+                                } else {
+                                    cParam += " + " + Math.abs(this.GetElmt(i, j)) + this.Persamaan[j];
+                                }
+                            }   
+                        } else if (this.Status[j]==3) { //Dapet yang dapat disubtitusikan
+                            // Cuma buat kosmetik
+                            if (this.GetElmt(i, j) > 0) {
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " - " + "(" + this.Persamaan[j] + ")";
+                                } else {
+                                    cParam += " - " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ")";
+                                }
+                            } else {
+                                if(Math.abs(this.GetElmt(i, j)) == 1) {
+                                    cParam += " + " + "(" + this.Persamaan[j] + ")";
+                                } else {
+                                    cParam += " + " + Math.abs(this.GetElmt(i, j)) + "(" + this.Persamaan[j] + ")";
+                                }
+                            }
+                        }
+                    }
+                    j++;
+                }
+            }
+
+            // Akan didapat cParam
+            this.Persamaan[k] = cParam;
         }
-
     }
 
-    void solusiBanyakGauss() {
-
-    }
-}
 
     /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
     void SPLInvers(){
@@ -291,5 +351,4 @@ public class SPL extends Matriks {
         }
         return MatriksVar;
     }
-
 }
