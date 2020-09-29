@@ -220,7 +220,6 @@ public class Regresi extends SPL {
         // Karena I.S. adalah SPL REGRESI yang telah dilakukan Normal Estimation, maka
         int nParameter = this.NKolEff-2;
         
-        // Apakah perlu ganti Metode?
         this.metodeGauss();
         if (this.jenisSolusi() == 0) {
             float hasil = this.Solusi[0] ; // Inisialisasi

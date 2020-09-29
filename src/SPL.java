@@ -106,8 +106,9 @@ public class SPL extends Matriks {
         int N; // Banyaknya solusi
         int count = 0;
         String line;
+        FileWriter writeSPL = null;
         try {
-            FileWriter writeSPL = new FileWriter(namaFile);
+            writeSPL = new FileWriter(namaFile);
             N = this.NKolEff-1;
             if (this.Status[0]==0) {
                 writeSPL.write("Solusi SPL tidak ada");
@@ -142,7 +143,7 @@ public class SPL extends Matriks {
         } catch (IOException e) {
             System.err.println("Terjadi error.");
             e.printStackTrace();
-        }
+        } 
     }
 
     /* *** KELOMPOK CEK JENIS SOLUSI ****/
@@ -224,12 +225,33 @@ public class SPL extends Matriks {
 
     /* *** KELOMPOK PENCARI SOLUSI METODE GAUSS *** */
 
-    /** SOLUSI
+    /** SOLUSI GAUSS
      * I.S. Matriks Augmented Terdefinisi
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
     void metodeGauss() {
         this.GaussElimination();
+        this.Solusi = new float [this.NKolEff-1];
+        this.Persamaan = new String [this.NKolEff-1];
+        this.Status = new int [this.NKolEff-1];
+
+        if (this.jenisSolusi()==0) {
+            this.solusiGauss();
+            /** this.Status akan bernilai 1 semua **/
+        } else if(this.jenisSolusi()==1) {
+            this.solusiGauss();
+        } else {
+            /** this.Status akan bernilai 0 semua **/
+        }
+    }
+
+
+    /** SOLUSI GAUSS JORDAN
+     * I.S. Matriks Augmented Terdefinisi
+     * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
+     */
+    void metodeGaussJordan() {
+        this.GaussJordanElimination();
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];
