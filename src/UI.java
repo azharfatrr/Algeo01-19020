@@ -112,13 +112,13 @@ public class UI {
             Scanner file = new Scanner(System.in);
             String filebaca, filetulis;
             
-            System.out.print("Tuliskan nama file yang akan dibaca (contoh data1.txt): ")
+            System.out.print("Tuliskan nama file yang akan dibaca (contoh data1.txt): ");
             filebaca = file.next();
             x = mInterpolasi.bacaFileInterpolasi(filebaca);
             
             y = mInterpolasi.InterpolasiPolinom(x);
 
-            System.out.print("Tuliskan nama file yang akan disimpan (contoh data2.txt): ")
+            System.out.print("Tuliskan nama file yang akan disimpan (contoh data2.txt): ");
             filetulis = file.next();
             mInterpolasi.tulisFileInterpolasi(x,y, filetulis);
 
