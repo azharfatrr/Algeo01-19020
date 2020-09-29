@@ -49,6 +49,8 @@ public class Interpolasi extends SPL {
         float x = input.nextFloat();
         
       	input.close();
+        
+        return x;
     }
 
 	void tulisInterpolasi(float x,float y)
