@@ -76,7 +76,55 @@ public class UI {
     }
 
     public static void MenuInterpolasi(){
-        
+        int pilihanMenu;
+        Scanner input = null;
+        Interpolasi mInterpolasi = new Interpolasi(0,2);
+
+        input = new Scanner(System.in);
+
+        System.out.println("-----------------------------------");
+        System.out.println("           PILIH CARA BACA");
+        System.out.println("-----------------------------------");
+        System.out.println("1. Baca Dari Terminal");
+        System.out.println("2. Baca Dari File");
+        System.out.println("3. Kembali");
+        System.out.println("-----------------------------------");
+        System.out.print("Masukkan pilihan : ");
+        pilihanMenu = input.nextInt();
+        input.close();
+
+        if (pilihanMenu==1) {
+            float x,y;
+            x = mInterpolasi.bacaInterpolasi();
+            y = mInterpolasi.InterpolasiPolinom(x);
+            mInterpolasi.tulisInterpolasi(x,y);
+
+        } else if (pilihanMenu==2) {
+            float x,y;
+            Scanner file = new Scanner(System.in);
+            String filebaca, filetulis;
+            
+            System.out.print("Tuliskan nama file yang akan dibaca (contoh data1.txt): ");
+            filebaca = file.next();
+            x = mInterpolasi.bacaFileInterpolasi(filebaca);
+            
+            y = mInterpolasi.InterpolasiPolinom(x);
+
+            System.out.print("Tuliskan nama file yang akan disimpan (contoh data2.txt): ");
+            filetulis = file.next();
+            mInterpolasi.tulisFileInterpolasi(x,y, filetulis);
+
+            file.close();
+            
+        } else if (pilihanMenu==3) {
+            clearScreen();
+            MainMenu();
+            
+        } else {
+            clearScreen();
+            System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
+            MenuInterpolasi();
+        }
     }
 
     public static void MenuRegresi(){
