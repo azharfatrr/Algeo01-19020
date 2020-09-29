@@ -108,7 +108,9 @@ public class SPL extends Matriks {
         String line;
         FileWriter writeSPL = null;
         try {
-            writeSPL = new FileWriter(namaFile);
+            String namaFileDir = "./hasil/" + namaFile;
+            writeSPL = new FileWriter(namaFileDir);
+
             N = this.NKolEff-1;
             if (this.Status[0]==0) {
                 writeSPL.write("Solusi SPL tidak ada");
@@ -138,7 +140,7 @@ public class SPL extends Matriks {
             }
             
             writeSPL.close();
-            System.out.println("Berhasil menyimpan matriks pada file \"" + namaFile + "\".");
+            System.out.println("Berhasil menyimpan matriks pada folder hasil, file \"" + namaFile + "\".");
 
         } catch (IOException e) {
             System.err.println("Terjadi error.");

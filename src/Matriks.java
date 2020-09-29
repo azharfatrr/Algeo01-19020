@@ -84,7 +84,8 @@ public class Matriks {
      {
           try {
           /* KAMUS */
-          File file = new File(namaFile);
+          String namaFileDir = "./data/" + namaFile;
+          File file = new File(namaFileDir);
           int NBrs = 0;
           int NKol = 0;
           int i,j; // Indeks
@@ -159,7 +160,9 @@ public class Matriks {
           int i,j;
           String line;
           try {
-               FileWriter writeMatriks = new FileWriter(namaFile);
+               String namaFileDir = "./hasil/" + namaFile;
+               FileWriter writeMatriks = new FileWriter(namaFileDir);
+
                for (i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++) {
                     line = "";
                     for (j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++) {
@@ -175,7 +178,7 @@ public class Matriks {
                     writeMatriks.write(line); 
                }
                writeMatriks.close();
-               System.out.println("Berhasil menyimpan matriks pada file \"" + namaFile + "\".");
+               System.out.println("Berhasil menyimpan matriks pada folder hasil, file \"" + namaFile + "\".");
              } catch (IOException e) {
                System.err.println("Terjadi error.");
                e.printStackTrace();

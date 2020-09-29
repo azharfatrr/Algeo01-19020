@@ -137,7 +137,8 @@ public class Regresi extends SPL {
         float hasil = MNormal.hasilRegresi();
 
         try {
-            FileWriter writeSPL = new FileWriter(namaFile);
+            String namaFileDir = "./hasil/" + namaFile;
+            FileWriter writeSPL = new FileWriter(namaFileDir);
 
             if (MNormal.jenisSolusi()==0) {
                 String persamaanRegresi = "Persamaan Regresi :\ny = " + MNormal.Persamaan[0] + " ";
@@ -157,7 +158,7 @@ public class Regresi extends SPL {
 
             writeSPL.write(line);
             writeSPL.close();
-            System.out.println("Berhasil menyimpan hasil regresi pada file \"" + namaFile + "\".");
+            System.out.println("Berhasil menyimpan hasil regresi pada folder hasil, file \"" + namaFile + "\".");
 
         } catch (IOException e) {
             System.err.println("Terjadi error.");

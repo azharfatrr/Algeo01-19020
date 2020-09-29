@@ -44,6 +44,7 @@ public class Interpolasi extends SPL {
     float bacaFileInterpolasi(String namafile)
     {
         bacaFileMatriks(namafile);
+
         Scanner input = new Scanner(System.in);
         System.out.print("Masukkan nilai x yang akan ditaksir : ");
         float x = input.nextFloat();
@@ -66,13 +67,15 @@ public class Interpolasi extends SPL {
         String line;
 
         try {
-            FileWriter writeSPL = new FileWriter(namaFile);
+
+            String namaFileDir = "./hasil/" + namaFile;
+            FileWriter writeSPL = new FileWriter(namaFileDir);
 
             line = "Hasil Interpolasi dari " + x + " adalah: " + y;
 
             writeSPL.write(line);
             writeSPL.close();
-            System.out.println("Berhasil menyimpan hasil regresi pada file \"" + namaFile + "\".");
+            System.out.println("Berhasil menyimpan hasil regresi pada folder hasil, file \"" + namaFile + "\".");
 
         } catch (IOException e) {
             System.err.println("Terjadi error.");
