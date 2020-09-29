@@ -56,15 +56,47 @@ public class Interpolasi extends SPL {
         return x;
     }
 
-	void tulisInterpolasi(float x,float y)
+	void tulisInterpolasi(float x,float y, Interpolasi z)
 	{
+        int i,j;
+        char variabel;
+
+        System.out.println("Persamaan Polinom: ");
+        for (i = 0; i <= z.GetLastIdxBrs(); i++) {
+            variabel = 'a';
+            for (j = 0; j < z.GetLastIdxKol(); j++) {
+                if (j == z.GetLastIdxKol()-1) {
+                    System.out.print(variabel);
+                    variabel++;
+                    System.out.print("*");
+                    System.out.print(z.GetElmt(i,j));
+                    System.out.print(" = ");
+                }
+                else if (j == 0) {
+                    System.out.print(variabel);
+                    variabel++;
+                    System.out.print(" + ");
+                }
+                else {
+                    System.out.print(variabel);
+                    variabel++;
+                    System.out.print("*");
+                    System.out.print(z.GetElmt(i,j));
+                    System.out.print(" + ");
+                }
+            }
+            System.out.println(z.GetElmt(i,z.GetLastIdxKol()));
+        }
+
+        System.out.println(" ");
+
 		System.out.print("Hasil Interpolasi dari ");
         System.out.print(x);
         System.out.print(" adalah: ");
         System.out.println(y);
 	}
 
-    void tulisFileInterpolasi(float x, float y, String namaFile)
+    void tulisFileInterpolasi(float x, float y, Interpolasi z, String namaFile)
     {
         String line;
 
@@ -73,7 +105,49 @@ public class Interpolasi extends SPL {
             String namaFileDir = "./hasil/" + namaFile;
             FileWriter writeSPL = new FileWriter(namaFileDir);
 
-            line = "Hasil Interpolasi dari " + x + " adalah: " + y;
+            int i,j;
+            char variabel;
+
+            String persamaanPolinom = "Persamaan Polinom: \n";
+            for (i = 0; i <= z.GetLastIdxBrs(); i++) {
+                variabel = 'a';
+                for (j = 0; j < z.GetLastIdxKol(); j++) {
+                    if (j == z.GetLastIdxKol()-1) {
+                        persamaanPolinom += variabel;
+                        //System.out.print(variabel);
+                        variabel++;
+                        persamaanPolinom += '*';
+                        //System.out.print("*");
+                        persamaanPolinom += Float.toString(z.GetElmt(i,j));
+                        //System.out.print(z.GetElmt(i,j));
+                        persamaanPolinom += " = ";
+                        //System.out.print(" = ");
+                    }
+                    else if (j == 0) {
+                        persamaanPolinom += variabel;
+                        //System.out.print(variabel);
+                        variabel++;
+                        persamaanPolinom += " + ";
+                        //System.out.print(" + ");
+                    }
+                    else {
+                        persamaanPolinom += variabel;
+                        //System.out.print(variabel);
+                        variabel++;
+                        persamaanPolinom += "*";
+                        //System.out.print("*");
+                        persamaanPolinom += Float.toString(z.GetElmt(i,j));
+                        //System.out.print(z.GetElmt(i,j));
+                        persamaanPolinom += " + ";
+                        //System.out.print(" + ");
+                    }
+                }
+                persamaanPolinom += Float.toString(z.GetElmt(i,z.GetLastIdxKol()));
+                //System.out.println(z.GetElmt(i,z.GetLastIdxKol()));
+                persamaanPolinom += "\n";
+            }
+
+            line = persamaanPolinom + "\nHasil Interpolasi dari " + x + " adalah: " + y;
 
             writeSPL.write(line);
             writeSPL.close();
@@ -150,4 +224,6 @@ public class Interpolasi extends SPL {
 //x = M1.bacaInterpolasi();
 //float y;
 //y = M1.InterpolasiPolinom(x);
+//Interpolasi Interpolate;
+//Interpolate = M1.ConvertToMatrixAug();
 //System.out.println(y);
