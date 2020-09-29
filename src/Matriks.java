@@ -515,20 +515,22 @@ public class Matriks {
           int k;    // variable yang digunakan untuk mengecek baris setelahnya
           float koef;
           boolean flag;
-          int indikatorDet = 1;
+          float indikatorDet = 1;
+          Matriks Det = new Matriks(0,0);
+          Det = this.copyMatriks();
 
-          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
-          for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
+          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir
+          for (j = Det.GetFirstIdxKol(); ((i<=Det.GetLastIdxBrs()) && (j < Det.GetLastIdxKol())); j++){
                
                boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
                
-               if (this.GetElmt(i, j) == 0){
+               if (Det.GetElmt(i, j) == 0){
 
                     k = i+1;
                     flag = false;
-                    while (!flag && k <= this.GetLastIdxBrs()){
+                    while (!flag && k <= Det.GetLastIdxBrs()){
                          //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
-                         if (this.GetElmt(k, j)!=0){
+                         if (Det.GetElmt(k, j)!=0){
                               flag = true;
                          } 
                          else {
@@ -538,8 +540,8 @@ public class Matriks {
 
                     //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
                     if (flag){
-                         this.SwapRow(i, k);
-                         indikatorDet *= -1;
+                         Det.SwapRow(i, k);
+                         indikatorDet *= (-1);
                     } 
                     else {
                          NextProcess = false;
@@ -548,22 +550,23 @@ public class Matriks {
 
                if (NextProcess){
                     // proses pembuatan segitiga atas
-                    this.MakeOne(i, this.GetElmt(i, j));
-                    for (k=i+1; k <= this.GetLastIdxBrs(); k++){
-                         koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
-                         this.PlusRow(i,k, koef);
+                    indikatorDet *= (Det.GetElmt(i, j));
+                    Det.MakeOne(i, Det.GetElmt(i, j));
+                    for (k=i+1; k <= Det.GetLastIdxBrs(); k++){
+                         koef = -(Det.GetElmt(k, j) / Det.GetElmt(i,j));
+                         Det.PlusRow(i,k, koef);
                     }
                     i+=1;
                }  
           }
 
-          float Det = this.GetElmt(this.GetFirstIdxBrs(), this.GetFirstIdxKol());
+          float Determinan = Det.GetElmt(Det.GetFirstIdxBrs(), Det.GetFirstIdxKol());
 
-          for (int o = this.GetFirstIdxBrs()+1; o<= this.GetLastIdxBrs(); o++){
-               Det *= this.GetElmt(o, o);
+          for (int o = Det.GetFirstIdxBrs()+1 ; o <= Det.GetLastIdxBrs(); o++){
+               Determinan *= Det.GetElmt(o, o);
           }
 
-          return (Det*indikatorDet);
+          return (Determinan*indikatorDet);
      }
 
      // ***** KELOMPOK MATRIKS INVERS *****//
@@ -693,7 +696,7 @@ public class Matriks {
           if (det == 0){
                System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
           }
-          else{ 
+          else{
                //proses copy matriks ke temp
                for (int i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++){
                     for (int j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++){
@@ -702,17 +705,19 @@ public class Matriks {
                }
                //proses bikin augmented matriks identitas di temp
                for (int i = temp.GetFirstIdxBrs(); i<=temp.GetLastIdxBrs(); i++){
-                    temp.SetElmt(i, this.GetLastIdxKol()+i, 1);
-               }
+                    temp.SetElmt(i, this.GetLastIdxKol()+i+1, 1);
+               }    
+
                
      
                temp.convertReducedEchelon();
                
-               for (int i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++){
+               
+               for (int i = temp.GetFirstIdxBrs(); i <= temp.GetLastIdxBrs(); i++){
                     
                     int k = this.GetFirstIdxKol();
                     
-                    for (int j = this.GetLastIdxKol()+i; j<= temp.GetLastIdxKol(); j++){
+                    for (int j = (temp.GetLastIdxKol()/2)+1; j <= temp.GetLastIdxKol(); j++){
                          Invers.SetElmt(i, k, temp.GetElmt(i, j));
                          k+=1;
                     }
