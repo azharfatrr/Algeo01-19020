@@ -46,29 +46,35 @@ public class Matriks {
       */
      void bacaMatriks() {
           int i, j;
-          Scanner input = new Scanner(System.in);
-          Scanner N = new Scanner(System.in);
+          Scanner input = null; 
+          
+          try {
+               input = new Scanner(System.in);
+               System.out.print("Masukkan NBrs : ");
+               int NBrsEff = input.nextInt();
+               System.out.print("Masukkan NKol : ");
+               int NKolEff = input.nextInt();
 
-          System.out.print("Masukkan NBrs : ");
-          int NBrsEff = N.nextInt();
-          System.out.print("Masukkan NKol : ");
-          int NKolEff = N.nextInt();
-
-          N.close();
-
-          while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
-               this.doubleMatriks();
-          }
-
-          this.NBrsEff = NBrsEff;
-          this.NKolEff = NKolEff;
-
-          for (i = 0; i < this.NBrsEff; i++) {
-               for (j = 0; j < this.NKolEff; j++) {
-                    this.Matriks[i][j] = input.nextFloat();
+               while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
+                    this.doubleMatriks();
                }
+     
+               this.NBrsEff = NBrsEff;
+               this.NKolEff = NKolEff;
+
+               System.out.println("Masukkan elemen matriks :");
+               for (i = 0; i < this.NBrsEff; i++) {
+                    for (j = 0; j < this.NKolEff; j++) {
+                         this.Matriks[i][j] = input.nextFloat();
+                    }
+               }
+
           }
-          input.close();
+          catch (Exception e) {
+          }
+          finally {
+               input.close();
+          }
      }
 
      /** Baca Matriks dari File Txt

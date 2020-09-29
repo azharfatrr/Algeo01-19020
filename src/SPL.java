@@ -101,7 +101,7 @@ public class SPL extends Matriks {
       * I.S. SPL Telah diselesaikan 
       * F.S. Menyimpan Hasil SPL pada suatu file
       */
-      void tulisFileSPL(String namaFile) {
+    void tulisFileSPL(String namaFile) {
         int i;
         int N; // Banyaknya solusi
         int count = 0;
@@ -139,10 +139,10 @@ public class SPL extends Matriks {
             writeSPL.close();
             System.out.println("Berhasil menyimpan matriks pada file \"" + namaFile + "\".");
 
-            } catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Terjadi error.");
             e.printStackTrace();
-            }
+        }
     }
 
     /* *** KELOMPOK CEK JENIS SOLUSI ****/
@@ -158,7 +158,7 @@ public class SPL extends Matriks {
         int solusi = 0;
         int i; // Indeks Baris
         /* Cek Solusi Unik */
-        if (isAllDiagonalOne() && (this.GetLastIdxBrs()==(this.GetLastIdxKol()-1))) {
+        if (isAllDiagonalOne() && (this.NBrsEff==(this.NKolEff-1))) {
             solusi = 0;
         } else if (isAllDiagonalOne() && (this.GetLastIdxBrs()!=(this.GetLastIdxKol()-1))) {
             solusi = 1;
@@ -189,7 +189,7 @@ public class SPL extends Matriks {
 
         while (allDiagonalOne && (i <= this.GetLastIdxBrs())) {
             // Cukup Cek Diagonal Utama
-            if (this.GetElmt(i, i)!=0) {
+            if (this.GetElmt(i, i)!=1) {
                 allDiagonalOne = false;
             } else {
                 i++;
@@ -228,7 +228,7 @@ public class SPL extends Matriks {
      * I.S. Matriks Augmented Terdefinisi
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
-    void solveGauss() {
+    void metodeGauss() {
         this.GaussElimination();
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
