@@ -64,7 +64,7 @@ public class UI {
 
 
     public static void MenuSPL(){
-
+        
     }
 
     public static void MenuDeterminan(){

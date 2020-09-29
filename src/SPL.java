@@ -373,7 +373,7 @@ public class SPL extends Matriks {
 
 
     /*      KELOMPOK SPL METODE MATRIKS BALIKAN       */
-    void SPLInvers(){
+    void metodeInvers(){
         /* Prekondisi : Determinan Matriks Augmented =/= 0 */
         /* I.S Terdefinisi matriks dalam bentuk A*X = B, dengan A adalah matriks solusi, X adalah matriks variabel, dan B adalah matriks solusi */
         /* F.S Terbentuk solusi dalam bentuk X = (A^-1)B */
@@ -420,7 +420,7 @@ public class SPL extends Matriks {
 }
 
     // ***** KAIDAH CRAMER ***** //
-    void KaidahCramer()
+    void metodeCramer()
     // I.S. SPL terdefinisi
     // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
     {
