@@ -58,9 +58,7 @@ public class Regresi extends SPL {
             this.bacaParameter();
 
         } catch (Exception e) {
-
-        } finally {
-            input.close();
+            System.err.println("Error di bacaRegresi");
         }
     }
 
@@ -78,20 +76,18 @@ public class Regresi extends SPL {
     * F.S. Atribut Parameter Matriks Data Regresi Terisi
     */
     void bacaParameter() {
-        Scanner input = null;
+        Scanner masukkan = null;
 
         try {
-            input = new Scanner(System.in);
+            masukkan = new Scanner(System.in);
             this.Parameter = new float[this.nPeubah()];
 
             for (int i = 0; i < this.nPeubah(); i++) {
                 System.out.print("Masukkan Nilai Parameter x" + (i+1) + ": ");
-                this.Parameter[i] = input.nextFloat();  
+                this.Parameter[i] = masukkan.nextFloat();  
             }
         } catch (Exception e) {
-
-        } finally {
-            input.close();
+            System.err.println("Error di parameter");
         } 
     }
 

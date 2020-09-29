@@ -71,10 +71,9 @@ public class Matriks {
 
           }
           catch (Exception e) {
+               System.err.println("Error di bacaMatriks");
           }
-          finally {
-               input.close();
-          }
+          
      }
 
      /** Baca Matriks dari File Txt
