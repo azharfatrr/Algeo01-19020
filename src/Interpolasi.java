@@ -27,6 +27,8 @@ public class Interpolasi extends SPL {
         this.NBrsEff = NBrsEff;
         this.NKolEff = NKolEff;
 
+        System.out.println("Masukkan kombinasi titik: ");
+
         for (i = 0; i < this.NBrsEff; i++) {
             for (j = 0; j < this.NKolEff; j++) {
             	this.Matriks[i][j] = input.nextFloat();
