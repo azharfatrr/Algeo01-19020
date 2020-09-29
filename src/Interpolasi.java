@@ -38,7 +38,7 @@ public class Interpolasi extends SPL {
 		System.out.print("Masukkan nilai x yang akan ditaksir : ");
         float x = input.nextFloat();
         
-      	input.close();    
+      	// input.close();    
 		
 		return x;
 	}
@@ -51,7 +51,7 @@ public class Interpolasi extends SPL {
         System.out.print("Masukkan nilai x yang akan ditaksir : ");
         float x = input.nextFloat();
         
-      	input.close();
+      	// input.close();
         
         return x;
     }

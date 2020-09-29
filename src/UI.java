@@ -1,20 +1,15 @@
 import java.io.File;
+// import java.io.FileWriter;
+// import java.io.IOException;
 import java.util.Scanner;
 
 public class UI {
+    
     public static void main(String[] args) {
-        String srcData = "../src/data";
-
-        // File data = new File(srcData);
-        // getAllFiles(data);
 
         MainMenu();
 
-        
     }
-
-    
-
 
     public static void MainMenu() {
         int pilihanMenu;
@@ -64,10 +59,7 @@ public class UI {
             MainMenu();
         }
 
-        input.close();
-
-        
-        
+        // input.close(); 
     }
 
 
@@ -137,48 +129,106 @@ public class UI {
 
     public static void MenuRegresi(){
         int pilihanMenu;
+        String namaFile;
+        char simpan;
         Scanner input = null;
+        // Scanner input2 = null;
         Regresi mRegresi = new Regresi(0,0);
 
-        input = new Scanner(System.in);
+        try {
+            input = new Scanner(System.in);
 
-        System.out.println("-----------------------------------");
-        System.out.println("           PILIH CARA BACA");
-        System.out.println("-----------------------------------");
-        System.out.println("1. Baca Dari Terminal");
-        System.out.println("2. Baca Dari File");
-        System.out.println("3. Kembali");
-        System.out.println("-----------------------------------");
-        System.out.print("Masukkan pilihan : ");
-        pilihanMenu = input.nextInt();
-
-        if (pilihanMenu==1) {
+            System.out.println("-----------------------------------");
+            System.out.println("           PILIH CARA BACA");
+            System.out.println("-----------------------------------");
+            System.out.println("1. Baca Dari Terminal");
+            System.out.println("2. Baca Dari File");
+            System.out.println("3. Kembali");
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan pilihan : ");
+            pilihanMenu = input.nextInt();
             
+            if (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
+                System.out.println("Masukkan Tidak Valid, Coba Lagi");
+                System.out.print("Masukkan pilihan : ");
+                pilihanMenu = input.nextInt();
+            }
 
+            if (pilihanMenu==1) {
+                System.out.println("-----------------------------------");
 
+                mRegresi.bacaRegresi();
 
-        } else if (pilihanMenu==2) {
+                System.out.println("-----------------------------------");
+                System.out.println("Data Regresi Berhasil Terbaca");
+
+            } else if (pilihanMenu==2) {
+                System.out.println("-----------------------------------");
+                System.out.println("List file valid :");
+                getAllDataFiles();
+                System.out.println("-----------------------------------");
+                System.out.print("Masukkan nama file data regresi : ");
+
+                namaFile = input.next();
+                mRegresi.bacaFileRegresi(namaFile);
+
+                System.out.println("-----------------------------------");
+                System.out.println("Data Regresi Berhasil Terbaca");
+                
+            } else if (pilihanMenu==3) {
+                clearScreen();
+                MainMenu();
+            }
+
+            if (pilihanMenu==1 || pilihanMenu==2) {
+                System.out.println("-----------------------------------");
+                mRegresi.tulisRegresi();
+                System.out.println("-----------------------------------");
+                System.out.print("Simpan Hasil? (y/n) : ");
+
+                simpan = input.next().charAt(0);
+                if (simpan=='y') {
+                    System.out.println("-----------------------------------");
+                    System.out.print("Masukkan nama file untuk disimpan <ekstensi .txt>: ");
+    
+                    namaFile = input.next();
+                    mRegresi.tulisFileRegresi(namaFile);
+                }
+            }
+            tekanEnter();
+            clearScreen();
+            MainMenu();
             
-        } else if (pilihanMenu==3) {
-            
-        } else {
-
+        } catch (Exception e) {
+            System.out.println("Terjadi Error");
+            e.printStackTrace();
         }
+        
         
     }
 
 
-
-    public static void getAllFiles(File curDir) {
-        File[] listFile = curDir.listFiles();
+    /** List input file yang valid */
+    public static void getAllDataFiles() {
+        String curDir = "../src/data";
+        File data = new File(curDir);
+        File[] listFile = data.listFiles();
         for(File f : listFile){
             System.out.println(f.getName());
         }
     }
 
+    /** Clear Screen */
     public static void clearScreen() {
         // Butuh Bantuan
         for (int i = 0; i < 50; ++i) System.out.println();   
         // System.out.flush();
-    }  
+    }
+    
+    /** Tekan Enter untuk melanjutkan */
+    public static void tekanEnter(){
+        System.out.println("Tekan \"ENTER\" untuk melanjutkan...");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+     }
 }
