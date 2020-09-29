@@ -41,64 +41,47 @@ public class Interpolasi extends SPL {
 		return x;
 	}
 
-	void tulisInterpolasi()
-	{
-		// mencetak elemen-elemen hingga indeks NBrsEff-1 NKolEff-1
-        int i, j;
+    float bacaFileInterpolasi(String namafile)
+    {
+        bacaFileMatriks(namafile);
+        Scanner input = new Scanner(System.in);
+        System.out.print("Masukkan nilai x yang akan ditaksir : ");
+        float x = input.nextFloat();
+        
+      	input.close();
+    }
 
-        for (i = 0; i < this.NBrsEff; i++) {
-            for (j = 0; j < this.NKolEff; j++) {
-                System.out.print(this.Matriks[i][j] + " ");
-            }
-            System.out.println();
-        }
+	void tulisInterpolasi(float x,float y)
+	{
+		System.out.print("Hasil Interpolasi dari ");
+        System.out.print(x);
+        System.out.print(" adalah: ");
+        System.out.println(y);
 	}
 
+    void tulisFileInterpolasi(float x, float y, String namaFile)
+    {
+        String line;
+
+        try {
+            FileWriter writeSPL = new FileWriter(namaFile);
+
+            line = "Hasil Interpolasi dari " + x + " adalah: " + y;
+
+            writeSPL.write(line);
+            writeSPL.close();
+            System.out.println("Berhasil menyimpan hasil regresi pada file \"" + namaFile + "\".");
+
+        } catch (IOException e) {
+            System.err.println("Terjadi error.");
+            e.printStackTrace();
+        }
+    }
 
     float InterpolasiPolinom(float x)
     //Melakukan proses interpolasi polinom dengan menggunakan metode eliminasi gauss dalam matriks augmented.
     {
-        //Scanner input = new Scanner(System.in);
-        //Scanner file = new Scanner(System.in);
-
-        //System.out.println("Pilihan:");
-        //System.out.println("1. Baca dari keyboard");
-        //System.out.println("2. Baca dari file");
-        //System.out.println("Format dalam memilih: 1 atau 2");
-        //System.out.print("Masukkan pilihan: ");
-        //int pilihan = input.nextInt();
-        //input.close();
-
-        //if (pilihan == 2) {
-          //  String namafile = file.nextString();
-            //this.bacaFileSPL(namafile);
-            //file.close();
-        //}
-        //else if (pilihan == 1) {
-            //int i, j;
-            //Scanner input = new Scanner(System.in);
-            //Scanner N = new Scanner(System.in);
-
-//            System.out.print("Masukkan Banyaknya n : ");
-  //          int NBrsEff = N.nextInt();
-    //        int NKolEff = 2;
-//
-  //          N.close();
-
-    //        while (NBrsEff > this.maxNBrsKol || NKolEff > this.maxNBrsKol) {
-      //          this.doubleMatriks();
-        //    }
-
-          //  this.NBrsEff = NBrsEff;
-            //this.NKolEff = NKolEff;
-
-            //for (i = 0; i < this.NBrsEff; i++) {
-              //  for (j = 0; j < this.NKolEff; j++) {
-                //    this.Matriks[i][j] = input.nextFloat();
-               //}
-          //}
-          //input.close();
-        //}
+        
         float y = 0;
         int j, pangkat;
         //Scanner inputs = new Scanner(System.in);
