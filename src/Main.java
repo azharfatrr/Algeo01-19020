@@ -7,7 +7,7 @@ public class Main {
         // Regresi
         Regresi M = new Regresi(0, 0);
 
-        M.bacaRegresi();
+        M.bacaFileRegresi("dataRegresi.txt");
         M.tulisRegresi();
 
         M.tulisFileRegresi("hasilRegresi.txt");
