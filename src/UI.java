@@ -31,19 +31,19 @@ public class UI {
         pilihanMenu = input.nextInt();
 
         if (pilihanMenu==1) {
-            // clearScreen();
+            clearScreen();
             MenuSPL();
         } else if (pilihanMenu==2) {
-            // clearScreen();
+            clearScreen();
             MenuDeterminan();
         } else if (pilihanMenu==3) {
-            // clearScreen();
+            clearScreen();
             MenuInvers();
         } else if (pilihanMenu==4) {
-            // clearScreen();
+            clearScreen();
             MenuInterpolasi();
         } else if (pilihanMenu==5) {
-            // clearScreen();
+            clearScreen();
             MenuRegresi();
         } else if (pilihanMenu==6) {
             System.out.println("-----------------------------------");
@@ -54,7 +54,7 @@ public class UI {
             System.out.println("-----------------------------------");
             System.exit(0);
         } else {
-            // clearScreen();
+            clearScreen();
             System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
             MainMenu();
         }
@@ -121,11 +121,11 @@ public class UI {
             file.close();
             
         } else if (pilihanMenu==3) {
-            // clearScreen();
+            clearScreen();
             MainMenu();
             
         } else {
-            // clearScreen();
+            clearScreen();
             System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
             MenuInterpolasi();
         }
@@ -180,7 +180,7 @@ public class UI {
                 System.out.println("Data Regresi Berhasil Terbaca");
                 
             } else if (pilihanMenu==3) {
-                // clearScreen();
+                clearScreen();
                 MainMenu();
             }
 
@@ -201,7 +201,7 @@ public class UI {
                 }
             }
             tekanEnter();
-            // clearScreen();
+            clearScreen();
             MainMenu();
             
         } catch (Exception e) {

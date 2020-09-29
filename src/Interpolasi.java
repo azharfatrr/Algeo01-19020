@@ -159,7 +159,7 @@ public class Interpolasi extends SPL {
         }
     }
 
-    float InterpolasiPolinom(float x)
+    float InterpolasiPolinom(float x) {
     //Melakukan proses interpolasi polinom dengan menggunakan metode eliminasi gauss dalam matriks augmented.
     {
         
@@ -189,7 +189,7 @@ public class Interpolasi extends SPL {
         return y;
     }
 
-    Interpolasi ConvertToMatrixAug()
+    Interpolasi ConvertToMatrixAug(){
     // I.S. terdapat ragam (xn,yn) dan nilai x yang akan ditaksir
     // F.S. terbentuk matriks yang akan siap untuk di eliminasi gauss jordan dan ditemukan solusinya
     {
