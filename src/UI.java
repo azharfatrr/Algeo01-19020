@@ -136,7 +136,6 @@ public class UI {
         String namaFile;
         char simpan;
         Scanner input = null;
-        // Scanner input2 = null;
         Regresi mRegresi = new Regresi(0,0);
 
         try {
@@ -152,7 +151,8 @@ public class UI {
             System.out.print("Masukkan pilihan : ");
             pilihanMenu = input.nextInt();
             
-            if (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
+            // VALIDASI PILIHAN MENU
+            while (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
                 System.out.println("Masukkan Tidak Valid, Coba Lagi");
                 System.out.print("Masukkan pilihan : ");
                 pilihanMenu = input.nextInt();
@@ -184,6 +184,7 @@ public class UI {
                 MainMenu();
             }
 
+            // MAU DISIMPAN?
             if (pilihanMenu==1 || pilihanMenu==2) {
                 System.out.println("-----------------------------------");
                 mRegresi.tulisRegresi();
@@ -226,7 +227,14 @@ public class UI {
     public static void clearScreen() {
         // Butuh Bantuan
         for (int i = 0; i < 50; ++i) System.out.println();   
+        // System.out.print("\033[H\033[2J");  
         // System.out.flush();
+
+        // System.out.print('\f');
+        // or
+        // System.out.print('\u000C');
+        // new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        
     }
     
     /** Tekan Enter untuk melanjutkan */
