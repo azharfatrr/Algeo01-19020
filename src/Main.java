@@ -4,13 +4,13 @@ public class Main {
 
 
 
-        // Regresi
-        Regresi M = new Regresi(0, 0);
+        // // Regresi
+        // Regresi M = new Regresi(0, 0);
 
-        M.bacaFileRegresi("dataRegresi.txt");
-        M.tulisRegresi();
+        // M.bacaFileRegresi("dataRegresi.txt");
+        // M.tulisRegresi();
 
-        M.tulisFileRegresi("hasilRegresi.txt");
+        // M.tulisFileRegresi("hasilRegresi.txt");
 
 
 
