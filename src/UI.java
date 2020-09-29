@@ -95,12 +95,15 @@ public class UI {
 
         if (pilihanMenu==1) {
             float x,y;
+            Interpolasi z;
             x = mInterpolasi.bacaInterpolasi();
             y = mInterpolasi.InterpolasiPolinom(x);
-            mInterpolasi.tulisInterpolasi(x,y);
+            z = mInterpolasi.ConvertToMatrixAug();
+            mInterpolasi.tulisInterpolasi(x,y,z);
 
         } else if (pilihanMenu==2) {
             float x,y;
+            Interpolasi z;
             Scanner file = new Scanner(System.in);
             String filebaca, filetulis;
             
@@ -109,10 +112,11 @@ public class UI {
             x = mInterpolasi.bacaFileInterpolasi(filebaca);
             
             y = mInterpolasi.InterpolasiPolinom(x);
+            z = mInterpolasi.ConvertToMatrixAug();
 
             System.out.print("Tuliskan nama file yang akan disimpan (contoh data2.txt): ");
             filetulis = file.next();
-            mInterpolasi.tulisFileInterpolasi(x,y, filetulis);
+            mInterpolasi.tulisFileInterpolasi(x,y,z, filetulis);
 
             file.close();
             
