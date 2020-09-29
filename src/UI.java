@@ -110,7 +110,16 @@ public class UI {
                 System.out.println(nilai);
             }
             else if (pilihanMenu == 2 && pilihanMetode == 2) {
-                
+                float nilai;
+                String namafile;
+                Scanner file = new Scanner(System.in);
+
+                System.out.print("Masukkan nama file yang akan dituju: ");
+                namafile = file.next();
+                mMatriks.bacaFileMatriks(namafile);
+                nilai = mMatriks.DeterminanKofaktor();
+                System.out.print("Nilai determinan dari matriks adalah ");
+                System.out.println(nilai);
             }
             else {
                 System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
