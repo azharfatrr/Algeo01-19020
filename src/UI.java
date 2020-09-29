@@ -124,7 +124,6 @@ public class UI {
             MainMenu();
             
         } else {
-            clearScreen();
             System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
             MenuInterpolasi();
         }
