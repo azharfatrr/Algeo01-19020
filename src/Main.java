@@ -11,15 +11,16 @@ public class Main {
         // System.out.println("Matriks Augmented Awal");
         // M1.tulisSPL();
         MTest.tulisMatriks();
-
+        System.out.println("\n");
         // System.out.println("Matriks Augmented Telah dilakukan OBE");
+
+
         MInv = MTest.InverseGaussJordan();
-        
         //M1.solveGauss();
         //M1.tulisFileSPL("coba.txt");
         //M1.tulisSPL();
-
-        MInv.tulisMatriks();
+        System.out.println("\n");
+        //MInv.tulisMatriks();
         
 
         // for (int i = 0; i < M1.Persamaan.length; i++) {
