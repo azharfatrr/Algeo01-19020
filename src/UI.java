@@ -91,7 +91,6 @@ public class UI {
         System.out.println("-----------------------------------");
         System.out.print("Masukkan pilihan : ");
         pilihanMenu = input.nextInt();
-        input.close();
 
         if (pilihanMenu==1) {
             float x,y;
