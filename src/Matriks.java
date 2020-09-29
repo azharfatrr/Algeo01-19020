@@ -650,92 +650,76 @@ public class Matriks {
           return MInvers;
      }
 
+     void convertReducedEchelon(){
+          int i,j,k;
+          int lead;
+
+          for (i=this.GetFirstIdxBrs(), lead=0; i <= this.GetLastIdxBrs() && lead <= this.GetLastIdxKol(); i++, lead++){
+               int baris = i;
+               while (this.GetElmt(i, lead) == 0){
+                    if (++baris == this.GetLastIdxBrs()){
+                         baris = i;
+                         if (++lead == this.GetLastIdxKol()){
+                              return;
+                         }
+                    }
+               }
+               SwapRow(baris, i);
+
+               if (this.GetElmt(i, lead)!=0){
+                    float koef = this.GetElmt(i, lead);
+                    this.MakeOne(i, koef);
+               }
+
+               for (k = this.GetFirstIdxBrs(); k <= GetLastIdxBrs(); k++){
+                    if (k == i){
+                         continue;
+                    }
+                    float koef = this.GetElmt(k, lead);
+                    for (int kol = this.GetFirstIdxKol(); kol <= this.GetLastIdxKol(); kol++){
+                         this.SetElmt(k, kol, this.GetElmt(k, kol)-(koef*this.GetElmt(i, kol)));
+                    }
+               }
+          }
+     }
+
      Matriks InverseGaussJordan(){
           /* I.S Terdefinisi Matriks M bujur sangkar */
           /* F.S Terbentuk sebuah matriks invers dengan metode Gauss Jordan */
           float det = this.DeterminanGauss();
-          Matriks Invers = new Matriks(this.NBrsEff, (this.NKolEff));
+          Matriks temp = new Matriks(this.NBrsEff, (this.NKolEff)*2);
+          Matriks Invers = new Matriks(this.NBrsEff, this.NKolEff);
 
           if (det == 0){
                System.out.println("Matriks tidak memiliki matriks balikan karena nilai determinannya = 0.");
           }
           else{ 
-               for (int i = Invers.GetFirstIdxBrs(); i <=Invers.GetLastIdxBrs(); i++){
-                    Invers.SetElmt(i, i, 1);
+               //proses copy matriks ke temp
+               for (int i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++){
+                    for (int j = this.GetFirstIdxKol(); j <= this.GetLastIdxKol(); j++){
+                         temp.SetElmt(i, j, this.GetElmt(i, j));
+                    }
                }
-     
-               int i = this.GetFirstIdxBrs();
-               int j;
-               int k;    // variable yang digunakan untuk mengecek baris setelahnya
-               float koef;
-               boolean flag;
-               int cek;
-     
-               // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
-               for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
-                    
-                    boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya (next baris)
-                    
-                    if (this.GetElmt(i, j) == 0){
-     
-                         k = i+1;
-                         flag = false;
-                         while (!flag && k <= this.GetLastIdxBrs()){
-                              //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
-                              if (this.GetElmt(k, j)!=0){
-                                   flag = true;
-                              } 
-                              else {
-                                   k+=1;
-                              }
-                         }
-     
-                         //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
-                         if (flag){
-                              Invers.SwapRow(i, k);
-                              this.SwapRow(i, k);
-                         } 
-                         else {
-                              NextProcess = false;
-                         }
-                    }
-     
-                    if (NextProcess){
-                         // proses pembuatan segitiga atas
-                         Invers.MakeOne(i, this.GetElmt(i, j));
-                         this.MakeOne(i, this.GetElmt(i, j));
-                         for (k=i+1; k <= this.GetLastIdxBrs(); k++){
-                              koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
-                              this.PlusRow(i,k, koef);
-                              Invers.PlusRow(i, k, koef);
-                         }
-                         i+=1;
-                    }  
+               //proses bikin augmented matriks identitas di temp
+               for (int i = temp.GetFirstIdxBrs(); i<=temp.GetLastIdxBrs(); i++){
+                    temp.SetElmt(i, this.GetLastIdxKol()+i, 1);
                }
+               
      
-               //iterasi dari indeks kolom terakhir sampai indeks kolom pertama
-               for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
-     
-                    i = this.GetLastIdxBrs();
-     
-                    //Jika elemen index ke (i,j)==0 maka di skip
-                    while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
-                         i-=1;
+               temp.convertReducedEchelon();
+               
+               for (int i = this.GetFirstIdxBrs(); i <= this.GetLastIdxBrs(); i++){
+                    
+                    int k = this.GetFirstIdxKol();
+                    
+                    for (int j = this.GetLastIdxKol()+i; j<= temp.GetLastIdxKol(); j++){
+                         Invers.SetElmt(i, k, temp.GetElmt(i, j));
+                         k+=1;
                     }
-     
-                    //proses pembuatan matriks eselon baris tereduksi
-                    k= i-1;
-                    cek = (int) Math.floor(this.GetElmt(i, j));
-                    if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
-                         for (k = i-1; k >= this.GetFirstIdxBrs(); k--){
-                              koef = -(this.GetElmt(k, j));
-                              Invers.PlusRow(i, k, koef);
-                              this.PlusRow(i, k, koef);
-                         }
-                    }
-               }    
+               }
+                 
           }
-          return Invers; 
+          return Invers;
      }
 
 
