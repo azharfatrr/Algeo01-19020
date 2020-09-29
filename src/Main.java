@@ -5,12 +5,12 @@ public class Main {
 
 
         // // Regresi
-        // Regresi M = new Regresi(0, 0);
+        Regresi M = new Regresi(0, 0);
 
-        // M.bacaFileRegresi("dataRegresi.txt");
-        // M.tulisRegresi();
+        M.bacaFileRegresi("./data/dataRegresi.txt");
+        M.tulisRegresi();
 
-        // M.tulisFileRegresi("hasilRegresi.txt");
+        M.tulisFileRegresi("hasilRegresi.txt");
 
 
 
