@@ -68,6 +68,66 @@ public class UI {
     }
 
     public static void MenuDeterminan(){
+        int pilihanMenu, pilihanMetode;
+        Scanner input = null;
+        Matriks mMatriks = new Matriks(0,0);
+
+        input = new Scanner(System.in);
+
+        System.out.println("INGAT!!!! DALAM MENCARI DETERMINAN HARUS MENGGUNAKAN MATRIKS BUJURSANGKAR");
+        System.out.println("-----------------------------------");
+        System.out.println("           PILIH CARA BACA");
+        System.out.println("-----------------------------------");
+        System.out.println("1. Baca Dari Terminal");
+        System.out.println("2. Baca Dari File");
+        System.out.println("3. Kembali");
+        System.out.println("-----------------------------------");
+        System.out.print("Masukkan pilihan : ");
+        pilihanMenu = input.nextInt();
+
+        if (pilihanMenu == 1 || pilihanMenu == 2) {
+            System.out.println("-----------------------------------");
+            System.out.println("           PILIH METODE");
+            System.out.println("-----------------------------------");
+            System.out.println("1. Metode Eliminasi Gauss");
+            System.out.println("2. Metode Ekspansi Kofaktor");
+            System.out.println("3. Kembali");
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan pilihan : ");
+            pilihanMetode = input.nextInt();
+
+            if (pilihanMenu == 1 && pilihanMetode == 1) {
+
+            }
+            else if (pilihanMenu == 2 && pilihanMetode == 1) {
+
+            }
+            else if (pilihanMenu == 1 && pilihanMetode == 2) {
+                float nilai;
+                mMatriks.bacaMatriks();
+                nilai = mMatriks.DeterminanKofaktor();
+                System.out.print("Nilai determinan dari matriks adalah ");
+                System.out.println(nilai);
+            }
+            else if (pilihanMenu == 2 && pilihanMetode == 2) {
+                
+            }
+            else {
+                System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
+                MenuDeterminan();
+            }
+        }
+
+        else if (pilihanMenu == 3) {
+            clearScreen();
+            MainMenu();
+        }
+
+        else {
+            System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
+            MenuDeterminan();
+        }
+
         
     }
 
