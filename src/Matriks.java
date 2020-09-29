@@ -572,10 +572,9 @@ public class Matriks {
      }
 
      // ***** KELOMPOK MATRIKS INVERS *****//
-     Matriks Kofaktor()
+     Matriks Kofaktor(){
      //I.S. Matriks terdefinisi, Matriks berbentuk bujursangkar
      //F.S. Terbentuk matriks kofaktor
-     {
           int i,j; //indeks matriks awal
           int k,l; //indeks matriks minor
           int m,n; //indeks matriks awal yang akan memasuki matriks minor
