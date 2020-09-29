@@ -93,7 +93,7 @@ public class Interpolasi extends SPL {
         Interpolasi augmented;
         augmented = this.ConvertToMatrixAug();
 
-		//augmented.tulisInterpolasi();
+        int i, k;
 
 		augmented.Solusi = new float [augmented.NKolEff-1];
         augmented.Persamaan = new String [augmented.NKolEff-1];
@@ -116,7 +116,7 @@ public class Interpolasi extends SPL {
     {
         Interpolasi Mat;
 
-        Mat = new Interpolasi(this.NBrsEff, this.NKolEff+1);
+        Mat = new Interpolasi(this.NBrsEff, this.NBrsEff+1);
         int pangkat = 0;
         int i,j;
         int k,l;
