@@ -64,7 +64,7 @@ public class UI {
 
 
     public static void MenuSPL(){
-        
+
     }
 
     public static void MenuDeterminan(){
@@ -97,10 +97,23 @@ public class UI {
             pilihanMetode = input.nextInt();
 
             if (pilihanMenu == 1 && pilihanMetode == 1) {
-
+                float nilai;
+                mMatriks.bacaMatriks();
+                nilai = mMatriks.DeterminanGauss();
+                System.out.print("Nilai determinan dari matriks adalah ");
+                System.out.println(nilai);
             }
             else if (pilihanMenu == 2 && pilihanMetode == 1) {
+                float nilai;
+                String namafile;
+                Scanner file = new Scanner(System.in);
 
+                System.out.print("Masukkan nama file yang akan dituju: ");
+                namafile = file.next();
+                mMatriks.bacaFileMatriks(namafile);
+                nilai = mMatriks.DeterminanGauss();
+                System.out.print("Nilai determinan dari matriks adalah ");
+                System.out.println(nilai);
             }
             else if (pilihanMenu == 1 && pilihanMetode == 2) {
                 float nilai;
