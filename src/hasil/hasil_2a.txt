@@ -1,0 +1,5 @@
+X_1 = -1.000000 + (+ 2.0A ) - 2.0A + B 
+X_2 = + 2.0A 
+X_3 = A
+X_4 = B
+Dengan A,B merupakan bilangan real
