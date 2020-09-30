@@ -254,7 +254,8 @@ public class SPL extends Matriks {
      */
     void metodeGaussJordan() {
         // this.GaussJordanElimination();
-        this.convertReducedEchelon();
+        // this.convertReducedEchelon();
+        this.GJordan();
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];
@@ -320,11 +321,12 @@ public class SPL extends Matriks {
             }
             // Akan dapet nilai c
             this.Solusi[k] = c;
-            if (c!=0) {
-                cParam = String.format("%f",c) + " ";
-            } else {
-                cParam = "";
-            }
+            cParam = c + " ";
+            // if (c!=0) {
+            //     cParam = c + " ";
+            // } else {
+            //     cParam = "";
+            // }
             
             j = k+1;
 

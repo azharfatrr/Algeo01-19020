@@ -733,6 +733,64 @@ public class Matriks {
           return Invers;
      }
 
+     void GJordan() {
+          /* I.S Terdefinisi Augmented Matriks M */
+          /* F.S Matriks M adalah sebuah matriks eselon baris */
+          /*   1 2 3
+               4 5 6     
+               7 8 9     */
+          int i = this.GetFirstIdxBrs();
+          int j;
+          int k;    // variable yang digunakan untuk mengecek baris setelahnya
+          float koef;
+          boolean flag;
+          // int indikatorDet = 1;
+
+          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
+          for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
+               
+               boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
+               
+               if (this.GetElmt(i, j) == 0){
+
+                    k = i+1;
+                    flag = false;
+                    while (!flag && k <= this.GetLastIdxBrs()){
+                         //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
+                         if (this.GetElmt(k, j)!=0){
+                              flag = true;
+                         } 
+                         else {
+                              k+=1;
+                         }
+                    }
+
+                    //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
+                    if (flag){
+                         this.SwapRow(i, k);
+                         // indikatorDet *= -1;
+                    } 
+                    else {
+                         NextProcess = false;
+                    }
+               }
+
+               if (NextProcess){
+                    // proses pembuatan segitiga atas bawah
+                    this.MakeOne(i, this.GetElmt(i, j));
+                    for (k=this.GetFirstIdxBrs(); k <= this.GetLastIdxBrs(); k++){
+                         if (k!=i) {
+                              koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
+                              this.PlusRow(i,k, koef);
+                         }
+                         
+                    }
+                    i+=1;
+               }  
+          }
+
+     }
+
 
      
 
