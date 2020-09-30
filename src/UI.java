@@ -134,7 +134,7 @@ public class UI {
                 while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3 && pilihanMetode!=4 && pilihanMetode!=5) {
                     System.out.println("Masukkan Tidak Valid, Coba Lagi");
                     System.out.print("Masukkan pilihan : ");
-                    pilihanMenu = input.nextInt();
+                    pilihanMetode = input.nextInt();
                 }
                 
                 System.out.println("-----------------------------------");
@@ -251,6 +251,13 @@ public class UI {
             System.out.print("Masukkan pilihan : ");
             pilihanMetode = input.nextInt();
 
+            // VALIDASI PILIHAN SUBMENU
+            while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3) {
+                System.out.println("Masukkan Tidak Valid, Coba Lagi");
+                System.out.print("Masukkan pilihan : ");
+                pilihanMetode = input.nextInt();
+            }
+
             if (pilihanMetode == 1) {
                 float nilai;
                 nilai = mMatriks.DeterminanGauss();
@@ -348,8 +355,8 @@ public class UI {
             System.out.print("Masukkan pilihan : ");
             pilihanMetode = input.nextInt();
 
-            //Validasi Input
-            while (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
+            // VALIDASI PILIHAN SUBMENU
+            while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3) {
                 System.out.println("Masukkan Tidak Valid, Coba Lagi");
                 System.out.print("Masukkan pilihan : ");
                 pilihanMetode = input.nextInt();
@@ -411,10 +418,18 @@ public class UI {
             Interpolasi z;
             Scanner file = new Scanner(System.in);
             String filebaca, filetulis;
+
             
-            System.out.print("Tuliskan nama file yang akan dibaca (contoh data1.txt): ");
+            System.out.println("-----------------------------------");
+            System.out.println("List file valid :");
+            getAllDataFiles();
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan nama file data interpolasi : ");
             filebaca = file.next();
             x = mInterpolasi.bacaFileInterpolasi(filebaca);
+
+            System.out.println("-----------------------------------");
+            System.out.println("Data Interpolasi Berhasil Terbaca");
             
             y = mInterpolasi.InterpolasiPolinom(x);
             z = mInterpolasi.ConvertToMatrixAug();
