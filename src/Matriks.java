@@ -789,12 +789,6 @@ public class Matriks {
           }
           return Invers;
      }
-
-     
-
-
-     
-
 }
 
 
