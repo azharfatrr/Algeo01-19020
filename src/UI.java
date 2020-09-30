@@ -134,7 +134,7 @@ public class UI {
                 while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3 && pilihanMetode!=4 && pilihanMetode!=5) {
                     System.out.println("Masukkan Tidak Valid, Coba Lagi");
                     System.out.print("Masukkan pilihan : ");
-                    pilihanMenu = input.nextInt();
+                    pilihanMetode = input.nextInt();
                 }
                 
                 System.out.println("-----------------------------------");
@@ -251,6 +251,13 @@ public class UI {
             System.out.print("Masukkan pilihan : ");
             pilihanMetode = input.nextInt();
 
+            // VALIDASI PILIHAN SUBMENU
+            while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3) {
+                System.out.println("Masukkan Tidak Valid, Coba Lagi");
+                System.out.print("Masukkan pilihan : ");
+                pilihanMetode = input.nextInt();
+            }
+
             if (pilihanMetode == 1) {
                 float nilai;
                 nilai = mMatriks.DeterminanGauss();
@@ -348,8 +355,8 @@ public class UI {
             System.out.print("Masukkan pilihan : ");
             pilihanMetode = input.nextInt();
 
-            //Validasi Input
-            while (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
+            // VALIDASI PILIHAN SUBMENU
+            while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3) {
                 System.out.println("Masukkan Tidak Valid, Coba Lagi");
                 System.out.print("Masukkan pilihan : ");
                 pilihanMetode = input.nextInt();

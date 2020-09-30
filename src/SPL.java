@@ -321,12 +321,12 @@ public class SPL extends Matriks {
             }
             // Akan dapet nilai c
             this.Solusi[k] = c;
-            cParam = c + " ";
-            // if (c!=0) {
-            //     cParam = c + " ";
-            // } else {
-            //     cParam = "";
-            // }
+            // cParam = c + " ";
+            if (c!=0 || this.Status[k]==1) {
+                cParam = c + " ";
+            } else {
+                cParam = "";
+            }
             
             j = k+1;
 
@@ -439,7 +439,7 @@ public class SPL extends Matriks {
 
 }
 
-    // ***** KAIDAH CRAMER ***** //
+    // * **** KAIDAH CRAMER **** * //
     void metodeCramer()
     // I.S. SPL terdefinisi
     // F.S. ditemukan nilai satu-persatu variabel dan menampilkan ke layar
