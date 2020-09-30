@@ -16,7 +16,7 @@ public class Interpolasi extends SPL {
 		int i, j;
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Masukkan Banyaknya n : ");
+        System.out.print("Masukkan Banyaknya nTitik : ");
         int NBrsEff = input.nextInt();
         int NKolEff = 2;
 
