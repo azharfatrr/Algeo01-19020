@@ -391,7 +391,6 @@ public class SPL extends Matriks {
         Matriks MSol = new Matriks(this.NBrsEff, 1);
         Matriks MRes;
         
-        
 
         //Proses assignment matriks koefisien
         for (int i = MInv.GetFirstIdxBrs(); i <= MInv.GetLastIdxBrs(); i++){
@@ -405,27 +404,34 @@ public class SPL extends Matriks {
             MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
         }
 
-        //Proses Inverse matriks koefisien
-        MInv = MInv.InversKofaktor();
+        if (MInv.NBrsEff != MInv.NKolEff){
+            System.out.println("Solusi SPL tidak dapat ditentukan karena jumlah kolom matriks variabel =/= jumlah baris");
+        }
+        else{
+            //Proses Inverse matriks koefisien
+            MInv = MInv.InversKofaktor();
 
-        //  MInv * Mvar = MSol
-        //  Mvar = MInv^-1 * MSol
-        //Hasil Akhir solusi
-        MRes = KaliMatriks(MInv, MSol);
-        MRes.tulisMatriks();
+            //  MInv * Mvar = MSol
+            //  Mvar = MInv^-1 * MSol
+            //Hasil Akhir solusi
+            MRes = KaliMatriks(MInv, MSol);
+            MRes.tulisMatriks();
 
-        MRes.transpose();
+            MRes.transpose();
 
-        this.Solusi = new float [MRes.NKolEff];
-        this.Persamaan = new String [MRes.NKolEff];
-        this.Status = new int [MRes.NKolEff];
+            this.Solusi = new float [MRes.NKolEff];
+            this.Persamaan = new String [MRes.NKolEff];
+            this.Status = new int [MRes.NKolEff];
+
+            
+            for (int j = MRes.GetFirstIdxKol(); j <= MRes.GetLastIdxKol(); j++){
+                this.Solusi[j] = MRes.GetElmt(0, j);
+                this.Persamaan[j] = Float.toString(MRes.GetElmt(0, j));
+                this.Status[j] = 1;
+            }
+        }
 
         
-        for (int j = MRes.GetFirstIdxKol(); j <= MRes.GetLastIdxKol(); j++){
-            this.Solusi[j] = MRes.GetElmt(0, j);
-            this.Persamaan[j] = Float.toString(MRes.GetElmt(0, j));
-            this.Status[j] = 1;
-        }
 
 }
 
