@@ -2,7 +2,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        SPL M = new SPL(10,10);
+        Regresi M = new Regresi(0,0);
         SPL M1 = new SPL(0,0);
         Matriks M2,M3;
 
@@ -18,9 +18,9 @@ public class Main {
         // M.tulisMatriks();
         // System.out.println();
 
-        M.bacaFileMatriks("testcase_3b.txt");
-        M.GJordanElimination();
-        M.tulisMatriks();
+        M.bacaFileRegresi("testcase_8.txt");
+        // M.GJordanElimination();
+        M.tulisRegresi();
         // M2 = M.InversKofaktor();
         // M3 = M.InverseGaussJordan();
         // // // M.metodeInvers();
