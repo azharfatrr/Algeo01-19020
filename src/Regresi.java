@@ -218,6 +218,7 @@ public class Regresi extends SPL {
         int nParameter = this.NKolEff-2;
         
         this.metodeGauss();
+
         if (this.jenisSolusi() == 0) {
             float hasil = this.Solusi[0] ; // Inisialisasi
 
