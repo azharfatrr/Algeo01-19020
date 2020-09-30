@@ -64,7 +64,128 @@ public class UI {
 
 
     public static void MenuSPL(){
+        int pilihanMenu, pilihanMetode;
+        String namaFile;
+        char simpan;
+        Scanner input = null;
+        SPL mSPL = new SPL(0,0);
 
+        try {
+            input = new Scanner(System.in);
+
+            System.out.println("-----------------------------------");
+            System.out.println("           PILIH CARA BACA");
+            System.out.println("-----------------------------------");
+            System.out.println("1. Baca Dari Terminal");
+            System.out.println("2. Baca Dari File");
+            System.out.println("3. Kembali");
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan pilihan : ");
+            pilihanMenu = input.nextInt();
+            
+            // VALIDASI PILIHAN MENU
+            while (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
+                System.out.println("Masukkan Tidak Valid, Coba Lagi");
+                System.out.print("Masukkan pilihan : ");
+                pilihanMenu = input.nextInt();
+            }
+
+            if (pilihanMenu==1) {
+                System.out.println("-----------------------------------");
+
+                mSPL.bacaSPL();
+
+                System.out.println("-----------------------------------");
+                System.out.println("Data matriks SPL Berhasil Terbaca");
+
+            } else if (pilihanMenu==2) {
+                System.out.println("-----------------------------------");
+                System.out.println("List file valid :");
+                getAllDataFiles();
+                System.out.println("-----------------------------------");
+                System.out.print("Masukkan nama file data matriks SPL : ");
+
+                namaFile = input.next();
+                mSPL.bacaFileSPL(namaFile);
+
+                System.out.println("-----------------------------------");
+                System.out.println("Data matriks SPL Berhasil Terbaca");
+                
+            } else if (pilihanMenu==3) {
+                clearScreen();
+                MainMenu();
+            }
+
+            // PILIH METODE
+            if (pilihanMenu == 1 || pilihanMenu == 2) {
+                System.out.println("-----------------------------------");
+                System.out.println("           PILIH METODE");
+                System.out.println("-----------------------------------");
+                System.out.println("1. Metode Eliminasi Gauss");
+                System.out.println("2. Metode Eliminasi Gauss Jordan");
+                System.out.println("3. Metode Matriks Balikan");
+                System.out.println("4. Metode Kaidah Cramer");
+                System.out.println("5. Kembali");
+                System.out.println("-----------------------------------");
+                System.out.print("Masukkan pilihan : ");
+                pilihanMetode = input.nextInt();
+
+                // VALIDASI PILIHAN SUBMENU
+                while (pilihanMetode!=1 && pilihanMetode!=2 && pilihanMetode!=3 && pilihanMetode!=4 && pilihanMetode!=5) {
+                    System.out.println("Masukkan Tidak Valid, Coba Lagi");
+                    System.out.print("Masukkan pilihan : ");
+                    pilihanMenu = input.nextInt();
+                }
+                
+                System.out.println("-----------------------------------");
+                if (pilihanMetode == 1) {
+                    System.out.println("Metode Eliminasi Gauss");
+                    mSPL.metodeGauss();
+                }
+                else if (pilihanMetode == 2) {
+                    System.out.println("Metode Eliminasi Gauss Jordan");
+                    mSPL.metodeGaussJordan();
+                }
+                else if (pilihanMetode == 3) {
+                    System.out.println("Metode Matriks Balikan");
+                    mSPL.metodeInvers();
+                }
+                else if (pilihanMetode == 4) {
+                    System.out.println("Metode Kaidah Cramer");
+                    mSPL.metodeCramer();
+                    
+                }
+                else { //pilihan Metode == 5
+                    pilihanMenu = 3;
+                    clearScreen();
+                    MainMenu();
+                }
+            }
+
+            // MAU DISIMPAN?
+            if (pilihanMenu==1 || pilihanMenu==2) {
+                System.out.println("-----------------------------------");
+                mSPL.tulisSPL();
+                System.out.println("-----------------------------------");
+                System.out.print("Simpan Hasil? (y/n) : ");
+
+                simpan = input.next().charAt(0);
+                if (simpan=='y') {
+                    System.out.println("-----------------------------------");
+                    System.out.print("Masukkan nama file untuk disimpan <ekstensi .txt>: ");
+    
+                    namaFile = input.next();
+                    mSPL.tulisFileSPL(namaFile);
+                }
+            }
+            tekanEnter();
+            clearScreen();
+            MainMenu();
+            
+        } catch (Exception e) {
+            System.out.println("Terjadi Error");
+            e.printStackTrace();
+        }
     }
 
     public static void MenuDeterminan(){

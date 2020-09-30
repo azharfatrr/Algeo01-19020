@@ -253,7 +253,8 @@ public class SPL extends Matriks {
      * F.S. Dihasilkan Solusi Unik yang dimasukkan ke dalam List solusi
      */
     void metodeGaussJordan() {
-        this.GaussJordanElimination();
+        // this.GaussJordanElimination();
+        this.convertReducedEchelon();
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];
@@ -368,6 +369,15 @@ public class SPL extends Matriks {
 
             // Akan didapat cParam
             this.Persamaan[k] = cParam;
+        }
+
+        // Tadi ada yang null
+        for (i = 0; i < this.GetLastIdxKol(); i++) {
+            if (this.Status[i] == 0) {
+                this.Status[i] = 2;
+                this.Persamaan[i] = String.valueOf(parameter);
+                parameter++;
+            }
         }
     }
 
