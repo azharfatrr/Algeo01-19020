@@ -411,10 +411,18 @@ public class UI {
             Interpolasi z;
             Scanner file = new Scanner(System.in);
             String filebaca, filetulis;
+
             
-            System.out.print("Tuliskan nama file yang akan dibaca (contoh data1.txt): ");
+            System.out.println("-----------------------------------");
+            System.out.println("List file valid :");
+            getAllDataFiles();
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan nama file data interpolasi : ");
             filebaca = file.next();
             x = mInterpolasi.bacaFileInterpolasi(filebaca);
+
+            System.out.println("-----------------------------------");
+            System.out.println("Data Interpolasi Berhasil Terbaca");
             
             y = mInterpolasi.InterpolasiPolinom(x);
             z = mInterpolasi.ConvertToMatrixAug();
