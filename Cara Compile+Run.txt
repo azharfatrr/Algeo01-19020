@@ -1,10 +1,10 @@
 Buka terminal di directory src
 
 - Compile + Run
-$ javac -d ../bin Matriks.java Main.java SPL.java Regresi.java UI.java ; java -cp ../bin UI
+$ javac -d ../bin Matriks.java Main.java SPL.java Regresi.java UI.java Interpolasi.java; java -cp ../bin UI
 
 - Compile
-$ javac -d ../bin Matriks.java Main.java SPL.java Regresi.java UI.java
+$ javac -d ../bin Matriks.java Main.java SPL.java Regresi.java UI.java Interpolasi.java
 
 - Run
 $ java -cp ../bin UI
