@@ -432,37 +432,97 @@ public class Matriks {
 
      }
 
-     void GaussJordanElimination(){
+     /* I.S Terdefinisi Augmented Matriks M */
+     /* F.S Matriks M adalah Matriks eselon baris tereduksi */
+     void GJordanElimination() {
           /* I.S Terdefinisi Augmented Matriks M */
-          /* F.S Matriks M adalah Matriks eselon baris tereduksi */
-          this.GaussElimination();           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
-          int i;
+          /* F.S Matriks M adalah sebuah matriks eselon baris */
+          /*   1 2 3
+               4 5 6     
+               7 8 9     */
+          int i = this.GetFirstIdxBrs();
           int j;
-          int k;
-          int cek;
+          int k;    // variable yang digunakan untuk mengecek baris setelahnya
           float koef;
+          boolean flag;
+          // int indikatorDet = 1;
 
-          //iterasi dari indeks kolom terakhir sampai indeks kolom pertama
-          for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
+          // perulangan dari baris pertama-terakhir dan kolom pertama-sebelum terakhir karena merupakan matriks augmented
+          for (j = this.GetFirstIdxKol(); ((i<=this.GetLastIdxBrs()) && (j < this.GetLastIdxKol())); j++){
+               
+               boolean NextProcess = true;        //indikator untuk lanjut ke proses berikutnya
+               
+               if (this.GetElmt(i, j) == 0){
 
-               i = this.GetLastIdxBrs();
+                    k = i+1;
+                    flag = false;
+                    while (!flag && k <= this.GetLastIdxBrs()){
+                         //lakukan perulangan sampai ditemukan elemen kolom j yang != 0
+                         if (this.GetElmt(k, j)!=0){
+                              flag = true;
+                         } 
+                         else {
+                              k+=1;
+                         }
+                    }
 
-               //Jika elemen index ke (i,j)==0 maka di skip
-               while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
-                    i-=1;
-               }
-
-               //proses pembuatan matriks eselon baris tereduksi
-               k= i-1;
-               cek = (int) Math.floor(this.GetElmt(i, j));
-               if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
-                    for (k = i-1; k>=this.GetFirstIdxBrs(); k--){
-                         koef = -(this.GetElmt(k, j));
-                         this.PlusRow(i, k, koef);
+                    //ketika ditemukan elemen != 0 di baris k, maka dilakukan pertukaran
+                    if (flag){
+                         this.SwapRow(i, k);
+                         // indikatorDet *= -1;
+                    } 
+                    else {
+                         NextProcess = false;
                     }
                }
+
+               if (NextProcess){
+                    // proses pembuatan segitiga atas bawah
+                    this.MakeOne(i, this.GetElmt(i, j));
+                    for (k=this.GetFirstIdxBrs(); k <= this.GetLastIdxBrs(); k++){
+                         if (k!=i) {
+                              koef = -(this.GetElmt(k, j) / this.GetElmt(i,j));
+                              this.PlusRow(i,k, koef);
+                         }
+                         
+                    }
+                    i+=1;
+               }  
           }
+
      }
+
+     // void GaussJordanElimination(){
+     //      /* I.S Terdefinisi Augmented Matriks M */
+     //      /* F.S Matriks M adalah Matriks eselon baris tereduksi */
+     //      this.GaussElimination();           //Dilakukan Eliminasi Gauss terlebih dahulu untuk membentuk matriks segitiga atas
+     //      int i;
+     //      int j;
+     //      int k;
+     //      int cek;
+     //      float koef;
+
+     //      //iterasi dari indeks kolom terakhir sampai indeks kolom pertama
+     //      for (j = this.GetLastIdxKol(); j >= this.GetFirstIdxKol(); j--){
+
+     //           i = this.GetLastIdxBrs();
+
+     //           //Jika elemen index ke (i,j)==0 maka di skip
+     //           while (this.GetElmt(i, j) == 0 && i>=this.GetFirstIdxBrs()){
+     //                i-=1;
+     //           }
+
+     //           //proses pembuatan matriks eselon baris tereduksi
+     //           k= i-1;
+     //           cek = (int) Math.floor(this.GetElmt(i, j));
+     //           if ((cek == 1) && (k >= this.GetFirstIdxBrs())){
+     //                for (k = i-1; k>=this.GetFirstIdxBrs(); k--){
+     //                     koef = -(this.GetElmt(k, j));
+     //                     this.PlusRow(i, k, koef);
+     //                }
+     //           }
+     //      }
+     // }
 
 
      /* *** METODE DETERMINAN *** */
@@ -659,38 +719,38 @@ public class Matriks {
           return MInvers;
      }
 
-     void convertReducedEchelon(){
-          int i,j,k;
-          int lead;
+     // void convertReducedEchelon(){
+     //      int i,j,k;
+     //      int lead;
 
-          for (i=this.GetFirstIdxBrs(), lead=0; i <= this.GetLastIdxBrs() && lead <= this.GetLastIdxKol(); i++, lead++){
-               int baris = i;
-               while (this.GetElmt(i, lead) == 0){
-                    if (++baris == this.GetLastIdxBrs()){
-                         baris = i;
-                         if (++lead == this.GetLastIdxKol()){
-                              return;
-                         }
-                    }
-               }
-               SwapRow(baris, i);
+     //      for (i=this.GetFirstIdxBrs(), lead=0; i <= this.GetLastIdxBrs() && lead <= this.GetLastIdxKol(); i++, lead++){
+     //           int baris = i;
+     //           while (this.GetElmt(i, lead) == 0){
+     //                if (++baris == this.GetLastIdxBrs()){
+     //                     baris = i;
+     //                     if (++lead == this.GetLastIdxKol()){
+     //                          return;
+     //                     }
+     //                }
+     //           }
+     //           SwapRow(baris, i);
 
-               if (this.GetElmt(i, lead)!=0){
-                    float koef = this.GetElmt(i, lead);
-                    this.MakeOne(i, koef);
-               }
+     //           if (this.GetElmt(i, lead)!=0){
+     //                float koef = this.GetElmt(i, lead);
+     //                this.MakeOne(i, koef);
+     //           }
 
-               for (k = this.GetFirstIdxBrs(); k <= GetLastIdxBrs(); k++){
-                    if (k == i){
-                         continue;
-                    }
-                    float koef = this.GetElmt(k, lead);
-                    for (int kol = this.GetFirstIdxKol(); kol <= this.GetLastIdxKol(); kol++){
-                         this.SetElmt(k, kol, this.GetElmt(k, kol)-(koef*this.GetElmt(i, kol)));
-                    }
-               }
-          }
-     }
+     //           for (k = this.GetFirstIdxBrs(); k <= GetLastIdxBrs(); k++){
+     //                if (k == i){
+     //                     continue;
+     //                }
+     //                float koef = this.GetElmt(k, lead);
+     //                for (int kol = this.GetFirstIdxKol(); kol <= this.GetLastIdxKol(); kol++){
+     //                     this.SetElmt(k, kol, this.GetElmt(k, kol)-(koef*this.GetElmt(i, kol)));
+     //                }
+     //           }
+     //      }
+     // }
 
      Matriks InverseGaussJordan(){
           /* I.S Terdefinisi Matriks M bujur sangkar */
@@ -714,10 +774,7 @@ public class Matriks {
                     temp.SetElmt(i, this.GetLastIdxKol()+i+1, 1);
                }    
 
-               
-     
-               temp.convertReducedEchelon();
-               
+               temp.GJordanElimination();
                
                for (int i = temp.GetFirstIdxBrs(); i <= temp.GetLastIdxBrs(); i++){
                     
@@ -732,6 +789,8 @@ public class Matriks {
           }
           return Invers;
      }
+
+     
 
 
      

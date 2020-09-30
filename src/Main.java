@@ -18,8 +18,8 @@ public class Main {
         // M.tulisMatriks();
         // System.out.println();
 
-        M.bacaFileMatriks("testcase_2_b.txt");
-        M.GaussElimination();
+        M.bacaFileMatriks("testcase_3b.txt");
+        M.GJordanElimination();
         M.tulisMatriks();
         // M2 = M.InversKofaktor();
         // M3 = M.InverseGaussJordan();
@@ -44,4 +44,7 @@ public class Main {
 
 
     }
+
+    
+
 }
