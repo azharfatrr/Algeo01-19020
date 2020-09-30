@@ -404,8 +404,10 @@ public class SPL extends Matriks {
             MSol.SetElmt(i, MSol.GetFirstIdxKol(), this.GetElmt(i, this.GetLastIdxKol()));
         }
 
+        
         if (MInv.NBrsEff != MInv.NKolEff){
             System.out.println("Solusi SPL tidak dapat ditentukan karena jumlah kolom matriks variabel =/= jumlah baris");
+            this.Status = new int [this.NKolEff-1];
         }
         else{
             //Proses Inverse matriks koefisien
@@ -469,6 +471,7 @@ public class SPL extends Matriks {
 
         if (det == 0) {
             System.out.println("Nilai variabel tidak dapat ditentukan karena nilai determinan awal adalah 0.");
+            this.Status = new int [this.NKolEff-1];
         }
         else {
             for (j = MatriksA.GetFirstIdxKol(); j <= MatriksA.GetLastIdxKol(); j++) {
@@ -486,17 +489,29 @@ public class SPL extends Matriks {
                 }
                 count += 1;
             }
-        }
-        MatriksVar.transpose();
 
-        this.Solusi = new float [this.NKolEff-1];
-        this.Persamaan = new String [this.NKolEff-1];
-        this.Status = new int [this.NKolEff-1];
+            MatriksVar.transpose();
 
-        for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
-            this.Solusi[j] = MatriksVar.GetElmt(0,j);
-            this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
-            this.Status[j] = 1;
+            this.Solusi = new float [this.NKolEff-1];
+            this.Persamaan = new String [this.NKolEff-1];
+            this.Status = new int [this.NKolEff-1];
+
+            for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
+                this.Solusi[j] = MatriksVar.GetElmt(0,j);
+                this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
+                this.Status[j] = 1;
+            }
         }
+        // MatriksVar.transpose();
+
+        // this.Solusi = new float [this.NKolEff-1];
+        // this.Persamaan = new String [this.NKolEff-1];
+        // this.Status = new int [this.NKolEff-1];
+
+        // for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
+        //     this.Solusi[j] = MatriksVar.GetElmt(0,j);
+        //     this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
+        //     this.Status[j] = 1;
+        // }
     }
 }
