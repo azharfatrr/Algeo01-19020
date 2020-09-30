@@ -206,6 +206,40 @@ public class UI {
         System.out.print("Masukkan pilihan : ");
         pilihanMenu = input.nextInt();
 
+        while (pilihanMenu!=1 && pilihanMenu!=2 && pilihanMenu!=3) {
+            System.out.println("Masukkan Tidak Valid, Coba Lagi");
+            System.out.print("Masukkan pilihan : ");
+            pilihanMenu = input.nextInt();
+        }
+
+        if (pilihanMenu == 1){
+            System.out.println("-----------------------------------");
+
+            mMatriks.bacaMatriks();
+
+            System.out.println("-----------------------------------");
+            System.out.println("Data matriks Berhasil Terbaca");
+        }
+        else if (pilihanMenu==2){
+            String namafile;
+            Scanner file = new Scanner(System.in);
+
+            System.out.println("-----------------------------------");
+            System.out.println("List file valid :");
+            getAllDataFiles();
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan nama file data matriks : ");
+
+            namafile = input.next();
+            mMatriks.bacaFileMatriks(namafile);
+
+            System.out.println("-----------------------------------");
+            System.out.println("Data matriks Berhasil Terbaca");
+        } else if (pilihanMenu==3) {
+            clearScreen();
+            MainMenu();
+        }
+
         if (pilihanMenu == 1 || pilihanMenu == 2) {
             System.out.println("-----------------------------------");
             System.out.println("           PILIH METODE");
@@ -217,41 +251,16 @@ public class UI {
             System.out.print("Masukkan pilihan : ");
             pilihanMetode = input.nextInt();
 
-            if (pilihanMenu == 1 && pilihanMetode == 1) {
+            if (pilihanMetode == 1) {
                 float nilai;
-                mMatriks.bacaMatriks();
                 nilai = mMatriks.DeterminanGauss();
                 System.out.print("Nilai determinan dari matriks adalah ");
                 System.out.println(nilai);
             }
-            else if (pilihanMenu == 2 && pilihanMetode == 1) {
+            else if (pilihanMetode == 2) {
                 float nilai;
-                String namafile;
-                Scanner file = new Scanner(System.in);
 
-                System.out.print("Masukkan nama file yang akan dituju: ");
-                namafile = file.next();
-                mMatriks.bacaFileMatriks(namafile);
                 nilai = mMatriks.DeterminanGauss();
-                System.out.print("Nilai determinan dari matriks adalah ");
-                System.out.println(nilai);
-            }
-            else if (pilihanMenu == 1 && pilihanMetode == 2) {
-                float nilai;
-                mMatriks.bacaMatriks();
-                nilai = mMatriks.DeterminanKofaktor();
-                System.out.print("Nilai determinan dari matriks adalah ");
-                System.out.println(nilai);
-            }
-            else if (pilihanMenu == 2 && pilihanMetode == 2) {
-                float nilai;
-                String namafile;
-                Scanner file = new Scanner(System.in);
-
-                System.out.print("Masukkan nama file yang akan dituju: ");
-                namafile = file.next();
-                mMatriks.bacaFileMatriks(namafile);
-                nilai = mMatriks.DeterminanKofaktor();
                 System.out.print("Nilai determinan dari matriks adalah ");
                 System.out.println(nilai);
             }
@@ -300,6 +309,34 @@ public class UI {
             pilihanMenu = input.nextInt();
         }
 
+        if (pilihanMenu == 1){
+            System.out.println("-----------------------------------");
+
+            mMatriks.bacaMatriks();
+
+            System.out.println("-----------------------------------");
+            System.out.println("Data matriks Berhasil Terbaca");
+        }
+        else if (pilihanMenu==2){
+            String namafile;
+            Scanner file = new Scanner(System.in);
+
+            System.out.println("-----------------------------------");
+            System.out.println("List file valid :");
+            getAllDataFiles();
+            System.out.println("-----------------------------------");
+            System.out.print("Masukkan nama file data matriks : ");
+
+            namafile = input.next();
+            mMatriks.bacaFileMatriks(namafile);
+
+            System.out.println("-----------------------------------");
+            System.out.println("Data matriks Berhasil Terbaca");
+        } else if (pilihanMenu==3) {
+            clearScreen();
+            MainMenu();
+        }
+
         if (pilihanMenu == 1 || pilihanMenu == 2){
             System.out.println("-----------------------------------");
             System.out.println("           PILIH METODE");
@@ -318,27 +355,14 @@ public class UI {
                 pilihanMetode = input.nextInt();
             }
 
-            if (pilihanMenu == 1){
-                float nilai;
-                mMatriks.bacaMatriks();
-            }
-            else if (pilihanMenu==2){
-                String namafile;
-                Scanner file = new Scanner(System.in);
-
-                System.out.print("Masukkan nama file yang akan dituju: ");
-                namafile = file.next();
-                mMatriks.bacaFileMatriks(namafile);
-            }
-
             if (pilihanMetode == 1){
                 MInv = mMatriks.InverseGaussJordan();
-                System.out.print("Matriks invers yang terbentuk adalah: ");
+                System.out.println("Matriks invers yang terbentuk adalah: ");
                 MInv.tulisMatriks();
             }
             else if (pilihanMetode == 2){
                 MInv = mMatriks.InversKofaktor();
-                System.out.print("Matriks invers yang terbentuk adalah: ");
+                System.out.println("Matriks invers yang terbentuk adalah: ");
                 MInv.tulisMatriks();
             }
             else{
