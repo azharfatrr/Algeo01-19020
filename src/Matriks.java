@@ -260,23 +260,28 @@ public class Matriks {
      void transpose () {
           //Membuat matriks transpose
           int i,j;
+          int temp;
           Matriks MTemp;
-          MTemp = this.copyMatriks();
+          MTemp = new Matriks(this.NKolEff,this.NBrsEff);
 
+          
           //Proses transpose
           for (i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
                for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
-                    MTemp.SetElmt(i, j, this.GetElmt(j, i));
+                    MTemp.SetElmt(j, i, this.GetElmt(i, j));
                }
           }
+          
+          temp = this.NBrsEff;
+          this.NBrsEff = this.NKolEff;
+          this.NKolEff = temp; 
 
-          //mengembalikan isi Matriks asal
+          // mengembalikan isi Matriks asal
           for (i=this.GetFirstIdxBrs(); i<=this.GetLastIdxBrs(); i++){
                for (j=this.GetFirstIdxKol(); j<=this.GetLastIdxKol(); j++){
                     this.SetElmt(i, j, MTemp.GetElmt(i, j));
                }
           }
-
           
      }
 

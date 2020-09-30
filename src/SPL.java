@@ -411,14 +411,14 @@ public class SPL extends Matriks {
         }
         else{
             //Proses Inverse matriks koefisien
-            MInv = MInv.InversKofaktor();
+            MInv = MInv.InverseGaussJordan();
+            
 
             //  MInv * Mvar = MSol
             //  Mvar = MInv^-1 * MSol
             //Hasil Akhir solusi
             MRes = KaliMatriks(MInv, MSol);
-            MRes.tulisMatriks();
-
+            
             MRes.transpose();
 
             this.Solusi = new float [MRes.NKolEff];
@@ -489,14 +489,16 @@ public class SPL extends Matriks {
                 }
                 count += 1;
             }
-
+            
             MatriksVar.transpose();
+            
+            
 
             this.Solusi = new float [this.NKolEff-1];
             this.Persamaan = new String [this.NKolEff-1];
             this.Status = new int [this.NKolEff-1];
 
-            for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
+            for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetLastIdxKol(); j++) {
                 this.Solusi[j] = MatriksVar.GetElmt(0,j);
                 this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
                 this.Status[j] = 1;
