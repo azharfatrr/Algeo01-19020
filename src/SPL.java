@@ -255,7 +255,7 @@ public class SPL extends Matriks {
     void metodeGaussJordan() {
         // this.GaussJordanElimination();
         // this.convertReducedEchelon();
-        this.GJordan();
+        this.GJordanElimination();
         this.Solusi = new float [this.NKolEff-1];
         this.Persamaan = new String [this.NKolEff-1];
         this.Status = new int [this.NKolEff-1];

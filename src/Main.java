@@ -19,7 +19,7 @@ public class Main {
         // System.out.println();
 
         M.bacaFileMatriks("testcase_3b.txt");
-        M.GJordan();
+        M.GJordanElimination();
         M.tulisMatriks();
         // M2 = M.InversKofaktor();
         // M3 = M.InverseGaussJordan();
