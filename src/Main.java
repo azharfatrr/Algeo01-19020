@@ -2,31 +2,33 @@
 public class Main {
     public static void main(String[] args) {
 
-        SPL M = new SPL(6,6);
+        SPL M = new SPL(10,10);
         SPL M1 = new SPL(0,0);
         Matriks M2,M3;
 
-        int k=0;
-        float b = 1;
-        for (int i = 0; i < M.NBrsEff; i++) {
-            for (int j = 0; j < M.NKolEff; j++) {
-                M.Matriks[i][j] = b/(j+1+k);
-            }
-            k++;
-        }
+        // int k=0;
+        // float b = 1;
+        // for (int i = 0; i < M.NBrsEff; i++) {
+        //     for (int j = 0; j < M.NKolEff; j++) {
+        //         M.Matriks[i][j] = b/(j+1+k);
+        //     }
+        //     k++;
+        // }
 
         // M.tulisMatriks();
         // System.out.println();
 
-        // M.bacaFileSPL("testcase_1d_1.txt");
-        M2 = M.InversKofaktor();
-        M3 = M.InverseGaussJordan();
-        // // M.metodeInvers();
-        // // System.out.println();
+        M.bacaFileMatriks("testcase_2_b.txt");
+        M.GaussElimination();
+        M.tulisMatriks();
+        // M2 = M.InversKofaktor();
+        // M3 = M.InverseGaussJordan();
+        // // // M.metodeInvers();
+        // // // System.out.println();
         
-        M2.tulisMatriks();
-        System.out.println();
-        M3.tulisMatriks();
+        // M2.tulisMatriks();
+        // System.out.println();
+        // M3.tulisMatriks();
 
         // M1.bacaFileSPL("testcase_1d_1.txt");
         // // M.GaussElimination();
