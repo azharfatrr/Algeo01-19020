@@ -83,7 +83,7 @@ public class Regresi extends SPL {
             this.Parameter = new float[this.nPeubah()];
 
             for (int i = 0; i < this.nPeubah(); i++) {
-                System.out.print("Masukkan Nilai Parameter x" + (i+1) + ": ");
+                System.out.print("Masukkan Nilai Parameter X" + (i+1) + ": ");
                 this.Parameter[i] = masukkan.nextFloat();  
             }
         } catch (Exception e) {
@@ -98,7 +98,7 @@ public class Regresi extends SPL {
     */
    void tulisRegresi() {
         Regresi MNormal = this.normalEstimation();
-        
+
         MNormal.Parameter = this.Parameter;
         float hasil = MNormal.hasilRegresi();
 
@@ -107,9 +107,9 @@ public class Regresi extends SPL {
 
             for (int i = 1; i <= this.nPeubah(); i++) {
                 if (MNormal.Solusi[i]<0) {
-                    persamaanRegresi += "- " + Math.abs(MNormal.Solusi[i]) + "x" + i + " ";
+                    persamaanRegresi += "- " + Math.abs(MNormal.Solusi[i]) + "*X" + i + " ";
                 } else {
-                    persamaanRegresi += "+ " + Math.abs(MNormal.Solusi[i]) + "x" + i + " ";
+                    persamaanRegresi += "+ " + Math.abs(MNormal.Solusi[i]) + "*X" + i + " ";
                 }
             }
 
