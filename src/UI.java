@@ -300,8 +300,6 @@ public class UI {
         // MAU DISIMPAN?
         if (pilihanMenu==1 || pilihanMenu==2) {
             System.out.println("-----------------------------------");
-            mMatriks.tulisMatriks();
-            System.out.println("-----------------------------------");
             System.out.print("Simpan Hasil? (y/n) : ");
 
             simpan = input.next().charAt(0);
@@ -475,12 +473,6 @@ public class UI {
 
             System.out.println("-----------------------------------");
             System.out.println("Data Interpolasi Berhasil Terbaca");
-            // float x,y;
-            // Interpolasi z;
-            // x = mInterpolasi.bacaInterpolasi();
-            // y = mInterpolasi.InterpolasiPolinom(x);
-            // z = mInterpolasi.ConvertToMatrixAug();
-            // mInterpolasi.tulisInterpolasi(x,y,z);
 
         } else if (pilihanMenu==2) {
             System.out.println("-----------------------------------");
@@ -494,23 +486,6 @@ public class UI {
 
             System.out.println("-----------------------------------");
             System.out.println("Data Interpolasi Berhasil Terbaca");
-            // float x,y;
-            // Interpolasi z;
-            // Scanner file = new Scanner(System.in);
-            // String filebaca, filetulis;
-            
-            // System.out.print("Tuliskan nama file yang akan dibaca (contoh data1.txt): ");
-            // filebaca = file.next();
-            // x = mInterpolasi.bacaFileInterpolasi(filebaca);
-            
-            // y = mInterpolasi.InterpolasiPolinom(x);
-            // z = mInterpolasi.ConvertToMatrixAug();
-
-            // System.out.print("Tuliskan nama file yang akan disimpan (contoh data2.txt): ");
-            // filetulis = file.next();
-            // mInterpolasi.tulisFileInterpolasi(x,y,z, filetulis);
-
-            // file.close();
             
         } else if (pilihanMenu==3) {
             x = 0;

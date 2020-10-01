@@ -1,0 +1,7 @@
+X_1 = - 3.0B + 2.0(- 2.0A ) - 2.0C 
+X_2 = B
+X_3 = - 2.0A 
+X_4 = A
+X_5 = C
+X_6 = 0.33 
+Dengan A,B,C merupakan bilangan real

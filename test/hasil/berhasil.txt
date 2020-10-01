@@ -1,0 +1,3 @@
+Persamaan Regresi :
+y =  + 1.0x1 
+Hasil Regresi : 10.0

@@ -1,0 +1,6 @@
+X_1 = 3.000000 + A 
+X_2 = + 2.0A 
+X_3 = B
+X_4 = -1.000000 + A 
+X_5 = A
+Dengan A,B merupakan bilangan real

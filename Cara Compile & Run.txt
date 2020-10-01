@@ -8,8 +8,3 @@ $ javac -d ../bin Matriks.java Main.java SPL.java Regresi.java UI.java Interpola
 
 - Run
 $ java -cp ../bin UI
-
-
-Buka terminal di directory Algeo01-19020
-- Run
-$ java -cp ./bin UI
