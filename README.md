@@ -48,6 +48,8 @@ Program ini dapat digunakan untuk melakukan beberapa hal, yaitu :
 ```
 $ java -cp ../bin UI
 ```
+- Khusus OS Windows, program dapat dieksekusi dengan menjalankan file `Run Program.bat` pada folder src
+
 
 ## Author
 - Muhammad Azhar Faturahman (13519020)
