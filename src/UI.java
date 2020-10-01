@@ -190,6 +190,8 @@ public class UI {
 
     public static void MenuDeterminan(){
         int pilihanMenu, pilihanMetode;
+        String namaFile;
+        char simpan;
         Scanner input = null;
         Matriks mMatriks = new Matriks(0,0);
 
@@ -287,11 +289,33 @@ public class UI {
             MenuDeterminan();
         }
 
+        // MAU DISIMPAN?
+        if (pilihanMenu==1 || pilihanMenu==2) {
+            System.out.println("-----------------------------------");
+            mMatriks.tulisMatriks();
+            System.out.println("-----------------------------------");
+            System.out.print("Simpan Hasil? (y/n) : ");
+
+            simpan = input.next().charAt(0);
+            if (simpan=='y') {
+                System.out.println("-----------------------------------");
+                System.out.print("Masukkan nama file untuk disimpan <ekstensi .txt>: ");
+
+                namaFile = input.next();
+                mMatriks.tulisFileMatriks(namaFile);
+            }
+        }
+        tekanEnter();
+        clearScreen();
+        MainMenu();
+
         
     }
 
     public static void MenuInvers(){
         int pilihanMenu, pilihanMetode;
+        String namaFile;
+        char simpan;
         Scanner input = null;
         Matriks mMatriks = new Matriks(0,0);
         Matriks MInv = new Matriks(0,0);
@@ -386,6 +410,26 @@ public class UI {
             System.out.println("PILIHAN MENU TIDAK VALID, COBA LAGI");
             MenuInvers();
         }
+
+        // MAU DISIMPAN?
+        if (pilihanMenu==1 || pilihanMenu==2) {
+            System.out.println("-----------------------------------");
+            mMatriks.tulisMatriks();
+            System.out.println("-----------------------------------");
+            System.out.print("Simpan Hasil? (y/n) : ");
+
+            simpan = input.next().charAt(0);
+            if (simpan=='y') {
+                System.out.println("-----------------------------------");
+                System.out.print("Masukkan nama file untuk disimpan <ekstensi .txt>: ");
+
+                namaFile = input.next();
+                mMatriks.tulisFileMatriks(namaFile);
+            }
+        }
+        tekanEnter();
+        clearScreen();
+        MainMenu();
     }
 
     public static void MenuInterpolasi(){
