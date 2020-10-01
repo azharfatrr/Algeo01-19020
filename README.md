@@ -23,7 +23,7 @@ Program ini dapat digunakan untuk melakukan beberapa hal, yaitu :
 
 ### Build With
 
-- [Java](https://www.java.com/)
+- [Java](https://en.wikipedia.org/wiki/Java_(programming_language))
 
 ## Getting Started
 
