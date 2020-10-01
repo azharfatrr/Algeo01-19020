@@ -493,8 +493,6 @@ public class SPL extends Matriks {
             }
             
             MatriksVar.transpose();
-            
-            
 
             this.Solusi = new float [this.NKolEff-1];
             this.Persamaan = new String [this.NKolEff-1];
@@ -506,16 +504,5 @@ public class SPL extends Matriks {
                 this.Status[j] = 1;
             }
         }
-        // MatriksVar.transpose();
-
-        // this.Solusi = new float [this.NKolEff-1];
-        // this.Persamaan = new String [this.NKolEff-1];
-        // this.Status = new int [this.NKolEff-1];
-
-        // for (j = MatriksVar.GetFirstIdxKol(); j <= MatriksVar.GetFirstIdxKol(); j++) {
-        //     this.Solusi[j] = MatriksVar.GetElmt(0,j);
-        //     this.Persamaan[j] = Float.toString(MatriksVar.GetElmt(0,j));
-        //     this.Status[j] = 1;
-        // }
     }
 }

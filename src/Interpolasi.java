@@ -1,6 +1,5 @@
-import java.io.File;
+
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -217,13 +216,3 @@ public class Interpolasi extends SPL {
     }
     
 }
-
-//Cara akses Interpolasi
-//Interpolasi M1 = new Interpolasi(3,2);
-//float x;
-//x = M1.bacaInterpolasi();
-//float y;
-//y = M1.InterpolasiPolinom(x);
-//Interpolasi Interpolate;
-//Interpolate = M1.ConvertToMatrixAug();
-//System.out.println(y);

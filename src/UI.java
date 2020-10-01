@@ -1,12 +1,19 @@
 import java.io.File;
-// import java.io.FileWriter;
-// import java.io.IOException;
 import java.util.Scanner;
 
 public class UI {
     
     public static void main(String[] args) {
-
+        System.out.println("---------------------------------------");
+        System.out.println("         Tubes-1-Algeo-2020");
+        System.out.println("---------------------------------------");
+        System.out.println("Author :");
+        System.out.println("- Muhammad Azhar Faturahman (13519020)");
+        System.out.println("- Daru Bagus Dananjaya (13519080)");
+        System.out.println("- Muhammad Dehan Al Kautsar (13519200)");
+        System.out.println("---------------------------------------");
+        
+        tekanEnter();
         MainMenu();
 
     }
