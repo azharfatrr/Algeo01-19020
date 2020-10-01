@@ -1,11 +1,13 @@
 # Tubes-1-Algeo-2020
 
-Program ini dibuat untuk memenuhi tugas Mata Kuliah **IF 2123** <br />
-**Aljabar Linier dan Geometri** <br />
+Program ini dibuat untuk memenuhi tugas Mata Kuliah **IF 2123**
+**Aljabar Linier dan Geometri** <br /> <br />
+
+<p align="center">
 *Program Studi Teknik Informatika* <br />
 *Sekolah Teknik Elektro dan Informatika* <br />
 **_Institut Teknologi Bandung_** <br />
-*Semester I Tahun 2020/2021* <br />
+</p>
 
 ## Description
 
