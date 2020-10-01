@@ -1,11 +1,11 @@
 # Tubes-1-Algeo-2020
 
-Program ini dibuat untuk memenuhi tugas Mata Kuliah **IF 2123**
-**Aljabar Linier dan Geometri**
-*Program Studi Teknik Informatika*
-*Sekolah Teknik Elektro dan Informatika*
-**_Institut Teknologi Bandung_**
-*Semester I Tahun 2020/2021*
+Program ini dibuat untuk memenuhi tugas Mata Kuliah **IF 2123** <br />
+**Aljabar Linier dan Geometri** <br />
+*Program Studi Teknik Informatika* <br />
+*Sekolah Teknik Elektro dan Informatika* <br />
+**_Institut Teknologi Bandung_** <br />
+*Semester I Tahun 2020/2021* <br />
 
 ## Description
 
@@ -41,7 +41,10 @@ Program ini dapat digunakan untuk melakukan beberapa hal, yaitu :
 - Buka Terminal atau Command Line
 - Arahkan directory ke dalam folder yang berisi file dan folder yang sudah di download
 - Jalankan program dengan command dibawah ini
-`$ java -cp ./bin UI`
+
+```
+$ java -cp ./bin UI
+```
 
 ## Author
 - Muhammad Azhar Faturahman (13519020)
