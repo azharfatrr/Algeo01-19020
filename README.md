@@ -4,7 +4,7 @@ Program ini dibuat untuk memenuhi tugas Mata Kuliah **IF 2123 Aljabar Linier dan
 
 *Program Studi Teknik Informatika* <br />
 *Sekolah Teknik Elektro dan Informatika* <br />
-*Institut Teknologi Bandung* <br /> <br />
+*Institut Teknologi Bandung* <br />
 
 *Semester I Tahun 2020/2021*
 
@@ -18,8 +18,8 @@ Program ini dapat digunakan untuk melakukan beberapa hal, yaitu :
 3. Menghitung matriks balikan
 4. Menghitung determinan matriks dengan metode reduksi baris dan ekspansi kofaktor.
 
-**LINK LAPORAN**
-*Laporan : bit.ly/BukanLaporanALGEO*
+**LINK LAPORAN** <br />
+*bit.ly/BukanLaporanALGEO*
 
 ### Build With
 
