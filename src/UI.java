@@ -639,8 +639,8 @@ public class UI {
     /** List input file yang valid */
     public static void getAllDataFiles() {
         String curDir = "../src/data";
-        File data = new File(curDir);
-        File[] listFile = data.listFiles();
+        File dataFile = new File(curDir);
+        File[] listFile = dataFile.listFiles();
         for(File f : listFile){
             System.out.println(f.getName());
         }
@@ -648,16 +648,7 @@ public class UI {
 
     /** Clear Screen */
     public static void clearScreen() {
-        // Butuh Bantuan
         for (int i = 0; i < 50; ++i) System.out.println();   
-        // System.out.print("\033[H\033[2J");  
-        // System.out.flush();
-
-        // System.out.print('\f');
-        // or
-        // System.out.print('\u000C');
-        // new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        
     }
     
     /** Tekan Enter untuk melanjutkan */
