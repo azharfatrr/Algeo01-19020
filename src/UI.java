@@ -14,6 +14,7 @@ public class UI {
         System.out.println("---------------------------------------");
         
         tekanEnter();
+        clearScreen();
         MainMenu();
 
     }
