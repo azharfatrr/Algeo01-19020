@@ -48,6 +48,10 @@ Program ini dapat digunakan untuk melakukan beberapa hal, yaitu :
 ```
 $ javac -d ../bin Matriks.java SPL.java Regresi.java UI.java Interpolasi.java; java -cp ../bin UI
 ```
+- Run program dengan command dibawah ini :
+```
+$ java -cp ../bin UI
+```
 - Khusus OS Windows, program dapat dieksekusi dengan menjalankan file `Run Program.bat` pada folder src
 
 
