@@ -8,3 +8,7 @@ $ javac -d ../bin Matriks.java SPL.java Regresi.java UI.java Interpolasi.java
 
 - Run
 $ java -cp ../bin UI
+
+ baca data regresi di ui Interpolasi
+
+ setiap masuk menu pilihan baca, kasi penjelasan lagi di menu apa

@@ -1,4 +1,0 @@
-X_1 = 5.000000 - 2.0A 
-X_2 = 
-X_3 = A
-Dengan A merupakan bilangan real

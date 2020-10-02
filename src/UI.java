@@ -82,6 +82,8 @@ public class UI {
             input = new Scanner(System.in);
 
             System.out.println("-----------------------------------");
+            System.out.println("               MENU SPL");
+            System.out.println("-----------------------------------");
             System.out.println("           PILIH CARA BACA");
             System.out.println("-----------------------------------");
             System.out.println("1. Baca Dari Terminal");
@@ -126,6 +128,8 @@ public class UI {
 
             // PILIH METODE
             if (pilihanMenu == 1 || pilihanMenu == 2) {
+                System.out.println("-----------------------------------");
+                System.out.println("             MENU SPL");
                 System.out.println("-----------------------------------");
                 System.out.println("           PILIH METODE");
                 System.out.println("-----------------------------------");
@@ -207,6 +211,8 @@ public class UI {
 
         System.out.println("INGAT!!!! DALAM MENCARI DETERMINAN HARUS MENGGUNAKAN MATRIKS BUJURSANGKAR");
         System.out.println("-----------------------------------");
+        System.out.println("           MENU DETERMINAN");
+        System.out.println("-----------------------------------");
         System.out.println("           PILIH CARA BACA");
         System.out.println("-----------------------------------");
         System.out.println("1. Baca Dari Terminal");
@@ -251,6 +257,8 @@ public class UI {
         }
 
         if (pilihanMenu == 1 || pilihanMenu == 2) {
+            System.out.println("-----------------------------------");
+            System.out.println("           MENU DETERMINAN");
             System.out.println("-----------------------------------");
             System.out.println("           PILIH METODE");
             System.out.println("-----------------------------------");
@@ -330,6 +338,8 @@ public class UI {
 
         System.out.println("INGAT!!!! DALAM MENCARI INVERS HARUS MENGGUNAKAN MATRIKS BUJURSANGKAR");
         System.out.println("-----------------------------------");
+        System.out.println("             MENU INVERS");
+        System.out.println("-----------------------------------");
         System.out.println("           PILIH CARA BACA");
         System.out.println("-----------------------------------");
         System.out.println("1. Baca Dari Terminal");
@@ -376,6 +386,8 @@ public class UI {
 
         if (pilihanMenu == 1 || pilihanMenu == 2){
             System.out.println("-----------------------------------");
+            System.out.println("            MENU INVERS");
+            System.out.println("-----------------------------------");
             System.out.println("           PILIH METODE");
             System.out.println("-----------------------------------");
             System.out.println("1. Metode Eliminasi Gauss-Jordan");
@@ -419,8 +431,8 @@ public class UI {
 
         // MAU DISIMPAN?
         if (pilihanMenu==1 || pilihanMenu==2) {
-            System.out.println("-----------------------------------");
-            mMatriks.tulisMatriks();
+            // System.out.println("-----------------------------------");
+            // mMatriks.tulisMatriks();
             System.out.println("-----------------------------------");
             System.out.print("Simpan Hasil? (y/n) : ");
 
@@ -449,6 +461,8 @@ public class UI {
 
         input = new Scanner(System.in);
 
+        System.out.println("-----------------------------------");
+        System.out.println("           MENU INTERPOLASI");
         System.out.println("-----------------------------------");
         System.out.println("           PILIH CARA BACA");
         System.out.println("-----------------------------------");
@@ -479,7 +493,7 @@ public class UI {
             System.out.println("List file valid :");
             getAllDataFiles();
             System.out.println("-----------------------------------");
-            System.out.print("Masukkan nama file data regresi : ");
+            System.out.print("Masukkan nama file data interpolasi : ");
 
             namaFile = input.next();
             x = mInterpolasi.bacaFileInterpolasi(namaFile);
@@ -539,7 +553,8 @@ public class UI {
 
         try {
             input = new Scanner(System.in);
-
+            System.out.println("-----------------------------------");
+            System.out.println("             MENU REGRESI");
             System.out.println("-----------------------------------");
             System.out.println("           PILIH CARA BACA");
             System.out.println("-----------------------------------");

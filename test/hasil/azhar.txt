@@ -1,3 +1,0 @@
-Persamaan Regresi :
-y = -3.511350  - 0.0026244328x1 + 7.9925323E-4x2 + 0.1542749x3 
-Hasil Regresi : -3.20645
